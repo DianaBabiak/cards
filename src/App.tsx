@@ -1,3 +1,12 @@
+import { Button } from "@/components/ui/button";
+
 export function App() {
-  return <div>Hello</div>;
+  return (
+    <div>
+      <Button variant={"primary"}>Name</Button>
+      <Button as={"a"} variant={"primary"}>
+        Name
+      </Button>
+    </div>
+  );
 }
