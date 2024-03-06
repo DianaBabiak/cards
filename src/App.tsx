@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card/card";
 
 export function App() {
   return (
@@ -7,6 +8,7 @@ export function App() {
       <Button as={"a"} variant={"primary"}>
         Name
       </Button>
+      <Card />
     </div>
   );
 }

@@ -36,12 +36,12 @@
   "private": true,
   "scripts": {
     "build": "tsc && vite build",
+    "build-storybook": "storybook build",
     "dev": "vite",
     "format": "prettier --write src",
     "lint": "eslint src --ext .jsx,.js,.tsx,.ts  --no-error-on-unmatched-pattern --fix && stylelint --fix src/{,*/}*.{scss,css} --allow-empty-input",
     "preview": "vite preview",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "storybook": "storybook dev -p 6006"
   },
   "type": "module",
   "version": "0.0.0"
