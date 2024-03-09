@@ -8,35 +8,43 @@
 
 .checkBox {
   all: unset;
-  background-color: var(--color-dark-900);
-  border: 2px solid var(--color-light-900);
+
+  cursor: pointer;
+
+  position: relative;
+
   width: 18px;
   height: 18px;
   margin: 3px;
-  position: relative;
-  cursor: pointer;
 
-  &:before {
+  background-color: var(--color-dark-900);
+  border: 2px solid var(--color-light-900);
+
+  &::before {
     content: '';
-    display: none;
-    z-index: -1;
-    width: 24px;
-    height: 24px;
-    background-color: var(--color-dark-100);
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
 
     position: absolute;
+    z-index: -1;
     top: 50%;
     left: 50%;
     transform-origin: top left;
+    transform: translate(-50%, -50%);
+
+    display: none;
+
+    width: 24px;
+    height: 24px;
+
+    background-color: var(--color-dark-100);
+    border-radius: 50%;
+
     transition: 0.2s ease-in-out;
   }
 
   &:focus-visible {
     background-color: var(--color-light-100);
 
-    &:before {
+    &::before {
       display: inline-block;
     }
   }
@@ -60,8 +68,9 @@
 
   &:disabled {
     pointer-events: none;
-    border: solid 2px var(--color-dark-100);
     background-color: var(--color-dark-900);
+    border: solid 2px var(--color-dark-100);
+
     & + .label {
       color: var(--color-dark-100);
     }
@@ -73,6 +82,7 @@
     .checkboxIndicator {
       color: var(--color-light-900);
     }
+
     & + .label {
       color: var(--color-dark-100);
     }
@@ -81,6 +91,6 @@
 
 .checkboxContainer {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 }
