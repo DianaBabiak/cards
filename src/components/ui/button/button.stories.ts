@@ -1,60 +1,60 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from '@storybook/react'
 
-import { Button } from "./";
+import { Button } from './'
 
 const meta = {
   argTypes: {
     variant: {
-      control: { type: "radio" },
-      options: ["primary", "secondary"],
+      control: { type: 'radio' },
+      options: ['primary', 'secondary'],
     },
   },
   component: Button,
-  tags: ["autodocs"],
-  title: "Components/Button",
-} satisfies Meta<typeof Button>;
+  tags: ['autodocs'],
+  title: 'Components/Button',
+} satisfies Meta<typeof Button>
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export default meta
+type Story = StoryObj<typeof meta>
 
 export const Primary: Story = {
   args: {
-    children: "Primary Button",
+    children: 'Primary Button',
     disabled: false,
-    variant: "primary",
+    variant: 'primary',
   },
-};
+}
 
 export const Secondary: Story = {
   args: {
-    children: "Secondary Button",
+    children: 'Secondary Button',
     disabled: false,
-    variant: "secondary",
+    variant: 'secondary',
   },
-};
+}
 
 export const FullWidth: Story = {
   args: {
-    children: "Full Width Primary Button",
+    children: 'Full Width Primary Button',
     disabled: false,
     isFullWidth: true,
-    variant: "primary",
+    variant: 'primary',
   },
-};
+}
 
 export const AsLink: Story = {
   args: {
-    as: "a",
-    children: "Link that looks like a button",
-    variant: "primary",
+    as: 'a',
+    children: 'Link that looks like a button',
+    variant: 'primary',
   },
-};
+}
 
 export const WithImg: Story = {
   args: {
-    children: "With img Button",
+    children: 'With img Button',
     disabled: false,
     isImg: true,
-    variant: "primary",
+    variant: 'primary',
   },
-};
+}
