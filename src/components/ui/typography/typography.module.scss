@@ -1,0 +1,217 @@
+.default {
+  all: unset;
+  color: inherit;
+  font-family: inherit;
+  line-height: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+@mixin typography( $lineHeight, $fontSize, $fontWeight) {
+  line-height: $lineHeight;
+  font-size: $fontSize;
+  font-weight: $fontWeight;
+}
+
+.h1 {
+  @include typography(var(--line-height-l), var(--font-size-xxl), var(--font-weight-bold))
+}
+
+.h2 {
+  @include typography(var(--line-height-l), var(--font-size-xl), var(--font-weight-bold))
+}
+
+.h3 {
+  @include typography(var(--line-height-m), var(--font-size-l), var(--font-weight-bold))
+}
+
+.h4 {
+  @include typography(var(--line-height-m), var(--font-size-m), var(--font-weight-bold))
+}
+
+.body1 {
+  @include typography(var(--line-height-m), var(--font-size-m), var(--font-weight-regular))
+}
+
+.subtitle1 {
+  @include typography(var(--line-height-m), var(--font-size-m), var(--font-weight-bold))
+}
+
+.body2 {
+  @include typography(var(--line-height-m), var(--font-size-s), var(--font-weight-regular))
+}
+
+.subtitle2 {
+  @include typography(var(--line-height-m), var(--font-size-s), var(--font-weight-bold))
+}
+
+.caption {
+  @include typography(var(--line-height-s), var(--font-size-xs), var(--font-weight-regular))
+}
+
+.overline {
+  @include typography(var(--line-height-s), var(--font-size-xs), var(--font-weight-bold))
+}
+
+.link {
+  cursor: pointer;
+  text-decoration: underline;
+  color: var(--color-info-500);
+}
+
+.link1 {
+  @include typography(var(--line-height-m), var(--font-size-s), var(--font-weight-regular));
+
+  cursor: pointer;
+  text-decoration: underline;
+  color: var(--color-info-500);
+}
+
+.link2 {
+  @include typography(var(--line-height-s), var(--font-size-xs), var(--font-weight-regular));
+
+  cursor: pointer;
+  text-decoration: underline;
+  color: var(--color-info-500);
+}
+
+//COLORS
+.accent-100{
+  color: var(--color-accent-100);
+}
+
+.accent-300{
+  color: var(--color-accent-300);
+}
+
+.accent-500{
+  color: var(--color-accent-500);
+}
+
+.accent-700{
+  color: var(--color-accent-700);
+}
+
+.accent-900{
+  color: var(--color-accent-900);
+}
+
+.success-100{
+  color: var(--color-success-100);
+}
+
+.success-300{
+  color: var(--color-success-300);
+}
+
+.success-500{
+  color: var(--color-success-500);
+}
+
+.success-700{
+  color: var(--color-success-700);
+}
+
+.success-900{
+  color: var(--color-success-900);
+}
+
+.danger-100{
+  color: var(--color-danger-100);
+}
+
+.danger-300{
+  color: var(--color-danger-300);
+}
+
+.danger-500{
+  color: var(--color-danger-500);
+}
+
+.danger-700{
+  color: var(--color-danger-700);
+}
+
+.danger-900{
+  color: var(--color-danger-900);
+}
+
+.warning-100{
+  color: var(--color-warning-100);
+}
+
+.warning-300{
+  color: var(--color-warning-300);
+}
+
+.warning-500{
+  color: var(--color-warning-500);
+}
+
+.warning-700{
+  color: var(--color-warning-700);
+}
+
+.warning-900{
+  color: var(--color-warning-900);
+}
+
+.info-100{
+  color: var(--color-info-100);
+}
+
+.info-300{
+  color: var(--color-info-300);
+}
+
+.info-500{
+  color: var(--color-info-500);
+}
+
+.info-700{
+  color: var(--color-info-700);
+}
+
+.info-900{
+  color: var(--color-info-900);
+}
+
+.light-100{
+  color: var(--color-light-100);
+}
+
+.light-300{
+  color: var(--color-light-300);
+}
+
+.light-500{
+  color: var(--color-light-500);
+}
+
+.light-700{
+  color: var(--color-light-700);
+}
+
+.light-900{
+  color: var(--color-light-900);
+}
+
+.dark-100{
+  color: var(--color-dark-100);
+}
+
+.dark-300{
+  color: var(--color-dark-300);
+}
+
+.dark-500{
+  color: var(--color-dark-500);
+}
+
+.dark-700{
+  color: var(--color-dark-700);
+}
+
+.dark-900{
+  color: var(--color-dark-900);
+}
