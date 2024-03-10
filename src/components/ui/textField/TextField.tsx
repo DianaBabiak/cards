@@ -1,6 +1,6 @@
 import { ChangeEvent, ComponentPropsWithoutRef, forwardRef, useState } from 'react'
 
-import { Icon } from '@/components/ui/Icon/icon'
+import { Icon } from '@/components/ui/icon'
 import { Typography } from '@/components/ui/typography'
 
 import s from './TextField.module.scss'
@@ -41,7 +41,7 @@ export const TextField = forwardRef<HTMLInputElement, Props>(
       onChange?.(e)
       onValueChange?.(e.currentTarget.value)
     }
-    const showPaswordHandler = () => setShowPasword(!showPasword)
+    const showPasswordHandler = () => setShowPasword(!showPasword)
     const getInputType = (type: Props['type'], showPassword: boolean) => {
       if (type === 'password' && showPassword) {
         return 'text'
@@ -72,7 +72,7 @@ export const TextField = forwardRef<HTMLInputElement, Props>(
             value={value}
           />
           {inputPassword && (
-            <button className={s.buttonEye} onClick={showPaswordHandler}>
+            <button className={s.buttonEye} onClick={showPasswordHandler}>
               {showPasword ? (
                 <Icon height={'20px'} iconId={'eyeOutlineOff'} width={'20px'} />
               ) : (
