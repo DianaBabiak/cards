@@ -3,7 +3,9 @@ import { Meta, StoryObj } from '@storybook/react'
 
 const meta = {
   component: CustomTabs,
+  //для создания Docs с общей страницей
   tags: ['autodocs'],
+  //для красоты чтоб было все названо слева в уголке
   title: 'Components/CustomTabs',
 } satisfies Meta<typeof CustomTabs>
 

@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import { ReactNode, forwardRef } from 'react'
 
 import { Typography } from '@/components/ui/typography'
 import * as Tabs from '@radix-ui/react-tabs'
@@ -20,37 +20,40 @@ type CustomTabsProps = {
   value?: string
 }
 
-export const CustomTabs = (props: CustomTabsProps) => {
-  const { children, defaultValue, onValueChange, tabs, tabsName, value } = props
+export const CustomTabs = forwardRef<HTMLDivElement, CustomTabsProps>(
+  (props: CustomTabsProps, ref) => {
+    const { children, defaultValue, onValueChange, tabs, tabsName, value } = props
 
-  return (
-    <Tabs.Root
-      className={s.tabsRoot}
-      defaultValue={defaultValue}
-      onValueChange={onValueChange}
-      value={value}
-    >
-      {tabsName && (
-        <Typography colorBalance={100} colorTheme={'light'} variant={'body2'}>
-          {tabsName}
-        </Typography>
-      )}
-      <Tabs.List className={s.tabsList}>
-        {tabs.map(tab => (
-          <Tabs.Trigger
-            className={`${s.tabsTriggerDefault}`}
-            disabled={tab.disabled}
-            key={tab.value}
-            value={tab.value}
-          >
-            {tab.title}
-          </Tabs.Trigger>
-        ))}
-      </Tabs.List>
-      {children}
-    </Tabs.Root>
-  )
-}
+    return (
+      <Tabs.Root
+        className={s.tabsRoot}
+        defaultValue={defaultValue}
+        onValueChange={onValueChange}
+        ref={ref}
+        value={value}
+      >
+        {tabsName && (
+          <Typography colorBalance={100} colorTheme={'light'} variant={'body2'}>
+            {tabsName}
+          </Typography>
+        )}
+        <Tabs.List className={s.tabsList}>
+          {tabs.map(tab => (
+            <Tabs.Trigger
+              className={`${s.tabsTriggerDefault}`}
+              disabled={tab.disabled}
+              key={tab.value}
+              value={tab.value}
+            >
+              {tab.title}
+            </Tabs.Trigger>
+          ))}
+        </Tabs.List>
+        {children}
+      </Tabs.Root>
+    )
+  }
+)
 
 type TabsContentProps = {
   children: ReactNode

@@ -3,7 +3,7 @@
   flex-direction: column;
 }
 
-.tabsList{
+.tabsList {
   display: flex;
   flex-shrink: 0;
 }
@@ -21,7 +21,7 @@
   border-radius: 2px 0 0 2px;
   border: 1px solid var(--color-dark-300);
 
-  &:hover{
+  &:hover {
     background-color: var(--color-dark-300);
     color: var(--color-light-900);
     border: 1px solid var(--color-dark-100);
@@ -29,13 +29,13 @@
   }
 }
 
-.tabsTriggerDefault[data-state = 'active']{
+.tabsTriggerDefault[data-state='active'] {
   background-color: var(--color-accent-500);
   color: var(--color-light-100);
   border: 1px solid var(--color-accent-500);
 }
 
-.tabsTriggerDefault[data-disabled]{
+.tabsTriggerDefault[data-disabled] {
   background-color: var(--color-dark-700);
   color: var(--color-dark-300);
   border: 1px solid var(--color-dark-300);
