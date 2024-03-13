@@ -4,6 +4,7 @@ import { Typography } from './'
 
 const meta = {
   argTypes: {
+    //для переключения варианта
     variant: {
       control: { type: 'radio' },
       options: [
@@ -23,7 +24,9 @@ const meta = {
     },
   },
   component: Typography,
+  //для создания Docs с общей страницей
   tags: ['autodocs'],
+  //для красоты чтоб было все названо слева в уголке
   title: 'Components/Typography',
 } satisfies Meta<typeof Typography>
 
