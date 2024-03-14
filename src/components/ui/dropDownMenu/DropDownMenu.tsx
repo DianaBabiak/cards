@@ -3,6 +3,7 @@ import { ComponentPropsWithoutRef, ElementRef, ReactNode, forwardRef, useState }
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
 
 import s from './dropDownMenu.module.scss'
+import { Typography } from '@/components/ui/typography'
 
 type Props = {
   align?: 'center' | 'end' | 'start'
@@ -22,9 +23,9 @@ export const DropDownMenu = forwardRef<ElementRef<typeof DropdownMenu.Trigger>, 
         </DropdownMenu.Trigger>
 
         <DropdownMenu.Portal>
-          <DropdownMenu.Content align={align} className={classNames} sideOffset={8} {...restProps}>
-            <DropdownMenu.Arrow className={s.arrowWrap} />
+          <DropdownMenu.Content align={align} className={classNames} sideOffset={4} {...restProps}>
             <div>{children}</div>
+            <DropdownMenu.Arrow className={s.arrowWrap} />
           </DropdownMenu.Content>
         </DropdownMenu.Portal>
       </DropdownMenu.Root>
@@ -39,9 +40,10 @@ type PropsItem = {
 } & ComponentPropsWithoutRef<typeof DropdownMenu.Item>
 export const DropdownItem = forwardRef<ElementRef<typeof DropdownMenu.Item>, PropsItem>(
   ({ children, className, disabled, onSelect, ...restProps }: PropsItem, ref) => {
+    const classNames = `${s.item} ${className}`
     return (
       <DropdownMenu.Item
-        className={s.item}
+        className={classNames}
         disabled={disabled}
         onSelect={onSelect}
         ref={ref}
@@ -52,3 +54,32 @@ export const DropdownItem = forwardRef<ElementRef<typeof DropdownMenu.Item>, Pro
     )
   }
 )
+
+type PropsItemWithImg = Omit<PropsItem, 'children'> & {
+  icon?: ReactNode
+  name?: string
+  email?: string
+}
+export const DropdownItemWithImg = forwardRef<
+  ElementRef<typeof DropdownMenu.Item>,
+  PropsItemWithImg
+>(({ className, disabled, email, name, onSelect, icon, ...restProps }: PropsItemWithImg, ref) => {
+  const classNames = `${s.item} ${className}`
+  return (
+    <DropdownMenu.Item
+      className={classNames}
+      disabled={disabled}
+      onSelect={onSelect}
+      ref={ref}
+      {...restProps}
+    >
+      <div className={s.icon}>{icon}</div>
+      <div className={s.nameAndEmailWrapper}>
+        <Typography variant={'body1'}>{name}</Typography>
+        <Typography colorTheme={'dark'} variant={'caption'}>
+          {email}
+        </Typography>
+      </div>
+    </DropdownMenu.Item>
+  )
+})
