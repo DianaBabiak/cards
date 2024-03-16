@@ -73,7 +73,7 @@ export const ModalWithSelector: Story = {
       { disabled: false, label: 'variant 1', value: 'variant1' },
       { disabled: false, label: 'variant 2', value: 'variant2' },
     ],
-    selectPlaceholder: 'Choose',
+    selectPlaceholder: 'choose',
     variant: VariantModalContent.withSelector,
   },
 }
