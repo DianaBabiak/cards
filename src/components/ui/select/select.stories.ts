@@ -3,7 +3,29 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { Select } from '@/components/ui/select/Select'
 
 const meta = {
-  argTypes: {},
+  argTypes: {
+    className: {
+      options: 'string',
+    },
+    defaultValue: {
+      options: 'string',
+    },
+    disabled: {
+      options: 'boolean',
+    },
+    label: {
+      options: 'string',
+    },
+    options: {
+      options: 'Option[]',
+    },
+    placeholder: {
+      options: 'string',
+    },
+    required: {
+      options: 'boolean',
+    },
+  },
   component: Select,
   tags: ['autodocs'],
   title: 'Components/Select',

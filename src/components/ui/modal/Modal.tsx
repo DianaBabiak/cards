@@ -1,4 +1,4 @@
-import { forwardRef } from 'react'
+import { ComponentPropsWithoutRef, forwardRef } from 'react'
 
 import {
   ContentContainerModal,
@@ -21,8 +21,9 @@ export type ModalProps = {
   labelSelector?: string
   labelTextFields?: string[]
   selectOptions?: Option[]
+  selectPlaceholder?: string
   variant?: VariantModalContent
-}
+} & ComponentPropsWithoutRef<'div'>
 
 export const Modal = forwardRef<HTMLDivElement, ModalProps>(
   (
@@ -37,6 +38,7 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
       labelSelector,
       labelTextFields,
       selectOptions,
+      selectPlaceholder,
       variant,
     },
     ref
@@ -53,6 +55,7 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
               labelSelector={labelSelector}
               labelTextFields={labelTextFields}
               selectOptions={selectOptions}
+              selectPlaceholder={selectPlaceholder}
               variant={variant}
             />
             <FooterModal

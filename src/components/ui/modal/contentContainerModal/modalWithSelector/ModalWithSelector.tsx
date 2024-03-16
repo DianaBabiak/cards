@@ -9,16 +9,25 @@ export type ModalWithSelectorProps = {
   labelSelector?: string
   labelTextFields?: string[]
   selectOptions?: Option[]
+  selectPlaceholder?: string
 }
 export const ModalWithSelector = ({
   labelCheckBox,
   labelSelector,
   labelTextFields,
   selectOptions,
+  selectPlaceholder,
 }: ModalWithSelectorProps) => {
   return (
     <>
-      {selectOptions && <Select label={labelSelector} options={selectOptions} width={'100%'} />}
+      {selectOptions && (
+        <Select
+          className={s.hundredPercentWidth}
+          label={labelSelector}
+          options={selectOptions}
+          placeholder={selectPlaceholder}
+        />
+      )}
       <TextField className={s.hundredPercentWidth} label={labelTextFields?.[0]} />
       <TextField className={s.hundredPercentWidth} label={labelTextFields?.[1]} />
       <div className={s.wrapperCheckbox}>

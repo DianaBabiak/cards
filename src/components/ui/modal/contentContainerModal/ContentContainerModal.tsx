@@ -19,6 +19,7 @@ export type ContentContainerModalProps = {
   labelSelector?: string
   labelTextFields?: string[]
   selectOptions?: Option[]
+  selectPlaceholder?: string
   variant?: VariantModalContent
 }
 export const ContentContainerModal = forwardRef<HTMLDivElement, ContentContainerModalProps>(
@@ -29,6 +30,7 @@ export const ContentContainerModal = forwardRef<HTMLDivElement, ContentContainer
       labelSelector,
       labelTextFields,
       selectOptions,
+      selectPlaceholder,
       variant = VariantModalContent.text,
     },
     ref
@@ -45,6 +47,7 @@ export const ContentContainerModal = forwardRef<HTMLDivElement, ContentContainer
             labelSelector={labelSelector}
             labelTextFields={labelTextFields}
             selectOptions={selectOptions}
+            selectPlaceholder={selectPlaceholder}
           />
         )}
 

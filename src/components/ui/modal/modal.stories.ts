@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { Modal } from '@/components/ui/modal/Modal'
+import { Modal } from '@/components/ui/modal'
 import { VariantModalContent } from '@/components/ui/modal/contentContainerModal/ContentContainerModal'
 
 const meta = {
@@ -34,6 +34,9 @@ const meta = {
     },
     selectOptions: {
       options: 'Option[]',
+    },
+    selectPlaceholder: {
+      options: 'string',
     },
     variant: {
       options: 'VariantModalContent',
@@ -70,6 +73,7 @@ export const ModalWithSelector: Story = {
       { disabled: false, label: 'variant 1', value: 'variant1' },
       { disabled: false, label: 'variant 2', value: 'variant2' },
     ],
+    selectPlaceholder: 'Choose',
     variant: VariantModalContent.withSelector,
   },
 }

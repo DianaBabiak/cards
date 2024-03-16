@@ -1,4 +1,3 @@
-
 .dialogOverlay {
   position: fixed;
   z-index: -1;
@@ -9,7 +8,7 @@
   animation: overlayShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.wrapperHeader{
+.wrapperHeader {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -35,7 +34,9 @@
 
   background-color: var(--color-dark-700);
   border-radius: 6px;
-  box-shadow: hsl(206deg 22% 7% / 35%) 0 10px 38px -10px, hsl(206deg 22% 7% / 20%) 0 10px 20px -15px;
+  box-shadow:
+    hsl(206deg 22% 7% / 35%) 0 10px 38px -10px,
+    hsl(206deg 22% 7% / 20%) 0 10px 20px -15px;
 
   animation: contentShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -50,18 +51,14 @@
   font-size: var(--font-size-m);
   font-weight: var(--font-weight-bold);
   line-height: var(----line-height-m);
-  color:var(--color-light-100);
+  color: var(--color-light-100);
   text-align: left;
-  letter-spacing: 0
-
-
-
+  letter-spacing: 0;
 }
 
 .text {
   margin: 0;
   text-align: justify;
-
 }
 
 .button {
@@ -86,21 +83,19 @@
 
   width: 24px;
   height: 24px;
-  padding:1px;
+  padding: 1px;
 
   font-family: inherit;
-  color:var(--color-light-100);
+  color: var(--color-light-100);
 
   background-color: var(--color-dark-700);
   border: none;
   border-radius: 100%;
 
-  & svg{
+  & svg {
     width: 22px;
     height: 22px;
   }
-
-
 }
 
 .iconButton:hover {
@@ -111,48 +106,44 @@
   box-shadow: 0 0 0 2px var(--violet-7);
 }
 
-
-
-
-.wrapperFooter{
+.wrapperFooter {
   display: flex;
   justify-content: space-between;
   padding: 5px 25px 30px;
 }
 
-.wrapperContent{
+.wrapperContent {
   display: flex;
   flex-direction: column;
-  gap:25px;
+  gap: 25px;
 
   margin-bottom: 10px;
   padding: 25px;
-
 }
 
-.wrapperCheckbox{
+.wrapperCheckbox {
   display: flex;
   justify-content: start;
   width: 100%;
 }
 
-.hundredPercentWidth{
+.hundredPercentWidth {
   width: 100%;
 }
 
-.wrapperImgContent{
+.wrapperImgContent {
   display: flex;
   flex-direction: column;
-  gap:15px;
+  gap: 15px;
 
-  &img{
+  &img {
     width: 100%;
   }
 }
 
-.fileInputContent{
-display: flex;
-  gap:10px;
+.fileInputContent {
+  display: flex;
+  gap: 10px;
   align-items: center;
   justify-content: center;
 
@@ -160,21 +151,19 @@ display: flex;
 
   background-color: var(--color-dark-300);
   border-radius: 4px;
-  box-shadow: 0 2px 10px 0 #6D6D6D40;
-
+  box-shadow: 0 2px 10px 0 #6d6d6d40;
 }
 
-.coverInput{
+.coverInput {
   display: none;
 }
 
-.wrapperFooterWithoutSecondaryButton{
-  justify-content:flex-end;
+.wrapperFooterWithoutSecondaryButton {
+  justify-content: flex-end;
 }
 
 .wrapperItemCard {
   display: flex;
   flex-direction: column;
-  gap:25px;
+  gap: 25px;
 }
-
