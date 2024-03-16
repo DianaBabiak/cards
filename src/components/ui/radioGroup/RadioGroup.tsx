@@ -1,4 +1,4 @@
-import { ElementRef, forwardRef } from 'react'
+import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
 
 import * as RadixRadioGroup from '@radix-ui/react-radio-group'
 
@@ -10,19 +10,18 @@ type Option = {
 }
 
 export type RadioGroupProps = {
-  defaultValue?: string
-  disabled?: boolean
-  name?: string
+  ariaLabel?: string
+  className?: string
   onChange: () => void
   options: Option[]
-}
+} & ComponentPropsWithoutRef<typeof RadixRadioGroup.Root>
 export const RadioGroup = forwardRef<ElementRef<typeof RadixRadioGroup.Root>, RadioGroupProps>(
-  ({ defaultValue, disabled, name, onChange, options }, ref) => {
+  ({ ariaLabel, className, defaultValue, disabled, name, onChange, options }, ref) => {
     return (
       <>
         <RadixRadioGroup.Root
-          aria-label={'View density'}
-          className={s.radioGroupRoot}
+          aria-label={ariaLabel}
+          className={`${s.radioGroupRoot} ${className}`}
           defaultValue={defaultValue}
           disabled={disabled}
           name={name}
