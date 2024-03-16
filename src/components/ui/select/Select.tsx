@@ -24,18 +24,18 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
         <RadixSelect.Root defaultValue={defaultValue} required={required}>
           <RadixSelect.Trigger
             aria-label={label}
-            className={s.SelectTrigger}
+            className={s.selectTrigger}
             disabled={disabled}
             ref={ref}
           >
             <RadixSelect.Value placeholder={placeholder} />
-            <RadixSelect.Icon className={`${s.SelectIcon} ${disabled && s.disabled}`}>
+            <RadixSelect.Icon className={`${s.selectIcon} ${disabled && s.disabled}`}>
               <ChevronDownIcon />
             </RadixSelect.Icon>
           </RadixSelect.Trigger>
           <RadixSelect.Portal>
-            <RadixSelect.Content className={s.SelectContent} position={'popper'}>
-              <RadixSelect.Viewport className={s.SelectViewport}>
+            <RadixSelect.Content className={s.selectContent} position={'popper'}>
+              <RadixSelect.Viewport className={s.selectViewport}>
                 <RadixSelect.Group>
                   {options.map(option => (
                     <SelectItem disabled={option.disabled} key={option.value} value={option.value}>
@@ -55,13 +55,13 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
 export type SelectItemProps = {
   disabled?: boolean
   value: string
-} & ComponentPropsWithoutRef<'div'>
+} & ComponentPropsWithoutRef<typeof RadixSelect.Item>
 
 const SelectItem = forwardRef<HTMLDivElement, SelectItemProps>(
   ({ children, className, disabled, value, ...props }, forwardedRef) => {
     return (
       <RadixSelect.Item
-        className={`${s.SelectItem} ${className} ${disabled && s.disabled}`}
+        className={`${s.selectItem} ${className} ${disabled && s.disabled}`}
         disabled={disabled}
         value={value}
         {...props}
