@@ -5,7 +5,7 @@ import * as RadixSelect from '@radix-ui/react-select'
 
 import s from './select.module.scss'
 
-type Option = { disabled?: boolean; label: string; value: string }
+export type Option = { disabled?: boolean; label: string; value: string }
 
 export type SelectProps = {
   defaultValue?: string
@@ -14,10 +14,11 @@ export type SelectProps = {
   options: Array<Option>
   placeholder?: string
   required?: boolean
+  width?: string
 } & ComponentPropsWithoutRef<'div'>
 
 export const Select = forwardRef<HTMLButtonElement, SelectProps>(
-  ({ defaultValue, disabled, label, options, placeholder, required }, ref) => {
+  ({ defaultValue, disabled, label, options, placeholder, required, width = '210px' }, ref) => {
     return (
       <RadixSelect.Root defaultValue={defaultValue} required={required}>
         <RadixSelect.Trigger
@@ -25,6 +26,7 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
           className={s.SelectTrigger}
           disabled={disabled}
           ref={ref}
+          style={{ width: width }}
         >
           <RadixSelect.Value placeholder={placeholder} />
           <RadixSelect.Icon className={`${s.SelectIcon} ${disabled && s.disabled}`}>

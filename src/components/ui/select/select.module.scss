@@ -6,7 +6,7 @@
   align-items: center;
   justify-content: space-between;
 
-  width: 210px;
+  box-sizing: border-box;
   height: 36px;
   padding: 0 15px;
 
@@ -48,7 +48,8 @@
 .SelectContent {
   overflow: hidden;
 
-  width: 210px;
+  width: var(--radix-select-trigger-width);
+  max-height: var(--radix-select-content-available-height);
   padding: 0 5px;
 
   background-color: var(--color-dark-900);
@@ -70,7 +71,7 @@
   align-items: center;
   justify-content: space-between;
 
-  height: 35px;
+  height: 36px;
   padding: 10px 5px;
 
   font-size: var(--font-size-m);

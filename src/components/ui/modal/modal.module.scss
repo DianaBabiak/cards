@@ -1,48 +1,70 @@
 
-.DialogOverlay {
+.dialogOverlay {
   position: fixed;
+  z-index: -1;
   inset: 0;
-  background-color: blue;
+
+  background-color: rgb(0 0 0 / 50%);
+
   animation: overlayShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.DialogContent {
+.wrapperHeader{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+  padding: 10px 25px;
+
+  border: solid 1px var(--color-dark-500);
+}
+
+.dialogContent {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 
-  width: 90vw;
-  max-width: 450px;
-  max-height: 85vh;
-  padding: 25px;
+  overflow-y: auto;
 
-  background-color: black;
+  width: 70vw;
+  max-width: 542px;
+  max-height: 85vh;
+  padding: 0;
+
+  background-color: var(--color-dark-700);
   border-radius: 6px;
   box-shadow: hsl(206deg 22% 7% / 35%) 0 10px 38px -10px, hsl(206deg 22% 7% / 20%) 0 10px 20px -15px;
 
   animation: contentShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.DialogContent:focus {
+.dialogContent:focus {
   outline: none;
 }
 
-.DialogTitle {
+.dialogTitle {
   margin: 0;
-  font-size: 17px;
-  font-weight: 500;
-  color: red;
+
+  font-size: var(--font-size-m);
+  font-weight: var(--font-weight-bold);
+  line-height: var(----line-height-m);
+  color:var(--color-light-100);
+  text-align: left;
+  letter-spacing: 0
+
+
+
 }
 
-.DialogDescription {
-  margin: 10px 0 20px;
-  font-size: 15px;
-  line-height: 1.5;
-  color: green;
+.text {
+  margin: 0;
+  text-align: justify;
+
 }
 
-.Button {
+.button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -57,94 +79,102 @@
   border-radius: 4px;
 }
 
-.Button.violet {
-  color: pink;
-  background-color: white;
-  box-shadow: 0 2px 10px var(--black-a7);
-}
-
-.Button.violet:hover {
-  background-color: blue;
-}
-
-.Button.violet:focus {
-  box-shadow: 0 0 0 2px black;
-}
-
-.ButtonGreen {
-  color: var(--green-11);
-  background-color: green;
-}
-
-.ButtonGreen:hover {
-  background-color: orange;
-}
-
-.Button.green:focus {
-  box-shadow: 0 0 0 2px var(--green-7);
-}
-
-.IconButton {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-
+.iconButton {
   display: inline-flex;
   align-items: center;
   justify-content: center;
 
-  width: 25px;
-  height: 25px;
+  width: 24px;
+  height: 24px;
+  padding:1px;
 
   font-family: inherit;
-  color: yellow;
+  color:var(--color-light-100);
 
+  background-color: var(--color-dark-700);
+  border: none;
   border-radius: 100%;
+
+  & svg{
+    width: 22px;
+    height: 22px;
+  }
+
+
 }
 
-.IconButton:hover {
-  background-color: yellowgreen;
+.iconButton:hover {
+  background-color: var(--color-dark-300);
 }
 
-.IconButton:focus {
+.iconButton:focus {
   box-shadow: 0 0 0 2px var(--violet-7);
 }
 
-.Fieldset {
+
+
+
+.wrapperFooter{
   display: flex;
-  gap: 20px;
-  align-items: center;
-  margin-bottom: 15px;
+  justify-content: space-between;
+  padding: 5px 25px 30px;
 }
 
-.Label {
-  width: 90px;
-  font-size: 15px;
-  color: blue;
-  text-align: right;
+.wrapperContent{
+  display: flex;
+  flex-direction: column;
+  gap:25px;
+
+  margin-bottom: 10px;
+  padding: 25px;
+
 }
 
-.Input {
-  display: inline-flex;
-  flex: 1;
+.wrapperCheckbox{
+  display: flex;
+  justify-content: start;
+  width: 100%;
+}
+
+.hundredPercentWidth{
+  width: 100%;
+}
+
+.wrapperImgContent{
+  display: flex;
+  flex-direction: column;
+  gap:15px;
+
+  &img{
+    width: 100%;
+  }
+}
+
+.fileInputContent{
+display: flex;
+  gap:10px;
   align-items: center;
   justify-content: center;
 
-  width: 100%;
-  height: 35px;
-  padding: 0 10px;
+  padding: 6px;
 
-  font-size: 15px;
-  line-height: 1;
-  color: red;
-
+  background-color: var(--color-dark-300);
   border-radius: 4px;
-  box-shadow: 0 0 0 1px blue;
+  box-shadow: 0 2px 10px 0 #6D6D6D40;
+
 }
 
-.Input:focus {
-  box-shadow: 0 0 0 2px red;
+.coverInput{
+  display: none;
 }
 
+.wrapperFooterWithoutSecondaryButton{
+  justify-content:flex-end;
+}
 
+.wrapperItemCard {
+  display: flex;
+  flex-direction: column;
+  gap:25px;
+}
 
