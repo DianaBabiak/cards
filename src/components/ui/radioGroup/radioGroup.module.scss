@@ -2,7 +2,6 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-
 }
 
 .radioGroupItem {
@@ -19,7 +18,7 @@
   border-radius: 100%;
 
   &::after {
-    content: "";
+    content: '';
 
     position: absolute;
     z-index: -1;
@@ -36,7 +35,7 @@
   }
 
   &:disabled {
-    border:2px solid var(--color-accent-900);
+    border: 2px solid var(--color-accent-900);
   }
 
   &:focus {
@@ -55,7 +54,7 @@
       opacity: 1;
       background-color: var(--color-dark-500);
     }
-}
+  }
 
   &:active {
     box-shadow: 0 0 5px rgb(0 0 0 / 20%);
@@ -65,9 +64,7 @@
       background-color: var(--color-accent-900);
     }
   }
-
-  }
-
+}
 
 .radioGroupIndicator {
   position: relative;
@@ -79,20 +76,17 @@
   width: 100%;
   height: 100%;
 
+  &::after {
+    content: '';
 
-&::after {
-  content: '';
+    display: block;
 
-  display: block;
+    width: 8px;
+    height: 8px;
 
-  width: 8px;
-  height: 8px;
-
-  background-color: var(--color-accent-500);
-  border-radius: 50%;
-
-
-}
+    background-color: var(--color-accent-500);
+    border-radius: 50%;
+  }
 }
 
 .label {
@@ -102,9 +96,7 @@
   font-weight: var(--font-weight-regular);
   line-height: var(--line-height-m);
   color: var(--color-light-100);
-
-
-  }
+}
 
 .disabledLabel {
   color: var(--color-light-900);
@@ -113,4 +105,5 @@
 .disabledIndicator {
   &::after {
     background-color: var(--color-accent-900);
-}}
+  }
+}

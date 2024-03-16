@@ -1,18 +1,19 @@
 import type { Meta, StoryObj } from '@storybook/react'
+
 import {
+  DropDownMenu,
   DropdownItem,
   DropdownItemWithImg,
-  DropDownMenu,
 } from '@/components/ui/dropDownMenu/DropDownMenu'
-import { Icon } from '@/components/ui/Icon'
+import { Icon } from '@/components/ui/icon'
 
 const meta = {
-  title: 'Components/Dropdown',
   component: DropDownMenu,
   parameters: {
     layout: 'centered',
   },
   tags: ['auto docs'],
+  title: 'Components/Dropdown',
 } satisfies Meta<typeof DropDownMenu>
 
 export default meta
@@ -20,64 +21,66 @@ type Story = StoryObj<typeof meta>
 
 export const DropdownDefault: Story = {
   args: {
+    children: (
+      <>
+        <DropdownItem>
+          <Icon height={'16px'} iconId={'playCircle'} viewBox={'0 0 16 16 '} width={'16px'} />
+          Learn
+        </DropdownItem>
+        <DropdownItem>
+          <Icon height={'16px'} iconId={'edit2'} viewBox={'0 0 16 16 '} width={'16px'} />
+          Edit
+        </DropdownItem>
+        <DropdownItem>
+          <Icon height={'16px'} iconId={'trash'} viewBox={'0 0 16 16 '} width={'16px'} />
+          Delete
+        </DropdownItem>
+      </>
+    ),
     trigger: (
       <button>
         <Icon
           height={'24px'}
           iconId={'moreVerticalOutline'}
-          width={'24px'}
           viewBox={'0 0 24 24 '}
+          width={'24px'}
         />
       </button>
-    ),
-    children: (
-      <>
-        <DropdownItem>
-          <Icon height={'16px'} iconId={'playCircle'} width={'16px'} viewBox={'0 0 16 16 '} />
-          Learn
-        </DropdownItem>
-        <DropdownItem>
-          <Icon height={'16px'} iconId={'edit2'} width={'16px'} viewBox={'0 0 16 16 '} />
-          Edit
-        </DropdownItem>
-        <DropdownItem>
-          <Icon height={'16px'} iconId={'trash'} width={'16px'} viewBox={'0 0 16 16 '} />
-          Delete
-        </DropdownItem>
-      </>
     ),
   },
 }
 
 export const DropdownWithImg: Story = {
   args: {
-    trigger: (
-      <button>
-        <img src={'https://placehold.co/36'} alt={'img'} />
-      </button>
-    ),
     children: (
       <>
         <DropdownItemWithImg
-          name={'Ivan'}
           email={'j&johnson@gmail.com'}
           icon={
             <img
-              src="https://yt3.googleusercontent.com/ytc/AIdro_k2wsQa2j9sAhjS25DyZxrhAGDJWtNZBYcLVd3uqQ=s900-c-k-c0x00ffffff-no-rj"
-              alt="img"
-              style={{ width: '36px', height: '36px', borderRadius: '50%' }}
+              alt={'img'}
+              src={
+                'https://yt3.googleusercontent.com/ytc/AIdro_k2wsQa2j9sAhjS25DyZxrhAGDJWtNZBYcLVd3uqQ=s900-c-k-c0x00ffffff-no-rj'
+              }
+              style={{ borderRadius: '50%', height: '36px', width: '36px' }}
             />
           }
+          name={'Ivan'}
         />
         <DropdownItem>
-          <Icon height={'16px'} iconId={'person'} width={'16px'} viewBox={'0 0 16 16 '} />
+          <Icon height={'16px'} iconId={'person'} viewBox={'0 0 16 16 '} width={'16px'} />
           My Profile
         </DropdownItem>
         <DropdownItem>
-          <Icon height={'16px'} iconId={'logOut'} width={'16px'} viewBox={'0 0 16 16 '} />
+          <Icon height={'16px'} iconId={'logOut'} viewBox={'0 0 16 16 '} width={'16px'} />
           Sing out
         </DropdownItem>
       </>
+    ),
+    trigger: (
+      <button>
+        <img alt={'img'} src={'https://placehold.co/36'} />
+      </button>
     ),
   },
 }

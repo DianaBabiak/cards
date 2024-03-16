@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { Icon } from '@/components/ui/icon/Icon'
+import { Icon } from '@/components/ui/icon'
 
 const meta = {
   argTypes: {},
@@ -12,7 +12,7 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {
+export const DefaultIcon: Story = {
   args: {
     height: '24px',
     iconId: 'buttonIcon',

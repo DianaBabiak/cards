@@ -1,9 +1,9 @@
 import { ComponentPropsWithoutRef, ElementRef, ReactNode, forwardRef, useState } from 'react'
 
+import { Typography } from '@/components/ui/typography'
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
 
 import s from './dropDownMenu.module.scss'
-import { Typography } from '@/components/ui/typography'
 
 type Props = {
   align?: 'center' | 'end' | 'start'
@@ -41,6 +41,7 @@ type PropsItem = {
 export const DropdownItem = forwardRef<ElementRef<typeof DropdownMenu.Item>, PropsItem>(
   ({ children, className, disabled, onSelect, ...restProps }: PropsItem, ref) => {
     const classNames = `${s.item} ${className}`
+
     return (
       <DropdownMenu.Item
         className={classNames}
@@ -56,15 +57,16 @@ export const DropdownItem = forwardRef<ElementRef<typeof DropdownMenu.Item>, Pro
 )
 
 type PropsItemWithImg = Omit<PropsItem, 'children'> & {
+  email?: string
   icon?: ReactNode
   name?: string
-  email?: string
 }
 export const DropdownItemWithImg = forwardRef<
   ElementRef<typeof DropdownMenu.Item>,
   PropsItemWithImg
->(({ className, disabled, email, name, onSelect, icon, ...restProps }: PropsItemWithImg, ref) => {
+>(({ className, disabled, email, icon, name, onSelect, ...restProps }: PropsItemWithImg, ref) => {
   const classNames = `${s.item} ${className}`
+
   return (
     <DropdownMenu.Item
       className={classNames}

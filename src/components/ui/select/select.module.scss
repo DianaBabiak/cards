@@ -1,0 +1,96 @@
+.SelectTrigger {
+  display: inline-flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+
+  box-sizing: border-box;
+  width: 100%;
+  height: 36px;
+  padding: 0 15px;
+
+  font-size: var(--font-size-m);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-light-100);
+
+  background-color: var(--color-dark-900);
+  border: 1px solid var(--color-dark-300);
+  border-radius: 2px;
+
+  &:disabled {
+    color: var(--color-dark-300);
+  }
+}
+
+.SelectTrigger:hover {
+  background-color: var(--color-dark-500);
+}
+
+.SelectTrigger:focus-visible {
+  outline: none;
+}
+
+.SelectTrigger:focus {
+  border: 2px solid var(--color-info-700);
+}
+
+.SelectIcon {
+  color: var(--color-light-100);
+}
+
+.SelectContent {
+  overflow: hidden;
+
+  width: var(--radix-select-trigger-width);
+  max-height: var(--radix-select-content-available-height);
+  padding: 0 5px;
+
+  background-color: var(--color-dark-900);
+  border: 1px solid var(--color-dark-100);
+  border-radius: 2px;
+}
+
+.SelectViewport {
+  padding: 5px;
+}
+
+.SelectItem {
+  user-select: none;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  height: 36px;
+  padding: 10px 5px;
+
+  font-size: var(--font-size-m);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-light-100);
+
+  border-radius: 3px;
+}
+
+.disabled {
+  color: var(--color-dark-300);
+}
+
+.SelectItem:hover {
+  background-color: var(--color-accent-900);
+}
+
+.SelectItem:focus-visible {
+  outline: none;
+}
+
+.label {
+  display: flex;
+  flex-direction: column;
+
+  font-size: var(--font-size-s);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-m);
+  color: var(--color-dark-100);
+  text-align: left;
+  letter-spacing: 0;
+}
