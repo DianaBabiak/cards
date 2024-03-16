@@ -12,7 +12,7 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {
+export const DefaultIcon: Story = {
   args: {
     height: '24px',
     iconId: 'buttonIcon',
