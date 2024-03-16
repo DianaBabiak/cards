@@ -18,6 +18,7 @@ export type ContentContainerModalProps = {
   labelCheckBox?: string
   labelSelector?: string
   labelTextFields?: string[]
+  placeholderTextFields?: string[]
   selectOptions?: Option[]
   selectPlaceholder?: string
   variant?: VariantModalContent
@@ -29,6 +30,7 @@ export const ContentContainerModal = forwardRef<HTMLDivElement, ContentContainer
       labelCheckBox,
       labelSelector,
       labelTextFields,
+      placeholderTextFields,
       selectOptions,
       selectPlaceholder,
       variant = VariantModalContent.text,
@@ -51,7 +53,13 @@ export const ContentContainerModal = forwardRef<HTMLDivElement, ContentContainer
           />
         )}
 
-        {variant === VariantModalContent.addCard && <CardModal labelCheckBox={labelCheckBox} />}
+        {variant === VariantModalContent.addCard && (
+          <CardModal
+            labelCheckBox={labelCheckBox}
+            labelTextField={labelTextFields?.[0]}
+            placeholderTextFields={placeholderTextFields}
+          />
+        )}
       </div>
     )
   }

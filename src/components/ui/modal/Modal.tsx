@@ -22,6 +22,7 @@ export type ModalProps = {
   labelFooterSecondaryButton?: string
   labelSelector?: string
   labelTextFields?: string[]
+  placeholderTextFields?: string[]
   selectOptions?: Option[]
   selectPlaceholder?: string
   variant?: VariantModalContent
@@ -40,6 +41,7 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
       labelFooterSecondaryButton,
       labelSelector,
       labelTextFields,
+      placeholderTextFields,
       selectOptions,
       selectPlaceholder,
       variant,
@@ -57,6 +59,7 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
               labelCheckBox={labelCheckBox}
               labelSelector={labelSelector}
               labelTextFields={labelTextFields}
+              placeholderTextFields={placeholderTextFields}
               selectOptions={selectOptions}
               selectPlaceholder={selectPlaceholder}
               variant={variant}

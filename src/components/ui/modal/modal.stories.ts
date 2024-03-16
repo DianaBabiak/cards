@@ -32,6 +32,9 @@ const meta = {
     labelTextFields: {
       options: 'string[]',
     },
+    placeholderTextFields: {
+      options: 'string[]',
+    },
     selectOptions: {
       options: 'Option[]',
     },
@@ -84,7 +87,8 @@ export const CardModal: Story = {
     labelCheckBox: 'Label',
     labelFooterPrimaryButton: 'Primary button',
     labelFooterSecondaryButton: 'Secondary button',
-    labelTextFields: ['label 1', 'label 2'],
+    labelTextFields: ['label 1'],
+    placeholderTextFields: ['Name', 'Name', 'Input'],
     variant: VariantModalContent.addCard,
   },
 }
