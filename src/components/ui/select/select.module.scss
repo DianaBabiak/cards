@@ -1,4 +1,4 @@
-.SelectTrigger {
+.selectTrigger {
   display: inline-flex;
   gap: 10px;
   align-items: center;
@@ -22,23 +22,23 @@
   }
 }
 
-.SelectTrigger:hover {
+.selectTrigger:hover {
   background-color: var(--color-dark-500);
 }
 
-.SelectTrigger:focus-visible {
+.selectTrigger:focus-visible {
   outline: none;
 }
 
-.SelectTrigger:focus {
+.selectTrigger:focus {
   border: 2px solid var(--color-info-700);
 }
 
-.SelectIcon {
+.selectIcon {
   color: var(--color-light-100);
 }
 
-.SelectContent {
+.selectContent {
   overflow: hidden;
 
   width: var(--radix-select-trigger-width);
@@ -50,11 +50,11 @@
   border-radius: 2px;
 }
 
-.SelectViewport {
+.selectViewport {
   padding: 5px;
 }
 
-.SelectItem {
+.selectItem {
   user-select: none;
 
   display: flex;
@@ -75,11 +75,11 @@
   color: var(--color-dark-300);
 }
 
-.SelectItem:hover {
+.selectItem:hover {
   background-color: var(--color-accent-900);
 }
 
-.SelectItem:focus-visible {
+.selectItem:focus-visible {
   outline: none;
 }
 
