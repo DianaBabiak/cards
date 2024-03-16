@@ -10,7 +10,9 @@ import { Option } from '@/components/ui/select'
 import * as Dialog from '@radix-ui/react-dialog'
 
 import s from './modal.module.scss'
+
 export type ModalProps = {
+  className?: string
   contentText?: string
   headerTitle: string
   isHeaderContent?: boolean
@@ -23,11 +25,12 @@ export type ModalProps = {
   selectOptions?: Option[]
   selectPlaceholder?: string
   variant?: VariantModalContent
-} & ComponentPropsWithoutRef<'div'>
+} & ComponentPropsWithoutRef<typeof Dialog.Root>
 
 export const Modal = forwardRef<HTMLDivElement, ModalProps>(
   (
     {
+      className,
       contentText,
       headerTitle,
       isHeaderContent,
@@ -47,7 +50,7 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
       <Dialog.Root open>
         <Dialog.Portal>
           <Dialog.Overlay className={s.dialogOverlay} />
-          <Dialog.Content className={s.dialogContent} ref={ref}>
+          <Dialog.Content className={`${s.dialogContent} ${className}`} ref={ref}>
             <HeaderModal isHeaderContent={isHeaderContent} title={headerTitle} />
             <ContentContainerModal
               contentText={contentText}

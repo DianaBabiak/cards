@@ -10,13 +10,11 @@ export type Option = { disabled?: boolean; label: string; value: string }
 
 export type SelectProps = {
   className?: string
-  defaultValue?: string
   disabled?: boolean
   label?: string
   options: Array<Option>
   placeholder?: string
-  required?: boolean
-} & ComponentPropsWithoutRef<'button'>
+} & ComponentPropsWithoutRef<typeof RadixSelect.Root>
 
 export const Select = forwardRef<HTMLButtonElement, SelectProps>(
   ({ className, defaultValue, disabled, label, options, placeholder, required }, ref) => {
