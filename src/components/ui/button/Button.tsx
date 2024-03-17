@@ -1,8 +1,8 @@
 import { ComponentPropsWithoutRef, ElementType, ForwardedRef, forwardRef } from 'react'
 
-import { Icon } from '@/components/ui/icon/Icon'
-
 import s from './button.module.scss'
+
+import { Icon } from '../icon/Icon'
 
 type InferType<T> = T extends ElementType<infer U> ? U : never
 

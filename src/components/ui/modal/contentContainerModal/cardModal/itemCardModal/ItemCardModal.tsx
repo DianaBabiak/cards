@@ -1,11 +1,12 @@
 import { ChangeEvent, createRef, forwardRef, useState } from 'react'
 
 import imgReact from '@/assets/imgReact.png'
-import { Icon } from '@/components/ui/icon/Icon'
 import { TextField } from '@/components/ui/textField'
 import { Typography } from '@/components/ui/typography'
 
 import s from '@/components/ui/modal/modal.module.scss'
+
+import { Icon } from '../../../../icon/Icon'
 
 export type ItemCardModalProps = {
   label: string
