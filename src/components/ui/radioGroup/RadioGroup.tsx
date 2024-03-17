@@ -16,7 +16,10 @@ export type RadioGroupProps = {
   options: Option[]
 } & ComponentPropsWithoutRef<typeof RadixRadioGroup.Root>
 export const RadioGroup = forwardRef<ElementRef<typeof RadixRadioGroup.Root>, RadioGroupProps>(
-  ({ ariaLabel, className, defaultValue, disabled, name, onChange, options }, ref) => {
+  (
+    { ariaLabel, className, defaultValue, disabled, name, onChange, options, value, ...rest },
+    ref
+  ) => {
     return (
       <>
         <RadixRadioGroup.Root
@@ -27,6 +30,8 @@ export const RadioGroup = forwardRef<ElementRef<typeof RadixRadioGroup.Root>, Ra
           name={name}
           onValueChange={onChange}
           ref={ref}
+          value={value}
+          {...rest}
         >
           {options.map(option => {
             return (
