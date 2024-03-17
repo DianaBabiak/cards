@@ -2,8 +2,6 @@ import { ComponentPropsWithoutRef, ElementType, ForwardedRef, forwardRef } from 
 
 import s from './button.module.scss'
 
-import { Icon } from '../icon/Icon'
-
 type InferType<T> = T extends ElementType<infer U> ? U : never
 
 export type ButtonProps<T extends ElementType = 'button'> = {

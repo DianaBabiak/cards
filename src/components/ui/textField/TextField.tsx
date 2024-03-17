@@ -1,10 +1,9 @@
 import { ChangeEvent, ComponentPropsWithoutRef, forwardRef, useState } from 'react'
 
+import { Icon } from '@/components/ui/icon'
 import { Typography } from '@/components/ui/typography'
 
 import s from './TextField.module.scss'
-
-import { Icon } from '../icon/Icon'
 
 type Props = {
   errorMessage?: string
