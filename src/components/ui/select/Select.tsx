@@ -17,11 +17,11 @@ export type SelectProps = {
 } & ComponentPropsWithoutRef<typeof RadixSelect.Root>
 
 export const Select = forwardRef<HTMLButtonElement, SelectProps>(
-  ({ className, defaultValue, disabled, label, options, placeholder, required }, ref) => {
+  ({ className, defaultValue, disabled, label, options, placeholder, required, ...props }, ref) => {
     return (
       <Label className={`${s.label} ${className}`}>
         {label}
-        <RadixSelect.Root defaultValue={defaultValue} required={required}>
+        <RadixSelect.Root defaultValue={defaultValue} required={required} {...props}>
           <RadixSelect.Trigger
             aria-label={label}
             className={s.selectTrigger}

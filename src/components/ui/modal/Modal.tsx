@@ -45,11 +45,12 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
       selectOptions,
       selectPlaceholder,
       variant,
+      ...rest
     },
     ref
   ) => {
     return (
-      <Dialog.Root open>
+      <Dialog.Root open {...rest}>
         <Dialog.Portal>
           <Dialog.Overlay className={s.dialogOverlay} />
           <Dialog.Content className={`${s.dialogContent} ${className}`} ref={ref}>
