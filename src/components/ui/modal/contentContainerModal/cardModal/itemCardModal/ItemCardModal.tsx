@@ -1,7 +1,7 @@
 import { ChangeEvent, createRef, forwardRef, useState } from 'react'
 
 import imgReact from '@/assets/imgReact.png'
-import { Icon } from '@/components/ui/icon'
+import { Icon } from '@/components/ui/icon/Icon'
 import { TextField } from '@/components/ui/textField'
 import { Typography } from '@/components/ui/typography'
 

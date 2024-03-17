@@ -1,6 +1,6 @@
 import { ComponentPropsWithoutRef, ElementType, ForwardedRef, forwardRef } from 'react'
 
-import { Icon } from '@/components/ui/icon'
+import { Icon } from '@/components/ui/icon/Icon'
 
 import s from './button.module.scss'
 

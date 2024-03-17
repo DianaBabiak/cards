@@ -5,7 +5,7 @@ import {
   DropdownItem,
   DropdownItemWithImg,
 } from '@/components/ui/dropDownMenu/DropDownMenu'
-import { Icon } from '@/components/ui/icon'
+import { Icon } from '@/components/ui/icon/Icon'
 
 const meta = {
   component: DropDownMenu,
