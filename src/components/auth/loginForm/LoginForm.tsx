@@ -59,7 +59,7 @@ export const LoginForm = () => {
         </Button>
       </form>
 
-      <Typography variant={'body2'}>Don't have an account?</Typography>
+      <Typography variant={'body2'}>Do not have an account?</Typography>
       <a className={s.link}>Sign Up</a>
     </Card>
   )
