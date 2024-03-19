@@ -5,7 +5,7 @@ import { Typography } from '@/components/ui/typography'
 
 import s from './TextField.module.scss'
 
-type Props = {
+export type Props = {
   errorMessage?: string
   inputType?: 'password' | 'search' | 'text'
   label?: string
