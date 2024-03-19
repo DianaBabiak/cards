@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
+import { Icon } from '@/components/ui/Icon'
 import {
   DropDownMenu,
   DropdownItem,
   DropdownItemWithImg,
 } from '@/components/ui/dropDownMenu/DropDownMenu'
-import { Icon } from '@/components/ui/icon'
 
 const meta = {
   component: DropDownMenu,
