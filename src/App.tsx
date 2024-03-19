@@ -1,14 +1,9 @@
-import { Button } from '@/components/ui/button'
-import { Card } from '@/components/ui/card/Card'
+import { LoginForm } from '@/components/auth/loginForm/LoginForm'
 
 export function App() {
   return (
     <div>
-      <Button variant={'primary'}>Name</Button>
-      <Button as={'a'} variant={'primary'}>
-        Name
-      </Button>
-      <Card />
+      <LoginForm />
     </div>
   )
 }
