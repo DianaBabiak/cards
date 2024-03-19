@@ -3,6 +3,7 @@ import { useController, useForm } from 'react-hook-form'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Checkbox } from '@/components/ui/checkBox'
+import { ControlledTextField } from '@/components/ui/controlled/controlled-textField/controlled-textField'
 import { Typography } from '@/components/ui/typography'
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -23,7 +24,6 @@ export const LoginForm = () => {
     control,
     formState: { errors },
     handleSubmit,
-    register,
   } = useForm<FormValues>({
     resolver: zodResolver(loginSchema),
   })
@@ -39,17 +39,26 @@ export const LoginForm = () => {
     name: 'rememberMe',
   })
 
-  console.log(errors, 'erroremaооооооо')
-  console.log(errors.email?.message, 'errorema')
-  console.log(errors.password?.message, 'errorpas')
-
   return (
     <Card className={s.container}>
       <Typography variant={'h1'}>Sign In</Typography>
       <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
         <DevTool control={control} />
-        <input {...register('email')} />
-        <input {...register('password')} />
+        <ControlledTextField
+          className={s.textField}
+          control={control}
+          errorMessage={errors.email?.message}
+          label={'email'}
+          name={'email'}
+        />
+        <ControlledTextField
+          className={s.textField}
+          control={control}
+          errorMessage={errors.password?.message}
+          inputType={'password'}
+          label={'password'}
+          name={'password'}
+        />
         <Checkbox checked={value} label={'remember me'} onCheckedChange={onChange} />
         <div className={s.containerTypography}>
           <Typography variant={'body2'}>Forgot Password?</Typography>
@@ -58,8 +67,7 @@ export const LoginForm = () => {
           Sign In
         </Button>
       </form>
-
-      <Typography variant={'body2'}>Do not have an account?</Typography>
+      <Typography variant={'body2'}>Don&apos;t have an account?</Typography>
       <a className={s.link}>Sign Up</a>
     </Card>
   )
