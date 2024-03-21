@@ -1,0 +1,49 @@
+.formWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.nameWrapper {
+  max-width: 246px;
+  display: flex;
+  gap: 9px;
+  margin-top: 6px;
+  padding-left: 8px;
+}
+
+.avatarWrapper{
+  display: flex;
+  position: relative;
+}
+
+.editNameIcon {
+  width: 16px;
+  height: 16px;
+  background-color: transparent;
+  padding-top: 10px;
+  cursor: pointer;
+}
+
+.editAvatarBtn {
+  width: 24px;
+  height: 24px;
+  padding: 4px;
+
+  position: absolute;
+  content: '';
+  right: 0;
+  bottom: 0;
+}
+
+.name {
+  margin: 0;
+  max-width: 100%;
+  word-wrap: break-word; /* Позволяет словам переноситься */
+  overflow-wrap: break-word; /* Современный аналог word-wrap для переноса слов */
+  hyphens: auto;
+}
+
+.isEditableFormButton {
+  margin-top: 13px;
+}
