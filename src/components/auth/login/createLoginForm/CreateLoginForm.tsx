@@ -1,54 +1,51 @@
-import { useController, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
-import { Checkbox } from '@/components/ui/checkBox'
 import { ControlledTextField } from '@/components/ui/controlled/controlled-textField/controlled-textField'
 import { Typography } from '@/components/ui/typography'
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
-import s from './loginForm.module.scss'
+import s from '../login.module.scss'
 
-const loginSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(3),
-  rememberMe: z.boolean().default(false),
-})
+const createLoginSchema = z
+  .object({
+    confirmPassword: z.string().min(3),
+    email: z.string().email(),
+    password: z.string().min(3),
+  })
+  .refine(data => data.password === data.confirmPassword, {
+    message: "Passwords don't match",
+    path: ['confirmPassword'],
+  })
 
-type FormValues = z.infer<typeof loginSchema>
+type FormValues = z.infer<typeof createLoginSchema>
 
-export const LoginForm = () => {
+export const CreateLoginForm = () => {
   const {
     control,
     formState: { errors },
     handleSubmit,
   } = useForm<FormValues>({
-    resolver: zodResolver(loginSchema),
+    resolver: zodResolver(createLoginSchema),
   })
 
   const onSubmit = (data: FormValues) => {
     console.log(data)
   }
-  const {
-    field: { onChange, value },
-  } = useController({
-    control,
-    defaultValue: false,
-    name: 'rememberMe',
-  })
 
   return (
     <Card className={s.container}>
-      <Typography variant={'h1'}>Sign In</Typography>
+      <Typography variant={'h1'}>Sign Up</Typography>
       <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
         <DevTool control={control} />
         <ControlledTextField
           className={s.textField}
           control={control}
           errorMessage={errors.email?.message}
-          label={'email'}
+          label={'Email'}
           name={'email'}
         />
         <ControlledTextField
@@ -56,19 +53,26 @@ export const LoginForm = () => {
           control={control}
           errorMessage={errors.password?.message}
           inputType={'password'}
-          label={'password'}
+          label={'Password'}
           name={'password'}
         />
-        <Checkbox checked={value} label={'remember me'} onCheckedChange={onChange} />
+        <ControlledTextField
+          className={s.textField}
+          control={control}
+          errorMessage={errors.password?.message}
+          inputType={'password'}
+          label={'Confirm Password'}
+          name={'confirmPassword'}
+        />
         <div className={s.containerTypography}>
           <Typography variant={'body2'}>Forgot Password?</Typography>
         </div>
         <Button isFullWidth type={'submit'}>
-          Sign In
+          Sign Up
         </Button>
       </form>
-      <Typography variant={'body2'}>Don&apos;t have an account?</Typography>
-      <a className={s.link}>Sign Up</a>
+      <Typography variant={'body2'}>Already have an account?</Typography>
+      <a className={s.link}>Sign In</a>
     </Card>
   )
 }
