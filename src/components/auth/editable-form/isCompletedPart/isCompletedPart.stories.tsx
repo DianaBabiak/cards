@@ -6,7 +6,7 @@ const meta = {
   argTypes: {},
   component: IsCompletedPart,
   tags: ['autodocs'],
-  title: 'Components/EditableForm/IsEditabledPart',
+  title: 'Auth/EditableForm/IsEditabledPart',
 } satisfies Meta<typeof IsCompletedPart>
 
 export default meta
