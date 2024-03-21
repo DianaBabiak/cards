@@ -6,7 +6,7 @@ const meta = {
   argTypes: {},
   component: EditableForm,
   tags: ['autodocs'],
-  title: 'Components/EditableForm',
+  title: 'Auth/EditableForm',
 } satisfies Meta<typeof EditableForm>
 
 export default meta
