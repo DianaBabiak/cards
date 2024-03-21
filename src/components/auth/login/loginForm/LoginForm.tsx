@@ -1,8 +1,8 @@
-import { useController, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
-import { Checkbox } from '@/components/ui/checkBox'
+import { ControlledCheckbox } from '@/components/ui/controlled/controlled-checkbox/controlled-checkbox'
 import { ControlledTextField } from '@/components/ui/controlled/controlled-textField/controlled-textField'
 import { Typography } from '@/components/ui/typography'
 import { DevTool } from '@hookform/devtools'
@@ -31,13 +31,6 @@ export const LoginForm = () => {
   const onSubmit = (data: FormValues) => {
     console.log(data)
   }
-  const {
-    field: { onChange, value },
-  } = useController({
-    control,
-    defaultValue: false,
-    name: 'rememberMe',
-  })
 
   return (
     <Card className={s.container}>
@@ -59,7 +52,7 @@ export const LoginForm = () => {
           label={'Password'}
           name={'password'}
         />
-        <Checkbox checked={value} label={'remember me'} onCheckedChange={onChange} />
+        <ControlledCheckbox control={control} label={'Remember me'} name={'rememberMe'} />
         <div className={s.containerTypography}>
           <Typography variant={'body2'}>Forgot Password?</Typography>
         </div>
