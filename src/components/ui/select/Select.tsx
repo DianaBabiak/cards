@@ -56,12 +56,8 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
               <RadixSelect.Viewport className={s.selectViewport}>
                 <RadixSelect.Group>
                   {options.map(option => (
-                    <div className={s.containerItem}>
-                      <SelectItem
-                        disabled={option.disabled}
-                        key={option.value}
-                        value={option.value}
-                      >
+                    <div className={s.containerItem} key={option.value}>
+                      <SelectItem disabled={option.disabled} value={option.value}>
                         {option.label}
                       </SelectItem>
                     </div>
