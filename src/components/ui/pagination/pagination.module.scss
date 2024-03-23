@@ -1,0 +1,80 @@
+.root {
+  display: flex;
+  gap: 25px;
+  align-items: center;
+}
+
+.container {
+  display: flex;
+  gap: 12px;
+  list-style-type: none;
+}
+
+@mixin item {
+  all: unset;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 24px;
+  height: 24px;
+
+  color: var(--color-light-100);
+
+  border-radius: var(--border-radius-s);
+}
+
+.item {
+  @include item;
+
+  cursor: pointer;
+
+  &:focus-visible {
+    box-sizing: border-box;
+    border: 2px solid var(--color-info-900);
+  }
+
+  &:disabled {
+    cursor: initial;
+    opacity: 1;
+
+    & svg {
+      opacity: 0.5;
+    }
+  }
+
+  &:hover:not(&:disabled) {
+    background-color: var(--color-dark-500);
+  }
+
+  &.selected {
+    color: var(--color-dark-900);
+    background-color: var(--color-light-100);
+  }
+}
+
+.dots {
+  @include item;
+}
+
+.icon {
+  .item:disabled & {
+    // important because icons have style prop
+    color: red !important;
+  }
+}
+
+.selectBox {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+
+  color: var(--color-light-100);
+  white-space: nowrap;
+}
+
+.select {
+  flex-shrink: 0;
+  padding: 0 2px 0 6px;
+}

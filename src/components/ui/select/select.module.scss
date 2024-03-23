@@ -43,7 +43,6 @@
 
   width: var(--radix-select-trigger-width);
   max-height: var(--radix-select-content-available-height);
-  padding: 0 5px;
 
   background-color: var(--color-dark-900);
   border: 1px solid var(--color-dark-100);
@@ -51,7 +50,14 @@
 }
 
 .selectViewport {
-  padding: 5px;
+}
+
+.containerItem {
+  width: 100%;
+}
+
+.containerItem:hover {
+  background-color: var(--color-accent-900);
 }
 
 .selectItem {
@@ -62,7 +68,7 @@
   justify-content: space-between;
 
   height: 36px;
-  padding: 10px 5px;
+  padding: 10px 15px;
 
   font-size: var(--font-size-m);
   font-weight: var(--font-weight-regular);
@@ -73,10 +79,6 @@
 
 .disabled {
   color: var(--color-dark-300);
-}
-
-.selectItem:hover {
-  background-color: var(--color-accent-900);
 }
 
 .selectItem:focus-visible {
