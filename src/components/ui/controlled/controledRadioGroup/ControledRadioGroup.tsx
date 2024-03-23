@@ -3,7 +3,7 @@ import { FieldValues, UseControllerProps, useController } from 'react-hook-form'
 import { RadioGroup, RadioGroupProps } from '@/components/ui/radioGroup'
 
 export type ControlledRadioGroupProps<T extends FieldValues> = UseControllerProps<T> &
-  Omit<RadioGroupProps, 'id' | 'onChange' | 'onValueChange' | 'value'>
+  Omit<RadioGroupProps, 'id' | 'onBlur' | 'onChange' | 'onValueChange' | 'value'>
 
 export const ControlledRadioGroup = <T extends FieldValues>({
   control,
@@ -14,7 +14,7 @@ export const ControlledRadioGroup = <T extends FieldValues>({
   ...radioGroupProps
 }: ControlledRadioGroupProps<T>) => {
   const {
-    field: { onChange, value },
+    field: { onBlur, onChange, ref, value },
   } = useController({
     control,
     defaultValue,
@@ -27,8 +27,10 @@ export const ControlledRadioGroup = <T extends FieldValues>({
     <RadioGroup
       {...{
         id: name,
+        onBlur,
         onChange,
-        value: value,
+        ref,
+        value,
         ...radioGroupProps,
       }}
     />

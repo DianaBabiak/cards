@@ -42,7 +42,7 @@ const meta = {
       options: 'string',
     },
     variant: {
-      options: 'VariantModalContent',
+      options: 'string',
     },
   },
   component: Modal,

@@ -1,0 +1,23 @@
+.container {
+  max-width: 420px;
+  padding: 33px 92px 41px 80px;
+  margin: 0 auto;
+}
+
+.isEditableContainer {
+  padding: 33px 36px 84px;
+}
+
+.formTitle {
+  margin-top: 0;
+  margin-bottom: 27px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.avatar {
+  display: block;
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+}
