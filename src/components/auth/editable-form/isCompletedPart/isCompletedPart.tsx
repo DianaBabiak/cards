@@ -1,3 +1,5 @@
+import { ChangeEvent, useState } from 'react'
+
 import avatar from '@/assets/Ellipse 45.png'
 import { Button } from '@/components/ui/button'
 import { Icon } from '@/components/ui/icon'
@@ -15,13 +17,31 @@ type IsCompletedPartProps = {
 export const IsCompletedPart = (props: IsCompletedPartProps) => {
   const { currentName, email, setIsEditable } = props
 
+  const [currentAvatar, setCurrentAvatar] = useState(avatar)
+
+  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files ? e.target.files[0] : null
+
+    if (file) {
+      const reader = new FileReader()
+
+      reader.onloadend = () => {
+        setCurrentAvatar(reader.result as string)
+      }
+      reader.readAsDataURL(file)
+    }
+  }
+
   return (
     <div className={s.formWrapper}>
       <div className={s.avatarWrapper}>
-        <img alt={'avatar'} className={h.avatar} src={avatar} />
-        <Button className={s.editAvatarBtn} variant={'secondary'}>
-          <Icon height={'16'} iconId={'edit2'} viewBox={'0 0 16 16'} width={'16'} />
-        </Button>
+        <img alt={'avatar'} className={h.avatar} src={currentAvatar} />
+        <label>
+          <input className={s.editAvatarInput} onChange={handleImageChange} type={'file'} />
+          <div className={s.editAvatarBtn}>
+            <Icon height={'16'} iconId={'edit2'} viewBox={'0 0 16 16'} width={'16'} />
+          </div>
+        </label>
       </div>
 
       <div className={s.nameWrapper}>
