@@ -7,13 +7,14 @@ type Props<T extends FieldValues> = UseControllerProps<T> &
 
 export const ControlledTextField = <T extends FieldValues>({
   control,
+  defaultValue,
   disabled,
   name,
   shouldUnregister,
   ...rest
 }: Props<T>) => {
   const {
-    field: { onBlur, onChange, ref, value },
+    field: { onBlur, onChange, ref, value = defaultValue },
   } = useController({
     control,
     disabled,
