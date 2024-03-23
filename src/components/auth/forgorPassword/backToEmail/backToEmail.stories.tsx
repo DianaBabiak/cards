@@ -6,7 +6,7 @@ const meta = {
   argTypes: {},
   component: BackToEmail,
   tags: ['autodocs'],
-  title: 'Components/ForgotPassword/BackToEmail',
+  title: 'Auth/ForgotPassword/BackToEmail',
 } satisfies Meta<typeof BackToEmail>
 
 export default meta

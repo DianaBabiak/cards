@@ -5,7 +5,7 @@ import { ForgotPasswordForm } from '@/components/auth/forgorPassword/forgotPassw
 const meta = {
   component: ForgotPasswordForm,
   tags: ['autodocs'],
-  title: 'Auth/ForgotPassword',
+  title: 'Auth/ForgotPassword/ForgotPassword',
 } satisfies Meta<typeof ForgotPasswordForm>
 
 export default meta
