@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
+import imgReact from '@/assets/imgReact.png'
 import { Modal } from '@/components/ui/modal'
 import { VariantModalContent } from '@/components/ui/modal/contentContainerModal/ContentContainerModal'
 
@@ -81,14 +82,26 @@ export const ModalWithSelector: Story = {
   },
 }
 
-export const CardModal: Story = {
+export const AddCardModal: Story = {
   args: {
+    defaultImage: imgReact,
     headerTitle: 'Title',
     labelCheckBox: 'Label',
     labelFooterPrimaryButton: 'Primary button',
     labelFooterSecondaryButton: 'Secondary button',
-    labelTextFields: ['label 1'],
-    placeholderTextFields: ['Name', 'Name', 'Input'],
+    placeholderTextFields: ['Name', 'Name'],
     variant: VariantModalContent.addCard,
+  },
+}
+
+export const AddDeckModal: Story = {
+  args: {
+    headerTitle: 'Add New Deck',
+    labelCheckBox: 'Private pack',
+    labelFooterPrimaryButton: 'Add New Pack',
+    labelFooterSecondaryButton: 'Cancel',
+    labelTextFields: ['Name Pack'],
+    placeholderTextFields: ['Name'],
+    variant: VariantModalContent.addDeck,
   },
 }

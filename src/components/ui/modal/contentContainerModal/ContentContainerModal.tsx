@@ -1,6 +1,7 @@
 import { forwardRef } from 'react'
 
 import { CardModal } from '@/components/ui/modal/contentContainerModal/cardModal/CardModal'
+import { DeckModal } from '@/components/ui/modal/contentContainerModal/deskModal/DeskModal'
 import { ModalWithSelector } from '@/components/ui/modal/contentContainerModal/modalWithSelector/ModalWithSelector'
 import { Option } from '@/components/ui/select'
 import { Typography } from '@/components/ui/typography'
@@ -9,12 +10,14 @@ import s from '@/components/ui/modal/modal.module.scss'
 
 export enum VariantModalContent {
   addCard = 'addCard',
+  addDeck = 'addDeck',
   text = 'text',
   withSelector = 'withSelector',
 }
 
 export type ContentContainerModalProps = {
   contentText?: string
+  defaultImage?: string
   labelCheckBox?: string
   labelSelector?: string
   labelTextFields?: string[]
@@ -27,6 +30,7 @@ export const ContentContainerModal = forwardRef<HTMLDivElement, ContentContainer
   (
     {
       contentText,
+      defaultImage,
       labelCheckBox,
       labelSelector,
       labelTextFields,
@@ -55,8 +59,16 @@ export const ContentContainerModal = forwardRef<HTMLDivElement, ContentContainer
 
         {variant === VariantModalContent.addCard && (
           <CardModal
+            defaultImage={defaultImage}
             labelCheckBox={labelCheckBox}
-            labelTextField={labelTextFields?.[0]}
+            placeholderTextFields={placeholderTextFields}
+          />
+        )}
+
+        {variant === VariantModalContent.addDeck && (
+          <DeckModal
+            labelCheckBox={labelCheckBox}
+            labelTextField={labelTextFields}
             placeholderTextFields={placeholderTextFields}
           />
         )}

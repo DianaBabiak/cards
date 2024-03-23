@@ -14,6 +14,7 @@ import s from './modal.module.scss'
 export type ModalProps = {
   className?: string
   contentText?: string
+  defaultImage?: string
   headerTitle: string
   isHeaderContent?: boolean
   isShowFooterSecondaryButton?: boolean
@@ -33,6 +34,7 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
     {
       className,
       contentText,
+      defaultImage,
       headerTitle,
       isHeaderContent,
       isShowFooterSecondaryButton,
@@ -57,6 +59,7 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
             <HeaderModal isHeaderContent={isHeaderContent} title={headerTitle} />
             <ContentContainerModal
               contentText={contentText}
+              defaultImage={defaultImage}
               labelCheckBox={labelCheckBox}
               labelSelector={labelSelector}
               labelTextFields={labelTextFields}
