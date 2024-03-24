@@ -9,10 +9,21 @@ export type FooterModalProps = {
   isShowSecondaryButton?: boolean
   labelPrimaryButton: string
   labelSecondaryButton?: string
+  onClickPrimaryButton: () => void
+  onClickSecondaryButton?: () => void
 }
 
 export const FooterModal = forwardRef<HTMLDivElement, FooterModalProps>(
-  ({ isShowSecondaryButton = true, labelPrimaryButton, labelSecondaryButton }, ref) => {
+  (
+    {
+      isShowSecondaryButton = true,
+      labelPrimaryButton,
+      labelSecondaryButton,
+      onClickPrimaryButton,
+      onClickSecondaryButton,
+    },
+    ref
+  ) => {
     return (
       <div
         className={`${s.wrapperFooter} ${
@@ -22,11 +33,13 @@ export const FooterModal = forwardRef<HTMLDivElement, FooterModalProps>(
       >
         {isShowSecondaryButton && (
           <Dialog.Close asChild>
-            <Button variant={'secondary'}>{labelSecondaryButton}</Button>
+            <Button onClick={onClickSecondaryButton} variant={'secondary'}>
+              {labelSecondaryButton}
+            </Button>
           </Dialog.Close>
         )}
         <Dialog.Close asChild>
-          <Button>{labelPrimaryButton}</Button>
+          <Button onClick={onClickPrimaryButton}>{labelPrimaryButton}</Button>
         </Dialog.Close>
       </div>
     )
