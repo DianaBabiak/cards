@@ -3,7 +3,7 @@ import { Modal } from '@/components/ui/modal'
 import { VariantModalContent } from '@/components/ui/modal/contentContainerModal/ContentContainerModal'
 import { CreationItem } from '@/features/creationEntity/creationItem/CreationItem'
 
-import s from '@/components/ui/modal/modal.module.scss'
+import s from '../creationEntity.module.scss'
 
 export type CreationDeckProps = {}
 export const CreationDeck = ({}: CreationDeckProps) => {

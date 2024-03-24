@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 
 import { Modal } from '@/components/ui/modal'
 import { VariantModalContent } from '@/components/ui/modal/contentContainerModal/ContentContainerModal'
+import { ModalWithSelector } from '@/components/ui/modal/contentContainerModal/modalWithSelector/ModalWithSelector'
 const meta = {
   argTypes: {
     contentText: {
@@ -16,25 +17,10 @@ const meta = {
     isShowFooterSecondaryButton: {
       options: 'boolean',
     },
-    labelCheckBox: {
-      options: 'string',
-    },
     labelFooterPrimaryButton: {
       options: 'string',
     },
     labelFooterSecondaryButton: {
-      options: 'string',
-    },
-    labelSelector: {
-      options: 'string',
-    },
-    labelTextFields: {
-      options: 'string[]',
-    },
-    selectOptions: {
-      options: 'Option[]',
-    },
-    selectPlaceholder: {
       options: 'string',
     },
     variant: {
@@ -60,19 +46,23 @@ export const Default: Story = {
   },
 }
 
-export const ModalWithSelector: Story = {
+export const WithSelector: Story = {
   args: {
+    children: (
+      <ModalWithSelector
+        labelCheckBox={'Label'}
+        labelSelector={'Label'}
+        labelTextFields={['label 1', 'label 2']}
+        selectOptions={[
+          { disabled: false, label: 'variant 1', value: 'variant1' },
+          { disabled: false, label: 'variant 2', value: 'variant2' },
+        ]}
+        selectPlaceholder={'choose'}
+      />
+    ),
     headerTitle: 'Title',
-    labelCheckBox: 'Label',
     labelFooterPrimaryButton: 'Primary button',
     labelFooterSecondaryButton: 'Secondary button',
-    labelSelector: 'Label',
-    labelTextFields: ['label 1', 'label 2'],
-    selectOptions: [
-      { disabled: false, label: 'variant 1', value: 'variant1' },
-      { disabled: false, label: 'variant 2', value: 'variant2' },
-    ],
-    selectPlaceholder: 'choose',
-    variant: VariantModalContent.withSelector,
+    variant: VariantModalContent.withChildren,
   },
 }
