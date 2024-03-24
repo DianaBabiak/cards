@@ -14,8 +14,7 @@ import s from './modal.module.scss'
 export type ModalProps = {
   className?: string
   contentText?: string
-  defaultImage?: string
-  headerTitle: string
+  headerTitle?: string
   isHeaderContent?: boolean
   isShowFooterSecondaryButton?: boolean
   labelCheckBox?: string
@@ -23,18 +22,17 @@ export type ModalProps = {
   labelFooterSecondaryButton?: string
   labelSelector?: string
   labelTextFields?: string[]
-  placeholderTextFields?: string[]
   selectOptions?: Option[]
   selectPlaceholder?: string
-  variant?: VariantModalContent
+  variant: VariantModalContent
 } & ComponentPropsWithoutRef<typeof Dialog.Root>
 
 export const Modal = forwardRef<HTMLDivElement, ModalProps>(
   (
     {
+      children,
       className,
       contentText,
-      defaultImage,
       headerTitle,
       isHeaderContent,
       isShowFooterSecondaryButton,
@@ -43,7 +41,6 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
       labelFooterSecondaryButton,
       labelSelector,
       labelTextFields,
-      placeholderTextFields,
       selectOptions,
       selectPlaceholder,
       variant,
@@ -59,15 +56,15 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
             <HeaderModal isHeaderContent={isHeaderContent} title={headerTitle} />
             <ContentContainerModal
               contentText={contentText}
-              defaultImage={defaultImage}
               labelCheckBox={labelCheckBox}
               labelSelector={labelSelector}
               labelTextFields={labelTextFields}
-              placeholderTextFields={placeholderTextFields}
               selectOptions={selectOptions}
               selectPlaceholder={selectPlaceholder}
               variant={variant}
-            />
+            >
+              {children}
+            </ContentContainerModal>
             <FooterModal
               isShowSecondaryButton={isShowFooterSecondaryButton}
               labelPrimaryButton={labelFooterPrimaryButton}

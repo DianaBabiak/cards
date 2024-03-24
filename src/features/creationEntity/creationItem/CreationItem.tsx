@@ -6,14 +6,14 @@ import { Typography } from '@/components/ui/typography'
 
 import s from '@/components/ui/modal/modal.module.scss'
 
-export type ItemAddModalProps = {
+export type CreationItemProps = {
   defaultImage?: string
-  label?: string
-  placeholder?: string
+  label: string
+  placeholder: string
   title?: string
 }
 
-export const ItemAddModal = forwardRef<HTMLDivElement, ItemAddModalProps>(
+export const CreationItem = forwardRef<HTMLDivElement, CreationItemProps>(
   ({ defaultImage, label, placeholder, title }, ref) => {
     const [selectedImage, setSelectedImage] = useState(defaultImage)
     const inputRef = createRef<HTMLInputElement>()

@@ -1,7 +1,5 @@
-import { forwardRef } from 'react'
+import { ComponentPropsWithoutRef, forwardRef } from 'react'
 
-import { CardModal } from '@/components/ui/modal/contentContainerModal/cardModal/CardModal'
-import { DeckModal } from '@/components/ui/modal/contentContainerModal/deskModal/DeskModal'
 import { ModalWithSelector } from '@/components/ui/modal/contentContainerModal/modalWithSelector/ModalWithSelector'
 import { Option } from '@/components/ui/select'
 import { Typography } from '@/components/ui/typography'
@@ -9,35 +7,31 @@ import { Typography } from '@/components/ui/typography'
 import s from '@/components/ui/modal/modal.module.scss'
 
 export enum VariantModalContent {
-  addCard = 'addCard',
-  addDeck = 'addDeck',
   text = 'text',
+  withChildren = 'withChildren',
   withSelector = 'withSelector',
 }
 
 export type ContentContainerModalProps = {
   contentText?: string
-  defaultImage?: string
   labelCheckBox?: string
   labelSelector?: string
   labelTextFields?: string[]
-  placeholderTextFields?: string[]
   selectOptions?: Option[]
   selectPlaceholder?: string
-  variant?: VariantModalContent
-}
+  variant: VariantModalContent
+} & ComponentPropsWithoutRef<'div'>
 export const ContentContainerModal = forwardRef<HTMLDivElement, ContentContainerModalProps>(
   (
     {
+      children,
       contentText,
-      defaultImage,
       labelCheckBox,
       labelSelector,
       labelTextFields,
-      placeholderTextFields,
       selectOptions,
       selectPlaceholder,
-      variant = VariantModalContent.text,
+      variant,
     },
     ref
   ) => {
@@ -57,21 +51,7 @@ export const ContentContainerModal = forwardRef<HTMLDivElement, ContentContainer
           />
         )}
 
-        {variant === VariantModalContent.addCard && (
-          <CardModal
-            defaultImage={defaultImage}
-            labelCheckBox={labelCheckBox}
-            placeholderTextFields={placeholderTextFields}
-          />
-        )}
-
-        {variant === VariantModalContent.addDeck && (
-          <DeckModal
-            labelCheckBox={labelCheckBox}
-            labelTextField={labelTextFields}
-            placeholderTextFields={placeholderTextFields}
-          />
-        )}
+        {variant === VariantModalContent.withChildren && children}
       </div>
     )
   }
