@@ -18,6 +18,8 @@ export type ModalProps = {
   isShowFooterSecondaryButton?: boolean
   labelFooterPrimaryButton: string
   labelFooterSecondaryButton?: string
+  onClickPrimaryButton: () => void
+  onClickSecondaryButton?: () => void
   variant: VariantModalContent
 } & ComponentPropsWithoutRef<typeof Dialog.Root>
 
@@ -32,6 +34,8 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
       isShowFooterSecondaryButton,
       labelFooterPrimaryButton,
       labelFooterSecondaryButton,
+      onClickPrimaryButton,
+      onClickSecondaryButton,
       variant,
       ...rest
     },
@@ -50,6 +54,8 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
               isShowSecondaryButton={isShowFooterSecondaryButton}
               labelPrimaryButton={labelFooterPrimaryButton}
               labelSecondaryButton={labelFooterSecondaryButton}
+              onClickPrimaryButton={onClickPrimaryButton}
+              onClickSecondaryButton={onClickSecondaryButton}
             />
           </Dialog.Content>
         </Dialog.Portal>
