@@ -1,20 +1,21 @@
 import { ChangeEvent, createRef, forwardRef, useState } from 'react'
 
-import imgReact from '@/assets/imgReact.png'
 import { Icon } from '@/components/ui/icon'
 import { TextField } from '@/components/ui/textField'
 import { Typography } from '@/components/ui/typography'
 
 import s from '@/components/ui/modal/modal.module.scss'
 
-export type ItemCardModalProps = {
+export type CreationItemProps = {
+  defaultImage?: string
   label: string
-  placeholder?: string
+  placeholder: string
+  title?: string
 }
 
-export const ItemCardModal = forwardRef<HTMLDivElement, ItemCardModalProps>(
-  ({ label, placeholder }, ref) => {
-    const [selectedImage, setSelectedImage] = useState(imgReact)
+export const CreationItem = forwardRef<HTMLDivElement, CreationItemProps>(
+  ({ defaultImage, label, placeholder, title }, ref) => {
+    const [selectedImage, setSelectedImage] = useState(defaultImage)
     const inputRef = createRef<HTMLInputElement>()
     const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
       const file = e.target.files ? e.target.files[0] : null
@@ -31,14 +32,10 @@ export const ItemCardModal = forwardRef<HTMLDivElement, ItemCardModalProps>(
 
     return (
       <div className={s.wrapperItemCard} ref={ref}>
-        <Typography variant={'subtitle2'}>{label}:</Typography>
-        <TextField
-          className={s.hundredPercentWidth}
-          label={' Question?'}
-          placeholder={placeholder}
-        />
+        {title && <Typography variant={'subtitle2'}>{title}</Typography>}
+        <TextField className={s.hundredPercentWidth} label={label} placeholder={placeholder} />
         <div className={s.wrapperImgContent}>
-          <img alt={label} src={selectedImage} />
+          {selectedImage && <img alt={label} src={selectedImage} />}
           <label className={s.customFileInput}>
             <input
               accept={'image/*'}

@@ -8,18 +8,18 @@ import s from './header.module.scss'
 import logo from '../../assets/Logo.png'
 
 type HeaderProps = {
-  email: string
-  isInitialization: boolean
-  name: string
+  email?: string
+  isInitialization?: boolean
+  name?: string
   userPhoto?: string
 }
 const defaultPhoto =
   'https://www.shutterstock.com/image-vector/default-avatar-profile-icon-social-600nw-1677509740.jpg'
 
 export const Header = ({
-  email,
-  isInitialization,
-  name,
+  email = 'gggg@gmail.com',
+  isInitialization = true,
+  name = 'Ivan',
   userPhoto = defaultPhoto,
 }: HeaderProps) => {
   return (

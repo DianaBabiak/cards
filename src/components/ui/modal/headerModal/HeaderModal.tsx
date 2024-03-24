@@ -7,7 +7,7 @@ import s from '@/components/ui/modal/modal.module.scss'
 
 export type HeaderModalProps = {
   isHeaderContent?: boolean
-  title: string
+  title?: string
 }
 export const HeaderModal = forwardRef<HTMLDivElement, HeaderModalProps>(
   ({ isHeaderContent = true, title }, ref) => {
