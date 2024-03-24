@@ -12,7 +12,7 @@ type Option = {
 export type RadioGroupProps = {
   ariaLabel?: string
   className?: string
-  onChange: () => void
+  onChange?: () => void
   options: Option[]
 } & ComponentPropsWithoutRef<typeof RadixRadioGroup.Root>
 export const RadioGroup = forwardRef<ElementRef<typeof RadixRadioGroup.Root>, RadioGroupProps>(
