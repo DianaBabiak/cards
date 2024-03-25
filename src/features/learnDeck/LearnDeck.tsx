@@ -1,11 +1,15 @@
 import { useState } from 'react'
+import { useForm } from 'react-hook-form'
 
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
+import { ControlledRadioGroup } from '@/components/ui/controlled/controledRadioGroup/ControledRadioGroup'
 import { Icon } from '@/components/ui/icon'
-import { RadioGroup } from '@/components/ui/radioGroup'
 import { Typography } from '@/components/ui/typography'
 import { Header } from '@/features/header'
+import { DevTool } from '@hookform/devtools'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
 
 import s from './learnDeck.module.scss'
 
@@ -18,6 +22,11 @@ type LearnDeckProps = {
   question: string
 }
 
+const LearnDeckFormSchema = z.object({
+  grade: z.string(),
+})
+
+export type LearnDeckFormValues = z.infer<typeof LearnDeckFormSchema>
 export const LearnDeck = ({
   answer,
   deckName,
@@ -30,28 +39,39 @@ export const LearnDeck = ({
   const optionsRadioGroup = [
     {
       label: 'Did not know',
-      value: 'didNotKnow',
+      value: '0',
     },
     {
       label: 'Forgot',
-      value: 'forgot',
+      value: '1',
     },
     {
       label: 'A lot of thought',
-      value: 'aLotOfThought',
+      value: '2',
     },
     {
       label: 'Сonfused',
-      value: 'confused',
+      value: '3',
     },
     {
       label: 'Knew the answer',
-      value: 'knewTheAnswer',
+      value: '4',
     },
   ]
 
   const showAnswerHandler = () => {
     setIsShowAnswer(true)
+  }
+
+  const {
+    control,
+    formState: {},
+    handleSubmit,
+  } = useForm<LearnDeckFormValues>({
+    resolver: zodResolver(LearnDeckFormSchema),
+  })
+  const onSubmit = (data: LearnDeckFormValues) => {
+    console.log(data, 'jjjjjj')
   }
 
   return (
@@ -79,14 +99,20 @@ export const LearnDeck = ({
             </Button>
           )}
           {isShowAnswer && (
-            <>
+            <form onSubmit={handleSubmit(onSubmit)}>
               <ItemLearnCard image={imageAnswer} label={'Answer: '} text={answer} />
               <div className={s.containerRadio}>
                 <Typography variant={'subtitle1'}>Rate yourself:</Typography>
-                <RadioGroup defaultValue={'didNotKnow'} options={optionsRadioGroup} />
+                <DevTool control={control} />
+                <ControlledRadioGroup
+                  control={control}
+                  defaultValue={'0'}
+                  name={'grade'}
+                  options={optionsRadioGroup}
+                />
               </div>
               <Button isFullWidth>Next Question</Button>
-            </>
+            </form>
           )}
         </Card>
       </div>
