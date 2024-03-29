@@ -1,0 +1,55 @@
+.container {
+  max-width: 1008px;
+  margin: 0 auto;
+  padding: 93px 0 168px;
+}
+
+.addDeckWrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.filterDecksWrapper{
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  margin-bottom: 36px;
+}
+
+.searchDecks {
+  width: 300px;
+  height: 36px;
+ }
+
+.tableDecks {
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+.deckButtonsWrapper{
+  width: auto;
+  height: fit-content;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.deckButtonsCell{
+  width: 117px;
+  padding: 6px 10px;
+}
+
+.deckButton {
+  background: none;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+
+  &:hover {
+    background: none;
+  }
+}
+
+.pagination {
+  margin-top: 24px;
+}
