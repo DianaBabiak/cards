@@ -31,7 +31,6 @@ export const TextField = forwardRef<HTMLInputElement, Props>(
     const inputPassword = inputType === 'password'
     const inputSearch = inputType === 'search'
     const classNames = {
-      container: `${s.container} ${className}`,
       input: `${s.input} ${errorMessage ? s.error : ''} ${
         inputSearch ? s.hasSearch : ''
       } ${className}`,
@@ -53,7 +52,7 @@ export const TextField = forwardRef<HTMLInputElement, Props>(
     const currentInputType = getInputType(inputType, showPasword)
 
     return (
-      <div className={classNames.container}>
+      <div className={s.container}>
         {label && !inputSearch && <span className={s.label}>{label}</span>}
         {/*<div className={s.InputContainer}>*/}
         <div className={classNames.inputContainer}>
@@ -83,7 +82,7 @@ export const TextField = forwardRef<HTMLInputElement, Props>(
           )}
         </div>
         {errorMessage && (
-          <Typography className={classNames.span} colorTheme={'danger'}>
+          <Typography as={'div'} className={classNames.span} colorTheme={'danger'}>
             {errorMessage}
           </Typography>
         )}
