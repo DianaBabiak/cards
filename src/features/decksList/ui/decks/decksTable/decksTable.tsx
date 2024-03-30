@@ -1,4 +1,7 @@
+import { Link } from 'react-router-dom'
+
 import { Button } from '@/components/ui/button'
+import { Icon } from '@/components/ui/icon'
 import {
   Table,
   TableBody,
@@ -60,7 +63,9 @@ export const DecksTable = (props: DecksTableProps) => {
             </TableBodyCell>
             <TableBodyCell className={s.deckButtonsCell}>
               <div className={s.deckButtonsWrapper}>
-                <Button as={'a'} buttonImg={'playCircle'} className={s.deckButton} isImg></Button>
+                <Link className={s.deckButton} to={`/learn/${deck.id}`}>
+                  <Icon iconId={'playCircle'} />
+                </Link>
                 <Button as={'a'} buttonImg={'edit2'} className={s.deckButton} isImg></Button>
                 <Button as={'a'} buttonImg={'trash'} className={s.deckButton} isImg></Button>
               </div>

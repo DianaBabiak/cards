@@ -1,62 +1,59 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { Link, useLocation } from 'react-router-dom'
 
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { ControlledRadioGroup } from '@/components/ui/controlled/controledRadioGroup/ControledRadioGroup'
 import { Icon } from '@/components/ui/icon'
 import { Typography } from '@/components/ui/typography'
+import {
+  SaveGradeCard,
+  useGetRandomCardQuery,
+  useSaveGradeCardMutation,
+} from '@/features/decksList/api'
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
 import s from './learnDeck.module.scss'
 
-type LearnDeckProps = {
-  answer: string
-  deckName: string
-  imageAnswer?: string
-  imageQuestion?: string
-  numberAttempts: number
-  question: string
-}
+export type LearnDeckProps = {}
 
 const LearnDeckFormSchema = z.object({
-  grade: z.string(),
+  grade: z.string().default('1'),
 })
 
 export type LearnDeckFormValues = z.infer<typeof LearnDeckFormSchema>
-export const LearnDeck = ({
-  answer,
-  deckName,
-  imageAnswer,
-  imageQuestion,
-  numberAttempts,
-  question,
-}: LearnDeckProps) => {
+export const LearnDeck = ({}: LearnDeckProps) => {
   const [isShowAnswer, setIsShowAnswer] = useState(false)
   const optionsRadioGroup = [
     {
       label: 'Did not know',
-      value: '0',
-    },
-    {
-      label: 'Forgot',
       value: '1',
     },
     {
-      label: 'A lot of thought',
+      label: 'Forgot',
       value: '2',
     },
     {
-      label: 'Сonfused',
+      label: 'A lot of thought',
       value: '3',
     },
     {
-      label: 'Knew the answer',
+      label: 'Сonfused',
       value: '4',
     },
+    {
+      label: 'Knew the answer',
+      value: '5',
+    },
   ]
+  const location = useLocation()
+  const idDeck = location.pathname.split('/').pop()
+
+  const { data, isLoading } = useGetRandomCardQuery({ idDeck: idDeck || '' })
+  const [saveGradeCard, { isError }] = useSaveGradeCardMutation()
 
   const showAnswerHandler = () => {
     setIsShowAnswer(true)
@@ -66,52 +63,76 @@ export const LearnDeck = ({
     control,
     formState: {},
     handleSubmit,
+    reset,
   } = useForm<LearnDeckFormValues>({
     resolver: zodResolver(LearnDeckFormSchema),
   })
-  const onSubmit = (data: LearnDeckFormValues) => {
-    console.log(data, 'jjjjjj')
+
+  const onSubmit = async (dataLearnDeckForm: LearnDeckFormValues) => {
+    try {
+      await saveGradeCard({
+        cardId: data?.id || '',
+        grade: parseInt(dataLearnDeckForm.grade, 10) as SaveGradeCard['grade'],
+        idDeck: idDeck || '',
+      })
+      if (!isError) {
+        reset()
+        setIsShowAnswer(false)
+      }
+    } catch (err) {
+      console.error('Ошибка при изучении дека:', err)
+    }
   }
 
   return (
     <div className={s.container}>
-      <a className={s.link}>
-        <Icon height={'16'} iconId={'backArrow'} viewBox={'0 0 16 16'} width={'16'}></Icon>
-        <Typography variant={'body2'}>Back to Decks List</Typography>
-      </a>
-      <Card className={s.containerCard}>
-        <Typography variant={'h1'}>Learn {deckName}</Typography>
-        <ItemLearnCard image={imageQuestion} label={'Question: '} text={question} />
-        <div className={s.containerText}>
-          <Typography colorTheme={'dark'} variant={'body2'}>
-            Количество попыток ответов на вопрос:
-          </Typography>
-          <Typography colorTheme={'dark'} variant={'subtitle2'}>
-            {numberAttempts}
-          </Typography>
-        </div>
-        {!isShowAnswer && (
-          <Button isFullWidth onClick={showAnswerHandler}>
-            Show Answer
-          </Button>
-        )}
-        {isShowAnswer && (
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <ItemLearnCard image={imageAnswer} label={'Answer: '} text={answer} />
-            <div className={s.containerRadio}>
-              <Typography variant={'subtitle1'}>Rate yourself:</Typography>
-              <DevTool control={control} />
-              <ControlledRadioGroup
-                control={control}
-                defaultValue={'0'}
-                name={'grade'}
-                options={optionsRadioGroup}
+      {isLoading ? (
+        <div>Loading</div>
+      ) : (
+        <>
+          <Link className={s.link} to={'/'}>
+            <Icon height={'16'} iconId={'backArrow'} viewBox={'0 0 16 16'} width={'16'}></Icon>
+            <Typography variant={'body2'}>Back to Decks List</Typography>
+          </Link>
+          {!data ? (
+            <div className={s.emptyDeck}>Deck is empty</div>
+          ) : (
+            <Card className={s.containerCard}>
+              <Typography variant={'h1'}>Learn card</Typography>
+              <ItemLearnCard
+                image={data?.questionImg}
+                label={'Question: '}
+                text={data?.question || ''}
               />
-            </div>
-            <Button isFullWidth>Next Question</Button>
-          </form>
-        )}
-      </Card>
+              {!isShowAnswer && (
+                <Button isFullWidth onClick={showAnswerHandler}>
+                  Show Answer
+                </Button>
+              )}
+              {isShowAnswer && (
+                <form onSubmit={handleSubmit(onSubmit)}>
+                  <ItemLearnCard
+                    image={data?.answerImg}
+                    label={'Answer: '}
+                    text={data?.answer || ''}
+                  />
+                  <div className={s.containerRadio}>
+                    <Typography variant={'subtitle1'}>Rate yourself:</Typography>
+                    <DevTool control={control} />
+                    <ControlledRadioGroup
+                      control={control}
+                      defaultValue={'1'}
+                      name={'grade'}
+                      options={optionsRadioGroup}
+                    />
+                  </div>
+                  <Button isFullWidth>Next Question</Button>
+                </form>
+              )}
+            </Card>
+          )}
+        </>
+      )}
     </div>
   )
 }

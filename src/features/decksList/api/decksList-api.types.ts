@@ -65,3 +65,30 @@ export type ResponseGetMinMaxCards = {
   max: number
   min: number
 }
+
+export type ResponseGetCard = {
+  answer: string
+  answerImg: string
+  answerVideo: string
+  created: string
+  deckId: string
+  grade: number
+  id: string
+  question: string
+  questionImg: string
+  questionVideo: string
+  shots: number
+  updated: string
+  userId: string
+}
+
+export type GetRandomCard = {
+  idDeck: string
+  previousCardId?: string
+}
+
+export type SaveGradeCard = {
+  cardId: string
+  grade: 0 | 1 | 2 | 3 | 4 | 5
+  idDeck: string
+}
