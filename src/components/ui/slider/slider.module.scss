@@ -1,14 +1,14 @@
-.customSliderWrapper {
+.customSliderWrapper{
   display: flex;
   width: fit-content;
   gap: 12px;
 }
 
-.sliderWrapper {
+.sliderWrapper{
   padding: 6px 0;
 }
 
-.sliderRoot {
+.sliderRoot{
   position: relative;
   align-items: center;
   user-select: none;
@@ -43,18 +43,19 @@
   border-radius: 10px;
   cursor: pointer;
 
-  &:hover {
+  &:hover{
     transform: scale(1.1);
     box-shadow: 0 2px 8px rgba(255, 255, 255, 0.5);
   }
 
-  &:focus-within {
+  &:focus-within{
     outline: none;
   }
 }
 
 .minMaxWrapper {
   width: 36px;
+  height: 36px;
   display: flex;
   justify-content: center;
   padding: 6px 0;
