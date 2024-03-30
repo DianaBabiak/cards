@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 
 import { Pagination } from '@/components/ui/pagination'
+import { CreationDeck } from '@/features/creationEntity/creationDeck'
 import { OrderBy, useGetDecksQuery, useGetMinMaxCardsQuery } from '@/features/decksList/api'
 import { DecksFilters } from '@/features/decksList/ui/decks/decksFiltres/decksFiltres'
 import { DecksTable } from '@/features/decksList/ui/decks/decksTable/decksTable'
@@ -14,6 +15,7 @@ export const DecksList = () => {
   const [itemsPerPage, setItemsPerPage] = useState('10')
   const [orderBy, setOrderBy] = useState<OrderBy>(null)
   const [name, setName] = useState('')
+  const [isOpenCreateDeck, setIsOpenCreateDeck] = useState(false)
 
   const { data: minMaxCards } = useGetMinMaxCardsQuery()
 
@@ -50,6 +52,10 @@ export const DecksList = () => {
     setName(searchName)
   }
 
+  const onOpenCreateCardHandler = () => {
+    setIsOpenCreateDeck(true)
+  }
+
   useEffect(() => {
     setMaxCardsCount(minMaxCards?.max)
     setMinCardsCount(minMaxCards?.min)
@@ -61,7 +67,8 @@ export const DecksList = () => {
   return (
     isInitialized && (
       <div className={s.container}>
-        <DecksTitleAddDeck />
+        <DecksTitleAddDeck onOpenCreateCardHandler={onOpenCreateCardHandler} />
+        <CreationDeck isOpen={isOpenCreateDeck} setIsOpen={setIsOpenCreateDeck} />
         <DecksFilters
           maxCardsCount={maxCardsCount}
           minCardsCount={minCardsCount}

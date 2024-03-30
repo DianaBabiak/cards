@@ -9,6 +9,8 @@ import { z } from 'zod'
 
 export type CreationCardProps = {
   defaultImage?: string
+  isOpen: boolean
+  setIsOpen: (isOpen: boolean) => void
 }
 
 const CreationCardFormSchema = z.object({
@@ -19,7 +21,7 @@ const CreationCardFormSchema = z.object({
 })
 
 export type CreationCardFormValues = z.infer<typeof CreationCardFormSchema>
-export const CreationCard = ({ defaultImage }: CreationCardProps) => {
+export const CreationCard = ({ defaultImage, isOpen, setIsOpen }: CreationCardProps) => {
   const {
     control,
     formState: { errors },
@@ -37,10 +39,12 @@ export const CreationCard = ({ defaultImage }: CreationCardProps) => {
       <DevTool control={control} />
       <Modal
         headerTitle={'Add New Card'}
+        isOpen={isOpen}
         labelFooterPrimaryButton={'Add New Card'}
         labelFooterSecondaryButton={'Cancel'}
         onClickPrimaryButton={handleSubmit(onSubmit)}
         onClickSecondaryButton={() => {}}
+        setIsOpen={setIsOpen}
         variant={VariantModalContent.withChildren}
       >
         <CreationItem<CreationCardFormValues>

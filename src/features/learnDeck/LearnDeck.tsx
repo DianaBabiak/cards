@@ -6,7 +6,6 @@ import { Card } from '@/components/ui/card'
 import { ControlledRadioGroup } from '@/components/ui/controlled/controledRadioGroup/ControledRadioGroup'
 import { Icon } from '@/components/ui/icon'
 import { Typography } from '@/components/ui/typography'
-import { Header } from '@/features/header'
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -75,48 +74,45 @@ export const LearnDeck = ({
   }
 
   return (
-    <>
-      <Header />
-      <div className={s.container}>
-        <a className={s.link}>
-          <Icon height={'16'} iconId={'backArrow'} viewBox={'0 0 16 16'} width={'16'}></Icon>
-          <Typography variant={'body2'}>Back to Decks List</Typography>
-        </a>
-        <Card className={s.containerCard}>
-          <Typography variant={'h1'}>Learn {deckName}</Typography>
-          <ItemLearnCard image={imageQuestion} label={'Question: '} text={question} />
-          <div className={s.containerText}>
-            <Typography colorTheme={'dark'} variant={'body2'}>
-              Количество попыток ответов на вопрос:
-            </Typography>
-            <Typography colorTheme={'dark'} variant={'subtitle2'}>
-              {numberAttempts}
-            </Typography>
-          </div>
-          {!isShowAnswer && (
-            <Button isFullWidth onClick={showAnswerHandler}>
-              Show Answer
-            </Button>
-          )}
-          {isShowAnswer && (
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <ItemLearnCard image={imageAnswer} label={'Answer: '} text={answer} />
-              <div className={s.containerRadio}>
-                <Typography variant={'subtitle1'}>Rate yourself:</Typography>
-                <DevTool control={control} />
-                <ControlledRadioGroup
-                  control={control}
-                  defaultValue={'0'}
-                  name={'grade'}
-                  options={optionsRadioGroup}
-                />
-              </div>
-              <Button isFullWidth>Next Question</Button>
-            </form>
-          )}
-        </Card>
-      </div>
-    </>
+    <div className={s.container}>
+      <a className={s.link}>
+        <Icon height={'16'} iconId={'backArrow'} viewBox={'0 0 16 16'} width={'16'}></Icon>
+        <Typography variant={'body2'}>Back to Decks List</Typography>
+      </a>
+      <Card className={s.containerCard}>
+        <Typography variant={'h1'}>Learn {deckName}</Typography>
+        <ItemLearnCard image={imageQuestion} label={'Question: '} text={question} />
+        <div className={s.containerText}>
+          <Typography colorTheme={'dark'} variant={'body2'}>
+            Количество попыток ответов на вопрос:
+          </Typography>
+          <Typography colorTheme={'dark'} variant={'subtitle2'}>
+            {numberAttempts}
+          </Typography>
+        </div>
+        {!isShowAnswer && (
+          <Button isFullWidth onClick={showAnswerHandler}>
+            Show Answer
+          </Button>
+        )}
+        {isShowAnswer && (
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <ItemLearnCard image={imageAnswer} label={'Answer: '} text={answer} />
+            <div className={s.containerRadio}>
+              <Typography variant={'subtitle1'}>Rate yourself:</Typography>
+              <DevTool control={control} />
+              <ControlledRadioGroup
+                control={control}
+                defaultValue={'0'}
+                name={'grade'}
+                options={optionsRadioGroup}
+              />
+            </div>
+            <Button isFullWidth>Next Question</Button>
+          </form>
+        )}
+      </Card>
+    </div>
   )
 }
 

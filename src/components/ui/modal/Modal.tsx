@@ -15,11 +15,13 @@ export type ModalProps = {
   contentText?: string
   headerTitle?: string
   isHeaderContent?: boolean
+  isOpen: boolean
   isShowFooterSecondaryButton?: boolean
   labelFooterPrimaryButton: string
   labelFooterSecondaryButton?: string
   onClickPrimaryButton: () => void
   onClickSecondaryButton?: () => void
+  setIsOpen: (isOpen: boolean) => void
   variant: VariantModalContent
 } & ComponentPropsWithoutRef<typeof Dialog.Root>
 
@@ -31,18 +33,20 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(
       contentText,
       headerTitle,
       isHeaderContent,
+      isOpen,
       isShowFooterSecondaryButton,
       labelFooterPrimaryButton,
       labelFooterSecondaryButton,
       onClickPrimaryButton,
       onClickSecondaryButton,
+      setIsOpen,
       variant,
       ...rest
     },
     ref
   ) => {
     return (
-      <Dialog.Root open {...rest}>
+      <Dialog.Root onOpenChange={setIsOpen} open={isOpen} {...rest}>
         <Dialog.Portal>
           <Dialog.Overlay className={s.dialogOverlay} />
           <Dialog.Content className={`${s.dialogContent} ${className}`} ref={ref}>

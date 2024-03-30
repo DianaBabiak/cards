@@ -40,8 +40,10 @@ export const Default: Story = {
     contentText:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniamdsa',
     headerTitle: 'Title',
+    isOpen: true,
     labelFooterPrimaryButton: 'Primary button',
     labelFooterSecondaryButton: 'Secondary button',
+    setIsOpen: () => {},
     variant: VariantModalContent.text,
   },
 }
@@ -61,8 +63,10 @@ export const WithSelector: Story = {
       />
     ),
     headerTitle: 'Title',
+    isOpen: true,
     labelFooterPrimaryButton: 'Primary button',
     labelFooterSecondaryButton: 'Secondary button',
+    setIsOpen: () => {},
     variant: VariantModalContent.withChildren,
   },
 }
