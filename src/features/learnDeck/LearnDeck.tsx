@@ -76,7 +76,7 @@ export const LearnDeck = ({}: LearnDeckProps) => {
         idDeck: idDeck || '',
       })
       if (!isError) {
-        reset()
+        reset({ grade: '1' })
         setIsShowAnswer(false)
       }
     } catch (err) {
