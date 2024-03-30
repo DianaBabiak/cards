@@ -4,33 +4,50 @@ import { ControlledCheckbox } from '@/components/ui/controlled/controlled-checkb
 import { Modal } from '@/components/ui/modal'
 import { VariantModalContent } from '@/components/ui/modal/contentContainerModal/ContentContainerModal'
 import { CreationItem } from '@/features/creationEntity/creationItem/CreationItem'
+import { useCreateDeckMutation } from '@/features/decksList/api'
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
 import s from '../creationEntity.module.scss'
 
-export type CreationDeckProps = {}
+export type CreationDeckProps = {
+  isOpen: boolean
+  setIsOpen: (isOpen: boolean) => void
+}
 
 const CreationDeckFormSchema = z.object({
   image: z.any().optional(),
-  name: z.string(),
+  name: z.string().min(3),
   private: z.boolean().default(false),
 })
 
 export type CreationDeckFormValues = z.infer<typeof CreationDeckFormSchema>
-export const CreationDeck = ({}: CreationDeckProps) => {
+export const CreationDeck = ({ isOpen, setIsOpen }: CreationDeckProps) => {
   const {
     control,
     formState: { errors },
     handleSubmit,
     register,
+    reset,
   } = useForm<CreationDeckFormValues>({
     resolver: zodResolver(CreationDeckFormSchema),
   })
-
-  const onSubmit = (data: CreationDeckFormValues) => {
-    console.log(data, 'jjjjjj')
+  const [createDeckMutation, { isError }] = useCreateDeckMutation()
+  const onSubmit = async (dataFormValues: CreationDeckFormValues) => {
+    try {
+      await createDeckMutation({
+        cover: dataFormValues.image,
+        isPrivate: dataFormValues.private,
+        name: dataFormValues.name,
+      })
+      if (!isError) {
+        reset({ image: null, name: '', private: false })
+        setIsOpen(false)
+      }
+    } catch (err) {
+      console.error('Ошибка при создании дека:', err)
+    }
   }
 
   return (
@@ -38,10 +55,12 @@ export const CreationDeck = ({}: CreationDeckProps) => {
       <DevTool control={control} />
       <Modal
         headerTitle={'Add New Deck'}
+        isOpen={isOpen}
         labelFooterPrimaryButton={'Add New Pack'}
         labelFooterSecondaryButton={'Cancel'}
         onClickPrimaryButton={handleSubmit(onSubmit)}
         onClickSecondaryButton={() => {}}
+        setIsOpen={setIsOpen}
         variant={VariantModalContent.withChildren}
       >
         <CreationItem<CreationDeckFormValues>

@@ -1,9 +1,11 @@
-import { LoginForm } from '@/components/auth/login/loginForm'
+import { DecksList } from '@/features/decksList/ui/decks'
+import { Header } from '@/features/header'
 
 export function App() {
   return (
     <div>
-      <LoginForm />
+      <Header />
+      <DecksList />
     </div>
   )
 }
