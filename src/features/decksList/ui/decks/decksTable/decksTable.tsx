@@ -18,10 +18,11 @@ import s from '@/features/decksList/ui/decks/decks.module.scss'
 type DecksTableProps = {
   data: ResponseGetDecks
   onChangeSortPerData: (sortData: 'asc' | 'desc') => void
+  onOpenDeleteDeckModalHandler: (idDeck: string) => void
 }
 
 export const DecksTable = (props: DecksTableProps) => {
-  const { data, onChangeSortPerData } = props
+  const { data, onChangeSortPerData, onOpenDeleteDeckModalHandler } = props
 
   const formatter1 = new Intl.DateTimeFormat('ru')
 
@@ -67,7 +68,13 @@ export const DecksTable = (props: DecksTableProps) => {
                   <Icon iconId={'playCircle'} />
                 </Link>
                 <Button as={'a'} buttonImg={'edit2'} className={s.deckButton} isImg></Button>
-                <Button as={'a'} buttonImg={'trash'} className={s.deckButton} isImg></Button>
+                <Button
+                  as={'a'}
+                  buttonImg={'trash'}
+                  className={s.deckButton}
+                  isImg
+                  onClick={() => onOpenDeleteDeckModalHandler(deck.id)}
+                ></Button>
               </div>
             </TableBodyCell>
           </TableRow>
