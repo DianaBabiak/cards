@@ -9,7 +9,7 @@
   justify-content: space-between;
 }
 
-.filterDecksWrapper{
+.filterDecksWrapper {
   display: flex;
   justify-content: space-between;
   align-items: end;
@@ -19,14 +19,14 @@
 .searchDecks {
   width: 300px;
   height: 36px;
- }
+}
 
 .tableDecks {
   width: 100%;
   margin-bottom: 24px;
 }
 
-.deckButtonsWrapper{
+.deckButtonsWrapper {
   width: auto;
   height: fit-content;
   display: flex;
@@ -34,7 +34,7 @@
   gap: 10px;
 }
 
-.deckButtonsCell{
+.deckButtonsCell {
   width: 117px;
   padding: 6px 10px;
 }
