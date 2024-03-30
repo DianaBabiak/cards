@@ -1,8 +1,15 @@
 import { useEffect, useState } from 'react'
 
+import { Modal } from '@/components/ui/modal'
+import { VariantModalContent } from '@/components/ui/modal/contentContainerModal/ContentContainerModal'
 import { Pagination } from '@/components/ui/pagination'
 import { CreationDeck } from '@/features/creationEntity/creationDeck'
-import { OrderBy, useGetDecksQuery, useGetMinMaxCardsQuery } from '@/features/decksList/api'
+import {
+  OrderBy,
+  useDeleteDeckMutation,
+  useGetDecksQuery,
+  useGetMinMaxCardsQuery,
+} from '@/features/decksList/api'
 import { DecksFilters } from '@/features/decksList/ui/decks/decksFiltres/decksFiltres'
 import { DecksTable } from '@/features/decksList/ui/decks/decksTable/decksTable'
 
@@ -16,6 +23,8 @@ export const DecksList = () => {
   const [orderBy, setOrderBy] = useState<OrderBy>(null)
   const [name, setName] = useState('')
   const [isOpenCreateDeck, setIsOpenCreateDeck] = useState(false)
+  const [isOpenDeleteDeck, setIsOpenDeleteDeck] = useState(false)
+  const [currentIdDeck, setCurrentIdDeck] = useState('')
 
   const { data: minMaxCards } = useGetMinMaxCardsQuery()
 
@@ -30,7 +39,7 @@ export const DecksList = () => {
     name,
     orderBy,
   })
-
+  const [deleteDeck, {}] = useDeleteDeckMutation()
   const onChangePageHandler = (page: number) => {
     setCurrentPage(page)
   }
@@ -56,6 +65,20 @@ export const DecksList = () => {
     setIsOpenCreateDeck(true)
   }
 
+  const onOpenDeleteDeckModalHandler = (idDeck: string) => {
+    setIsOpenDeleteDeck(true)
+    setCurrentIdDeck(idDeck)
+  }
+  const onDeleteDeckHandler = async () => {
+    try {
+      await deleteDeck({
+        id: currentIdDeck,
+      })
+    } catch (err) {
+      console.error('Ошибка при удалении дека:', err)
+    }
+  }
+
   useEffect(() => {
     setMaxCardsCount(minMaxCards?.max)
     setMinCardsCount(minMaxCards?.min)
@@ -69,13 +92,27 @@ export const DecksList = () => {
       <div className={s.container}>
         <DecksTitleAddDeck onOpenCreateCardHandler={onOpenCreateCardHandler} />
         <CreationDeck isOpen={isOpenCreateDeck} setIsOpen={setIsOpenCreateDeck} />
+        <Modal
+          contentText={'Do you really want to remove Deck? All cards will be deleted.'}
+          headerTitle={'Delete Deck'}
+          isOpen={isOpenDeleteDeck}
+          labelFooterPrimaryButton={'Delete Card'}
+          labelFooterSecondaryButton={'Cansel'}
+          onClickPrimaryButton={onDeleteDeckHandler}
+          setIsOpen={setIsOpenDeleteDeck}
+          variant={VariantModalContent.text}
+        />
         <DecksFilters
           maxCardsCount={maxCardsCount}
           minCardsCount={minCardsCount}
           onSetSearchNameHandler={onSearchNameHandler}
           onSliderValueChange={onSliderValueChange}
         />
-        <DecksTable data={data} onChangeSortPerData={onChangeSortPerData} />
+        <DecksTable
+          data={data}
+          onChangeSortPerData={onChangeSortPerData}
+          onOpenDeleteDeckModalHandler={onOpenDeleteDeckModalHandler}
+        />
 
         <Pagination
           count={data.pagination.totalPages}
