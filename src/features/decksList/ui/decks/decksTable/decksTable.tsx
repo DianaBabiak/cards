@@ -51,7 +51,9 @@ export const DecksTable = (props: DecksTableProps) => {
         {data.items.map(deck => (
           <TableRow className={s.deckTableRow} key={deck.id}>
             <TableBodyCell>
-              <Typography variant={'body2'}>{deck.name}</Typography>
+              <Link to={`deck/${deck.id}`}>
+                <Typography variant={'body2'}>{deck.name}</Typography>
+              </Link>
             </TableBodyCell>
             <TableBodyCell>
               <Typography variant={'body2'}>{deck.cardsCount}</Typography>

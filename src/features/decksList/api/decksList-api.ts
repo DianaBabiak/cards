@@ -5,9 +5,11 @@ import {
   DecksItems,
   DeleteDeckArgs,
   DeleteDeckResponse,
+  GetCardsArgs,
   GetDecksArgs,
   GetRandomCard,
   ResponseGetCard,
+  ResponseGetCards,
   ResponseGetDecks,
   ResponseGetMinMaxCards,
   SaveGradeCard,
@@ -30,6 +32,13 @@ export const decksApi = baseApi.injectEndpoints({
         query: args => ({
           method: 'DELETE',
           url: `/v1/decks/${args.id}`,
+        }),
+      }),
+      getCards: builder.query<ResponseGetCards, GetCardsArgs>({
+        providesTags: ['Decks'],
+        query: ({ id, ...params }) => ({
+          params: params ?? undefined,
+          url: `/v1/decks/${id}/cards`,
         }),
       }),
       getDecks: builder.query<ResponseGetDecks, GetDecksArgs | void>({
@@ -70,6 +79,7 @@ export const decksApi = baseApi.injectEndpoints({
 export const {
   useCreateDeckMutation,
   useDeleteDeckMutation,
+  useGetCardsQuery,
   useGetDecksQuery,
   useGetMinMaxCardsQuery,
   useGetRandomCardQuery,

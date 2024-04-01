@@ -92,3 +92,17 @@ export type SaveGradeCard = {
   grade: 0 | 1 | 2 | 3 | 4 | 5
   idDeck: string
 }
+
+export type ResponseGetCards = {
+  items: ResponseGetCard[]
+  pagination: DecksPagination
+}
+
+export type GetCardsArgs = {
+  answer?: string
+  currentPage?: number
+  id: string
+  itemsPerPage?: number
+  orderBy?: OrderBy
+  question?: string
+}
