@@ -2,8 +2,8 @@ import { baseApi } from '@/services/base-api'
 
 import {
   CreateDeckArgs,
-  DecksItems,
-  DeleteDeckArgs,
+  DeckArgs,
+  DecksItem,
   DeleteDeckResponse,
   GetCardsArgs,
   GetDecksArgs,
@@ -19,7 +19,7 @@ import {
 export const decksApi = baseApi.injectEndpoints({
   endpoints: builder => {
     return {
-      createDeck: builder.mutation<DecksItems, CreateDeckArgs>({
+      createDeck: builder.mutation<DecksItem, CreateDeckArgs>({
         invalidatesTags: ['Decks'],
         query: args => ({
           body: args,
@@ -27,7 +27,7 @@ export const decksApi = baseApi.injectEndpoints({
           url: '/v1/decks',
         }),
       }),
-      deleteDeck: builder.mutation<DeleteDeckResponse, DeleteDeckArgs>({
+      deleteDeck: builder.mutation<DeleteDeckResponse, DeckArgs>({
         invalidatesTags: ['Decks'],
         query: args => ({
           method: 'DELETE',
@@ -35,10 +35,16 @@ export const decksApi = baseApi.injectEndpoints({
         }),
       }),
       getCards: builder.query<ResponseGetCards, GetCardsArgs>({
-        providesTags: ['Decks'],
+        providesTags: ['Cards'],
         query: ({ id, ...params }) => ({
           params: params ?? undefined,
           url: `/v1/decks/${id}/cards`,
+        }),
+      }),
+      getDeck: builder.query<DecksItem, DeckArgs>({
+        providesTags: ['Decks'],
+        query: ({ id }) => ({
+          url: `/v1/decks/${id}`,
         }),
       }),
       getDecks: builder.query<ResponseGetDecks, GetDecksArgs | void>({
@@ -64,7 +70,7 @@ export const decksApi = baseApi.injectEndpoints({
           url: `/v1/decks/${idDeck}/learn`,
         }),
       }),
-      updateDeck: builder.mutation<DecksItems, UpdateDeckArgs>({
+      updateDeck: builder.mutation<DecksItem, UpdateDeckArgs>({
         invalidatesTags: ['Decks'],
         query: ({ id, ...args }) => ({
           body: args,
@@ -80,6 +86,7 @@ export const {
   useCreateDeckMutation,
   useDeleteDeckMutation,
   useGetCardsQuery,
+  useGetDeckQuery,
   useGetDecksQuery,
   useGetMinMaxCardsQuery,
   useGetRandomCardQuery,

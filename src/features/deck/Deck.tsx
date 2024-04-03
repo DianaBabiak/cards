@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 
 import { Button } from '@/components/ui/button'
@@ -15,32 +14,47 @@ import {
 } from '@/components/ui/table'
 import { TextField } from '@/components/ui/textField'
 import { Typography } from '@/components/ui/typography'
-import { OrderBy, useGetCardsQuery } from '@/features/decksList/api'
+import { useDeck } from '@/features/deck/useDeck'
+import { useGetCardsQuery, useGetDeckQuery } from '@/features/decksList/api'
 
 import s from './deck.module.scss'
 
 export const Deck = () => {
-  const [currentPage, setCurrentPage] = useState(1)
-  const [itemsPerPage, setItemsPerPage] = useState(10)
-  const [orderBy, setOrderBy] = useState<OrderBy>(null)
-  const [answer, setAnswer] = useState('')
-  const [question, setQuestion] = useState('')
-
   const location = useLocation()
   const idDeck = location.pathname.split('/').pop()
-  const { data, isLoading } = useGetCardsQuery({
+
+  const { data: deckData, isLoading: isLoadingGetDeck } = useGetDeckQuery({
+    id: idDeck,
+  })
+  const formatter1 = new Intl.DateTimeFormat('ru')
+
+  const {
     answer,
-    currentPage,
+    handleChangeAnswer,
+    handleChangeItemsPerPage,
+    handleChangePage,
+    handleChangeQuestion,
+    handleChangeSort,
+    handleToPreviewPage,
+    itemsPerPage,
+    orderBy,
+    page,
+    question,
+  } = useDeck()
+
+  const { data, isLoading: isLoadingGetCards } = useGetCardsQuery({
+    answer,
+    currentPage: page,
     id: idDeck,
     itemsPerPage,
     orderBy,
     question,
   })
-  const formatter1 = new Intl.DateTimeFormat('ru')
+  // const isOwner = deck?.userId === userData?.id
 
   return (
     <div className={s.container}>
-      {isLoading ? (
+      {isLoadingGetDeck || isLoadingGetCards ? (
         <div>LOADING....</div>
       ) : (
         <>
@@ -50,7 +64,7 @@ export const Deck = () => {
           </Link>
           <div className={s.titleContainer}>
             <div className={s.containerDropDownMenu}>
-              <Typography variant={'h1'}>Name Deck</Typography>
+              <Typography variant={'h1'}>{deckData?.name}</Typography>
               <DropDownMenu
                 trigger={
                   <button className={s.buttonDropDownMenu}>
@@ -93,16 +107,15 @@ export const Deck = () => {
             </div>
           ) : (
             <div className={s.wrapperContent}>
-              {
-                <img
-                  alt={'mainCardImage'}
-                  className={s.mainImageCard}
-                  src={
-                    'https://img.freepik.com/free-photo/the-adorable-illustration-of-kittens-playing-in-the-forest-generative-ai_260559-483.jpg?size=338&ext=jpg&ga=GA1.1.1908636980.1711929600&semt=ais'
-                  }
-                />
-              }
-              <TextField className={s.textField} inputType={'search'} />
+              {deckData?.cover && (
+                <img alt={'mainCardImage'} className={s.mainImageCard} src={deckData.cover} />
+              )}
+
+              <TextField
+                className={s.textField}
+                inputType={'search'}
+                onValueChange={handleChangeQuestion}
+              />
               <Table className={s.tableDecks}>
                 <TableHead>
                   <TableRow className={s.deckTableRow}>
@@ -112,7 +125,11 @@ export const Deck = () => {
                     <TableHeadCell className={s.cell}>
                       <Typography variant={'subtitle2'}>Answer</Typography>
                     </TableHeadCell>
-                    <TableHeadCell className={s.cell} isSortedColumn>
+                    <TableHeadCell
+                      className={s.cell}
+                      isSortedColumn
+                      onChangeSort={handleChangeSort}
+                    >
                       <Typography variant={'subtitle2'}>Last Updated</Typography>
                     </TableHeadCell>
                     <TableHeadCell className={s.cell}>
@@ -125,8 +142,8 @@ export const Deck = () => {
                   {data?.items.map(card => (
                     <TableRow className={s.deckTableRow} key={card.id}>
                       <TableBodyCell className={s.cell}>
-                        <Typography variant={'body2'}>
-                          {card.question}
+                        <div className={s.wrapperTableImg}>
+                          <Typography variant={'body2'}>{card.question}</Typography>
                           {card.questionImg && (
                             <img
                               alt={'questionCardImage'}
@@ -134,11 +151,11 @@ export const Deck = () => {
                               src={card.questionImg}
                             />
                           )}
-                        </Typography>
+                        </div>
                       </TableBodyCell>
                       <TableBodyCell className={s.cell}>
-                        <Typography variant={'body2'}>
-                          {card.answer}
+                        <div className={s.wrapperTableImg}>
+                          <Typography variant={'body2'}>{card.answer}</Typography>
                           {card.answerImg && (
                             <img
                               alt={'answerCardImage'}
@@ -146,7 +163,7 @@ export const Deck = () => {
                               src={card.answerImg}
                             />
                           )}
-                        </Typography>
+                        </div>
                       </TableBodyCell>
                       <TableBodyCell className={s.cell}>
                         <Typography variant={'body2'}>
@@ -186,8 +203,8 @@ export const Deck = () => {
               </Table>
               <Pagination
                 count={data?.pagination.totalPages || 1}
-                onChange={() => {}}
-                onPerPageChange={() => {}}
+                onChange={handleChangePage}
+                onPerPageChange={handleChangeItemsPerPage}
                 page={data?.pagination.currentPage || 1}
                 perPage={data?.pagination.itemsPerPage.toString() || '10'}
                 perPageOptions={['20', '15', '10', '5']}

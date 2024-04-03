@@ -1,6 +1,6 @@
 .container {
   max-width: 1008px;
-  margin: 0 auto;
+  margin: 0 auto 30px;
 }
 
 .link {
@@ -106,12 +106,25 @@
 
 .mainImageCard {
   max-width: 170px;
+  max-height: 107px;
+  object-fit: cover;
 }
 
 .imageCard {
-  width: 100%;
+  max-width: 118px;
+  min-height: 48px;
+  object-fit: cover;
 }
 
 a {
   text-decoration: none;
+}
+
+.wrapperTableImg {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: flex-start;
+
+  width: 100%;
 }

@@ -1,12 +1,12 @@
 export type ResponseGetDecks = {
-  items: DecksItems[]
+  items: DecksItem[]
   pagination: DecksPagination
 }
 export type DecksItemsAuthor = {
   id: string
   name: string
 }
-export type DecksItems = {
+export type DecksItem = {
   author: DecksItemsAuthor
   cardsCount: number
   cover: string
@@ -40,13 +40,13 @@ export type CreateDeckArgs = {
   name: string
 }
 
-export type DeleteDeckArgs = {
+export type DeckArgs = {
   id: string
 }
 
-export type DeleteDeckResponse = Omit<DecksItems, 'author'>
+export type DeleteDeckResponse = Omit<DecksItem, 'author'>
 
-export type UpdateDeckArgs = Partial<CreateDeckArgs> & DeleteDeckArgs
+export type UpdateDeckArgs = Partial<CreateDeckArgs> & DeckArgs
 
 export type OrderBy =
   | 'author.name-asc'
@@ -103,6 +103,6 @@ export type GetCardsArgs = {
   currentPage?: number
   id: string
   itemsPerPage?: number
-  orderBy?: OrderBy
+  orderBy?: string
   question?: string
 }
