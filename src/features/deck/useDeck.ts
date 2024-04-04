@@ -28,15 +28,6 @@ export const useDeck = () => {
     setSearchParams(searchParams)
   }
 
-  const handleChangeAnswer = (answer: string) => {
-    if (answer) {
-      searchParams.set('answer', answer)
-    } else {
-      searchParams.delete('answer')
-    }
-    searchParams.set('page', '1')
-    setSearchParams(searchParams)
-  }
   const handleChangeItemsPerPage = (items: string) => {
     searchParams.set('items', items)
     searchParams.set('page', '1')
@@ -52,7 +43,7 @@ export const useDeck = () => {
 
   const handleChangeSort = (sort: 'asc' | 'desc') => {
     if (sort) {
-      searchParams.set('sort', `${sort}`)
+      searchParams.set('sort', `created-${sort}`)
     } else {
       searchParams.delete('sort')
     }
@@ -74,7 +65,6 @@ export const useDeck = () => {
 
   return {
     answer,
-    handleChangeAnswer,
     handleChangeItemsPerPage,
     handleChangePage,
     handleChangeQuestion,

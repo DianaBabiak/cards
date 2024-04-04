@@ -1,6 +1,7 @@
 import { baseApi } from '@/services/base-api'
 
 import {
+  CreateCardArgs,
   CreateDeckArgs,
   DeckArgs,
   DecksItem,
@@ -19,6 +20,14 @@ import {
 export const decksApi = baseApi.injectEndpoints({
   endpoints: builder => {
     return {
+      createCard: builder.mutation<ResponseGetCard, CreateCardArgs>({
+        invalidatesTags: ['Cards'],
+        query: ({ id, ...args }) => ({
+          body: args,
+          method: 'POST',
+          url: `/v1/decks/${id}/cards`,
+        }),
+      }),
       createDeck: builder.mutation<DecksItem, CreateDeckArgs>({
         invalidatesTags: ['Decks'],
         query: args => ({
@@ -27,11 +36,18 @@ export const decksApi = baseApi.injectEndpoints({
           url: '/v1/decks',
         }),
       }),
-      deleteDeck: builder.mutation<DeleteDeckResponse, DeckArgs>({
-        invalidatesTags: ['Decks'],
+      deleteCard: builder.mutation<DeleteDeckResponse, DeckArgs>({
+        invalidatesTags: ['Cards'],
         query: args => ({
           method: 'DELETE',
           url: `/v1/decks/${args.id}`,
+        }),
+      }),
+      deleteDeck: builder.mutation<void, DeckArgs>({
+        invalidatesTags: ['Decks'],
+        query: args => ({
+          method: 'DELETE',
+          url: `/v1/cards/${args.id}`,
         }),
       }),
       getCards: builder.query<ResponseGetCards, GetCardsArgs>({
@@ -83,7 +99,9 @@ export const decksApi = baseApi.injectEndpoints({
 })
 
 export const {
+  useCreateCardMutation,
   useCreateDeckMutation,
+  useDeleteCardMutation,
   useDeleteDeckMutation,
   useGetCardsQuery,
   useGetDeckQuery,

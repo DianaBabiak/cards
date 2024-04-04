@@ -1,36 +1,33 @@
-import { Link, useLocation } from 'react-router-dom'
+import { useState } from 'react'
+import { useLocation } from 'react-router-dom'
 
-import { Button } from '@/components/ui/button'
-import { DropDownMenu, DropdownItem } from '@/components/ui/dropDownMenu'
-import { Icon } from '@/components/ui/icon'
+import { Modal } from '@/components/ui/modal'
+import { VariantModalContent } from '@/components/ui/modal/contentContainerModal/ContentContainerModal'
 import { Pagination } from '@/components/ui/pagination'
-import {
-  Table,
-  TableBody,
-  TableBodyCell,
-  TableHead,
-  TableHeadCell,
-  TableRow,
-} from '@/components/ui/table'
 import { TextField } from '@/components/ui/textField'
-import { Typography } from '@/components/ui/typography'
+import { CreationCard } from '@/features/creationEntity/creationCard'
+import { DeckTable } from '@/features/deck/deckTable/DeckTable'
+import { EmptyDeck } from '@/features/deck/emptyDeck/EmptyDeck'
+import { LinkBackHome } from '@/features/deck/linkBackHome/LinkBackHome'
+import { NameDeck } from '@/features/deck/nameDeck/NameDeck'
 import { useDeck } from '@/features/deck/useDeck'
-import { useGetCardsQuery, useGetDeckQuery } from '@/features/decksList/api'
+import { useDeleteCardMutation, useGetCardsQuery, useGetDeckQuery } from '@/features/decksList/api'
 
 import s from './deck.module.scss'
 
 export const Deck = () => {
+  const [isOpenCreateCard, setIsOpenCreateCard] = useState(false)
+  const [isOpenDeleteCard, setIsOpenDeleteCard] = useState(false)
+  const [currentIdCard, setCurrentIdCard] = useState('')
   const location = useLocation()
   const idDeck = location.pathname.split('/').pop()
 
   const { data: deckData, isLoading: isLoadingGetDeck } = useGetDeckQuery({
-    id: idDeck,
+    id: idDeck as string,
   })
-  const formatter1 = new Intl.DateTimeFormat('ru')
 
   const {
     answer,
-    handleChangeAnswer,
     handleChangeItemsPerPage,
     handleChangePage,
     handleChangeQuestion,
@@ -41,176 +38,79 @@ export const Deck = () => {
     page,
     question,
   } = useDeck()
-
+  const onOpenCreateCardHandler = () => {
+    setIsOpenCreateCard(true)
+  }
   const { data, isLoading: isLoadingGetCards } = useGetCardsQuery({
     answer,
     currentPage: page,
-    id: idDeck,
+    id: idDeck as string,
     itemsPerPage,
     orderBy,
     question,
   })
+  const [deleteCard, {}] = useDeleteCardMutation()
+  const onOpenDeleteCardModalHandler = (idCard: string) => {
+    setIsOpenDeleteCard(true)
+    setCurrentIdCard(idCard)
+  }
+  const onDeleteCardHandler = async () => {
+    try {
+      await deleteCard({
+        id: currentIdCard,
+      })
+    } catch (err) {
+      console.error('Ошибка при удалении карточки:', err)
+    }
+  }
+
   // const isOwner = deck?.userId === userData?.id
+  if (isLoadingGetDeck || isLoadingGetCards) {
+    return <div>LOADING....</div>
+  }
 
   return (
     <div className={s.container}>
-      {isLoadingGetDeck || isLoadingGetCards ? (
-        <div>LOADING....</div>
+      <LinkBackHome />
+      {data?.items.length === 0 ? (
+        <EmptyDeck id={idDeck} />
       ) : (
         <>
-          <Link className={s.link} to={'/'}>
-            <Icon height={'16'} iconId={'backArrow'} viewBox={'0 0 16 16'} width={'16'}></Icon>
-            <Typography variant={'body2'}>Back to Decks List</Typography>
-          </Link>
-          <div className={s.titleContainer}>
-            <div className={s.containerDropDownMenu}>
-              <Typography variant={'h1'}>{deckData?.name}</Typography>
-              <DropDownMenu
-                trigger={
-                  <button className={s.buttonDropDownMenu}>
-                    <Icon
-                      height={'24px'}
-                      iconId={'moreVerticalOutline'}
-                      viewBox={'0 0 24 24 '}
-                      width={'24px'}
-                    />
-                  </button>
-                }
-              >
-                <DropdownItem>
-                  <Icon
-                    height={'16px'}
-                    iconId={'playCircle'}
-                    viewBox={'0 0 16 16 '}
-                    width={'16px'}
-                  />
-                  Learn
-                </DropdownItem>
-                <DropdownItem>
-                  <Icon height={'16px'} iconId={'edit2'} viewBox={'0 0 16 16 '} width={'16px'} />
-                  Edit
-                </DropdownItem>
-                <DropdownItem>
-                  <Icon height={'16px'} iconId={'trash'} viewBox={'0 0 16 16 '} width={'16px'} />
-                  Delete
-                </DropdownItem>
-              </DropDownMenu>
-            </div>
-            <Button>Add New Card</Button>
+          <CreationCard id={idDeck} isOpen={isOpenCreateCard} setIsOpen={setIsOpenCreateCard} />
+          <Modal
+            contentText={'Do you really want to remove Card?'}
+            headerTitle={'Delete Card'}
+            isOpen={isOpenDeleteCard}
+            labelFooterPrimaryButton={'Delete Card'}
+            labelFooterSecondaryButton={'Cansel'}
+            onClickPrimaryButton={onDeleteCardHandler}
+            setIsOpen={setIsOpenDeleteCard}
+            variant={VariantModalContent.text}
+          />
+          <NameDeck deckName={deckData?.name} onOpenCreateCardHandler={onOpenCreateCardHandler} />
+          <div className={s.wrapperContent}>
+            {deckData?.cover && (
+              <img alt={'mainCardImage'} className={s.mainImageCard} src={deckData.cover} />
+            )}
+            <TextField
+              className={s.textField}
+              inputType={'search'}
+              onValueChange={handleChangeQuestion}
+            />
+            <DeckTable
+              data={data}
+              handleChangeSort={handleChangeSort}
+              onOpenDeleteCardModalHandler={onOpenDeleteCardModalHandler}
+            />
+            <Pagination
+              count={data?.pagination.totalPages || 1}
+              onChange={handleChangePage}
+              onPerPageChange={handleChangeItemsPerPage}
+              page={data?.pagination.currentPage || 1}
+              perPage={data?.pagination.itemsPerPage.toString() || '10'}
+              perPageOptions={['20', '15', '10', '5']}
+            />
           </div>
-          {data?.items.length === 0 ? (
-            <div className={s.wrapperEmptyContent}>
-              <Typography colorTheme={'dark'}>
-                This pack is empty. Click add new card to fill this pack
-              </Typography>
-              <Button>Add New Card</Button>
-            </div>
-          ) : (
-            <div className={s.wrapperContent}>
-              {deckData?.cover && (
-                <img alt={'mainCardImage'} className={s.mainImageCard} src={deckData.cover} />
-              )}
-
-              <TextField
-                className={s.textField}
-                inputType={'search'}
-                onValueChange={handleChangeQuestion}
-              />
-              <Table className={s.tableDecks}>
-                <TableHead>
-                  <TableRow className={s.deckTableRow}>
-                    <TableHeadCell className={s.cell}>
-                      <Typography variant={'subtitle2'}>Question</Typography>
-                    </TableHeadCell>
-                    <TableHeadCell className={s.cell}>
-                      <Typography variant={'subtitle2'}>Answer</Typography>
-                    </TableHeadCell>
-                    <TableHeadCell
-                      className={s.cell}
-                      isSortedColumn
-                      onChangeSort={handleChangeSort}
-                    >
-                      <Typography variant={'subtitle2'}>Last Updated</Typography>
-                    </TableHeadCell>
-                    <TableHeadCell className={s.cell}>
-                      <Typography variant={'subtitle2'}>Grade</Typography>
-                    </TableHeadCell>
-                    <TableHeadCell className={s.lastCell}></TableHeadCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {data?.items.map(card => (
-                    <TableRow className={s.deckTableRow} key={card.id}>
-                      <TableBodyCell className={s.cell}>
-                        <div className={s.wrapperTableImg}>
-                          <Typography variant={'body2'}>{card.question}</Typography>
-                          {card.questionImg && (
-                            <img
-                              alt={'questionCardImage'}
-                              className={s.imageCard}
-                              src={card.questionImg}
-                            />
-                          )}
-                        </div>
-                      </TableBodyCell>
-                      <TableBodyCell className={s.cell}>
-                        <div className={s.wrapperTableImg}>
-                          <Typography variant={'body2'}>{card.answer}</Typography>
-                          {card.answerImg && (
-                            <img
-                              alt={'answerCardImage'}
-                              className={s.imageCard}
-                              src={card.answerImg}
-                            />
-                          )}
-                        </div>
-                      </TableBodyCell>
-                      <TableBodyCell className={s.cell}>
-                        <Typography variant={'body2'}>
-                          {formatter1.format(new Date(card.updated))}
-                        </Typography>
-                      </TableBodyCell>
-                      <TableBodyCell className={s.cell}>
-                        <Typography variant={'body2'}>
-                          <div className={s.gradesContainer}>
-                            <Icon height={'16px'} iconId={'emptyStar'} width={'16px'}></Icon>
-                            <Icon height={'16px'} iconId={'emptyStar'} width={'16px'}></Icon>
-                            <Icon height={'16px'} iconId={'emptyStar'} width={'16px'}></Icon>
-                            <Icon height={'16px'} iconId={'emptyStar'} width={'16px'}></Icon>
-                            <Icon height={'16px'} iconId={'emptyStar'} width={'16px'}></Icon>
-                          </div>
-                        </Typography>
-                      </TableBodyCell>
-                      <TableBodyCell className={s.lastCell}>
-                        <div className={s.deckButtonsWrapper}>
-                          <Button
-                            as={'a'}
-                            buttonImg={'edit2'}
-                            className={s.deckButton}
-                            isImg
-                          ></Button>
-                          <Button
-                            as={'a'}
-                            buttonImg={'trash'}
-                            className={s.deckButton}
-                            isImg
-                          ></Button>
-                        </div>
-                      </TableBodyCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-              <Pagination
-                count={data?.pagination.totalPages || 1}
-                onChange={handleChangePage}
-                onPerPageChange={handleChangeItemsPerPage}
-                page={data?.pagination.currentPage || 1}
-                perPage={data?.pagination.itemsPerPage.toString() || '10'}
-                perPageOptions={['20', '15', '10', '5']}
-              />
-            </div>
-          )}
         </>
       )}
     </div>

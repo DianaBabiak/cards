@@ -86,17 +86,11 @@
 
 .cell {
   height: 100%;
+  text-align: justify;
 }
 
 .cell:nth-child(-n + 2) {
   width: 28%;
-}
-
-.gradesContainer {
-  display: flex;
-  gap: 5px;
-  align-items: center;
-  justify-content: space-between;
 }
 
 .lastCell {
@@ -127,4 +121,9 @@ a {
   justify-content: flex-start;
 
   width: 100%;
+}
+
+.deckTableRow {
+  hyphens: auto;
+  word-wrap: break-word;
 }

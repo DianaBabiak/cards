@@ -3,12 +3,14 @@ import { useForm } from 'react-hook-form'
 import { Modal } from '@/components/ui/modal'
 import { VariantModalContent } from '@/components/ui/modal/contentContainerModal/ContentContainerModal'
 import { CreationItem } from '@/features/creationEntity/creationItem/CreationItem'
+import { useCreateCardMutation } from '@/features/decksList/api'
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
 export type CreationCardProps = {
   defaultImage?: string
+  id?: string
   isOpen: boolean
   setIsOpen: (isOpen: boolean) => void
 }
@@ -21,17 +23,33 @@ const CreationCardFormSchema = z.object({
 })
 
 export type CreationCardFormValues = z.infer<typeof CreationCardFormSchema>
-export const CreationCard = ({ defaultImage, isOpen, setIsOpen }: CreationCardProps) => {
+export const CreationCard = ({ defaultImage, id, isOpen, setIsOpen }: CreationCardProps) => {
+  const [createCardMutation, { isError }] = useCreateCardMutation()
   const {
     control,
     formState: { errors },
     handleSubmit,
     register,
+    reset,
   } = useForm<CreationCardFormValues>({
     resolver: zodResolver(CreationCardFormSchema),
   })
-  const onSubmit = (data: CreationCardFormValues) => {
-    console.log(data, 'jjjjjj')
+  const onSubmit = async (dataFormValues: CreationCardFormValues) => {
+    try {
+      await createCardMutation({
+        answer: dataFormValues.answerName,
+        answerImg: dataFormValues.answerImage,
+        id,
+        question: dataFormValues.questionName,
+        questionImg: dataFormValues.questionImage,
+      })
+      if (!isError) {
+        reset({ answerImage: null, answerName: '', questionImage: null, questionName: '' })
+        setIsOpen(false)
+      }
+    } catch (err) {
+      console.error('Ошибка при создании карточки:', err)
+    }
   }
 
   return (
