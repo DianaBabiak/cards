@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom'
 
 import { LoginForm } from '@/components/auth/login/loginForm'
+import { Cards } from '@/features/cards/ui/Cards'
 import { DecksList } from '@/features/decksList/ui/decks'
 import { LearnDeck } from '@/features/learnDeck'
 
@@ -25,6 +26,10 @@ const privateRoutes: RouteObject[] = [
   {
     element: <LearnDeck />,
     path: '/learn/:deckId',
+  },
+  {
+    element: <Cards />,
+    path: '/deck/:deckId',
   },
 ]
 

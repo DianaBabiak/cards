@@ -3,13 +3,13 @@ import { useForm } from 'react-hook-form'
 import { ControlledCheckbox } from '@/components/ui/controlled/controlled-checkbox/controlled-checkbox'
 import { Modal } from '@/components/ui/modal'
 import { VariantModalContent } from '@/components/ui/modal/contentContainerModal/ContentContainerModal'
-import { CreationItem } from '@/features/creationEntity/creationItem/CreationItem'
+import { Item } from '@/features/creationEditionEntity/createEditCard/item'
 import { useCreateDeckMutation } from '@/features/decksList/api'
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
-import s from '../creationEntity.module.scss'
+import s from '../../creationEditionEntity.module.scss'
 
 export type CreationDeckProps = {
   isOpen: boolean
@@ -30,6 +30,7 @@ export const CreationDeck = ({ isOpen, setIsOpen }: CreationDeckProps) => {
     handleSubmit,
     register,
     reset,
+    setValue,
   } = useForm<CreationDeckFormValues>({
     resolver: zodResolver(CreationDeckFormSchema),
   })
@@ -63,7 +64,7 @@ export const CreationDeck = ({ isOpen, setIsOpen }: CreationDeckProps) => {
         setIsOpen={setIsOpen}
         variant={VariantModalContent.withChildren}
       >
-        <CreationItem<CreationDeckFormValues>
+        <Item<CreationDeckFormValues>
           control={control}
           error={errors.name?.message}
           label={'Name Pack'}
@@ -71,6 +72,7 @@ export const CreationDeck = ({ isOpen, setIsOpen }: CreationDeckProps) => {
           nameTextField={'name'}
           placeholder={'Name'}
           register={register}
+          setValue={setValue}
         />
         <div className={s.wrapperCheckbox}>
           <ControlledCheckbox control={control} label={'Private pack'} name={'private'} />
