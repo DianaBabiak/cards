@@ -52,7 +52,7 @@ export const NameDeck = ({ deckId, deckName, isOwner, onOpenCreateCardHandler }:
               </button>
             }
           >
-            <Link to={`/learn/${deckId}`}>
+            <Link className={s.learn} to={`/learn/${deckId}`}>
               <DropdownItem>
                 <Icon height={'16px'} iconId={'playCircle'} viewBox={'0 0 16 16 '} width={'16px'} />
                 Learn
