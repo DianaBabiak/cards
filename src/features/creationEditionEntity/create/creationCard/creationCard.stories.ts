@@ -1,8 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { CreationCard } from '@/features/creationEntity/creationCard/CreationCard'
-
-import defaultImg from '../../../../assets/imgReact.png'
+import { CreationCard } from '@/features/creationEditionEntity/create/creationCard/CreationCard'
 
 const meta = {
   argTypes: {},
@@ -16,7 +14,6 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    defaultImage: defaultImg,
     isOpen: true,
     setIsOpen: () => {},
   },

@@ -1,9 +1,7 @@
-import { useEffect } from 'react'
-import { useLocation, useSearchParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
 
 export const useCards = () => {
   const [searchParams, setSearchParams] = useSearchParams()
-  const { state } = useLocation()
 
   const orderBy = searchParams.get('sort') || undefined
 
@@ -41,18 +39,6 @@ export const useCards = () => {
     searchParams.set('page', '1')
     setSearchParams(searchParams)
   }
-
-  useEffect(() => {
-    if (state) {
-      localStorage.setItem('prevUrl', `/${state.search}`)
-    }
-
-    return () => {
-      if (state) {
-        localStorage.removeItem('prevUrl')
-      }
-    }
-  }, [])
 
   return {
     answer,
