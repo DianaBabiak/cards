@@ -2,7 +2,6 @@ import { useForm } from 'react-hook-form'
 
 import { useGetCardByIdQuery, useUpdateCardMutation } from '@/features/cards/api'
 import { CreateEditCard } from '@/features/creationEditionEntity/createEditCard/CreateEditCard'
-import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -59,7 +58,6 @@ export const UpdateCard = ({ idCard, isOpen, setIsOpen }: UpdateCardProps) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <DevTool control={control} />
       <CreateEditCard
         answerError={errors.answerName?.message}
         answerUrlImage={data?.answerImg}

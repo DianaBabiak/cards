@@ -1,4 +1,4 @@
-import { ChangeEvent, useRef, useState } from 'react'
+import { ChangeEvent, useEffect, useRef, useState } from 'react'
 import { Control, FieldValues, Path, UseFormRegister, UseFormSetValue } from 'react-hook-form'
 
 import { Button } from '@/components/ui/button'
@@ -34,6 +34,10 @@ export const Item = <T extends object>({
   title,
 }: CreationItemProps<T>) => {
   const [selectedImage, setSelectedImage] = useState(defaultImage || null)
+
+  useEffect(() => {
+    setSelectedImage(defaultImage ?? null)
+  }, [defaultImage])
 
   const inputRef = useRef<HTMLInputElement>(null)
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {

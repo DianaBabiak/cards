@@ -2,7 +2,6 @@ import { useForm } from 'react-hook-form'
 
 import { useCreateCardMutation } from '@/features/cards/api'
 import { CreateEditCard } from '@/features/creationEditionEntity/createEditCard/CreateEditCard'
-import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -52,7 +51,6 @@ export const CreationCard = ({ id, isOpen, setIsOpen }: CreationCardProps) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <DevTool control={control} />
       <CreateEditCard
         answerError={errors.answerName?.message}
         control={control}

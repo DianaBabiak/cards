@@ -68,8 +68,10 @@ export const TableHeadCell = forwardRef<HTMLTableCellElement, TableHeadCellProps
     const [sort, setSort] = useState<'asc' | 'desc'>(sortName)
 
     const changeSortHandler = () => {
-      onChangeSort?.(sort)
-      setSort(sort === 'desc' ? 'asc' : 'desc')
+      const newSortDirection = sort === 'desc' ? 'asc' : 'desc'
+
+      onChangeSort?.(newSortDirection)
+      setSort(newSortDirection)
     }
 
     return (
