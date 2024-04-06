@@ -1,5 +1,5 @@
-import { ChangeEvent, useState } from 'react'
-import { Control, FieldValues, Path, UseFormRegister } from 'react-hook-form'
+import { ChangeEvent, useRef, useState } from 'react'
+import { Control, FieldValues, Path, UseFormRegister, UseFormSetValue } from 'react-hook-form'
 
 import { Button } from '@/components/ui/button'
 import { ControlledTextField } from '@/components/ui/controlled/controlled-textField/controlled-textField'
@@ -13,14 +13,15 @@ interface CreationItemProps<T extends FieldValues> {
   defaultImage?: string
   error?: string
   label: string
-  nameImg: (Path<T> & string) | (Path<T> & undefined)
+  nameImg: string
   nameTextField: (Path<T> & string) | (Path<T> & undefined)
   placeholder: string
-  register: UseFormRegister<T>
+  register: UseFormRegister<any>
+  setValue: UseFormSetValue<any>
   title?: string
 }
 
-export const CreationItem = <T extends object>({
+export const Item = <T extends object>({
   control,
   defaultImage,
   error,
@@ -29,19 +30,18 @@ export const CreationItem = <T extends object>({
   nameTextField,
   placeholder,
   register,
+  setValue,
   title,
 }: CreationItemProps<T>) => {
   const [selectedImage, setSelectedImage] = useState(defaultImage || null)
+
+  const inputRef = useRef<HTMLInputElement>(null)
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files ? e.target.files[0] : null
+    if (e.target.files && e.target.files.length) {
+      const file = e.target.files[0]
 
-    if (file) {
-      const reader = new FileReader()
-
-      reader.onloadend = () => {
-        setSelectedImage(reader.result as string)
-      }
-      reader.readAsDataURL(file)
+      setSelectedImage(URL.createObjectURL(file))
+      setValue(nameImg, file)
     }
   }
 
@@ -61,7 +61,9 @@ export const CreationItem = <T extends object>({
         <label className={s.customFileInput}>
           <input
             className={s.coverInput}
-            {...register(nameImg, { onChange: handleImageChange })}
+            {...register(nameImg)}
+            onChange={handleImageChange}
+            ref={inputRef}
             type={'file'}
           />
           <Button as={'span'} isFullWidth variant={'secondary'}>

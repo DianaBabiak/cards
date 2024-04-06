@@ -2,9 +2,9 @@ import { useState } from 'react'
 
 import { Button } from '@/components/ui/button'
 import { Typography } from '@/components/ui/typography'
-import { CreationCard } from '@/features/creationEntity/creationCard'
+import { CreationCard } from '@/features/creationEditionEntity/create/creationCard'
 
-import s from '@/features/deck/deck.module.scss'
+import s from '../cards.module.scss'
 type EmptyDeckProps = {
   id?: string
 }

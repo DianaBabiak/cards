@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { Modal } from '@/components/ui/modal'
 import { VariantModalContent } from '@/components/ui/modal/contentContainerModal/ContentContainerModal'
 import { Pagination } from '@/components/ui/pagination'
-import { CreationDeck } from '@/features/creationEntity/creationDeck'
+import { CreationDeck } from '@/features/creationEditionEntity/create/creationDeck'
 import {
   OrderBy,
   useDeleteDeckMutation,

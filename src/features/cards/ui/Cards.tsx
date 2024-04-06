@@ -5,17 +5,18 @@ import { Modal } from '@/components/ui/modal'
 import { VariantModalContent } from '@/components/ui/modal/contentContainerModal/ContentContainerModal'
 import { Pagination } from '@/components/ui/pagination'
 import { TextField } from '@/components/ui/textField'
-import { CreationCard } from '@/features/creationEntity/creationCard'
-import { DeckTable } from '@/features/deck/deckTable/DeckTable'
-import { EmptyDeck } from '@/features/deck/emptyDeck/EmptyDeck'
-import { LinkBackHome } from '@/features/deck/linkBackHome/LinkBackHome'
-import { NameDeck } from '@/features/deck/nameDeck/NameDeck'
-import { useDeck } from '@/features/deck/useDeck'
-import { useDeleteCardMutation, useGetCardsQuery, useGetDeckQuery } from '@/features/decksList/api'
+import { useDeleteCardMutation, useGetCardsQuery } from '@/features/cards/api'
+import { DeckTable } from '@/features/cards/ui/deckTable/DeckTable'
+import { EmptyDeck } from '@/features/cards/ui/emptyDeck/EmptyDeck'
+import { LinkBackHome } from '@/features/cards/ui/linkBackHome/LinkBackHome'
+import { NameDeck } from '@/features/cards/ui/nameDeck/NameDeck'
+import { useCards } from '@/features/cards/ui/useCards'
+import { CreationCard } from '@/features/creationEditionEntity/create/creationCard'
+import { useGetDeckQuery } from '@/features/decksList/api'
 
-import s from './deck.module.scss'
+import s from './cards.module.scss'
 
-export const Deck = () => {
+export const Cards = () => {
   const [isOpenCreateCard, setIsOpenCreateCard] = useState(false)
   const [isOpenDeleteCard, setIsOpenDeleteCard] = useState(false)
   const [currentIdCard, setCurrentIdCard] = useState('')
@@ -32,12 +33,11 @@ export const Deck = () => {
     handleChangePage,
     handleChangeQuestion,
     handleChangeSort,
-    handleToPreviewPage,
     itemsPerPage,
     orderBy,
     page,
     question,
-  } = useDeck()
+  } = useCards()
   const onOpenCreateCardHandler = () => {
     setIsOpenCreateCard(true)
   }
@@ -64,7 +64,8 @@ export const Deck = () => {
     }
   }
 
-  // const isOwner = deck?.userId === userData?.id
+  const isOwner = true
+
   if (isLoadingGetDeck || isLoadingGetCards) {
     return <div>LOADING....</div>
   }
@@ -87,7 +88,12 @@ export const Deck = () => {
             setIsOpen={setIsOpenDeleteCard}
             variant={VariantModalContent.text}
           />
-          <NameDeck deckName={deckData?.name} onOpenCreateCardHandler={onOpenCreateCardHandler} />
+          <NameDeck
+            deckId={idDeck || ''}
+            deckName={deckData?.name}
+            isOwner={isOwner}
+            onOpenCreateCardHandler={onOpenCreateCardHandler}
+          />
           <div className={s.wrapperContent}>
             {deckData?.cover && (
               <img alt={'mainCardImage'} className={s.mainImageCard} src={deckData.cover} />
@@ -100,6 +106,7 @@ export const Deck = () => {
             <DeckTable
               data={data}
               handleChangeSort={handleChangeSort}
+              isOwner={isOwner}
               onOpenDeleteCardModalHandler={onOpenDeleteCardModalHandler}
             />
             <Pagination

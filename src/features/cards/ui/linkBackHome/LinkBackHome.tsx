@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { Icon } from '@/components/ui/icon'
 import { Typography } from '@/components/ui/typography'
 
-import s from '@/features/deck/deck.module.scss'
+import s from '../cards.module.scss'
 
 export const LinkBackHome = () => {
   return (

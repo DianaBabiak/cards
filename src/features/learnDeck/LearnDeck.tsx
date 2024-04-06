@@ -11,7 +11,7 @@ import {
   SaveGradeCard,
   useGetRandomCardQuery,
   useSaveGradeCardMutation,
-} from '@/features/decksList/api'
+} from '@/features/cards/api'
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -99,6 +99,9 @@ export const LearnDeck = ({}: LearnDeckProps) => {
           ) : (
             <Card className={s.containerCard}>
               <Typography variant={'h1'}>Learn card</Typography>
+              <Link className={s.close} to={`/deck/${idDeck}`}>
+                <Icon iconId={'close'} />
+              </Link>
               <ItemLearnCard
                 image={data?.questionImg}
                 label={'Question: '}

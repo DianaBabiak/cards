@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 
 import { CreationCard } from '@/features/creationEntity/creationCard/CreationCard'
 
-import defaultImg from '../../../assets/imgReact.png'
+import defaultImg from '../../../../assets/imgReact.png'
 
 const meta = {
   argTypes: {},

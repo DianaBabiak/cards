@@ -4,6 +4,8 @@
 }
 
 .containerCard {
+  position: relative;
+
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -54,4 +56,18 @@
   display: flex;
   justify-content: center;
   width: 100%;
+}
+
+.close {
+  cursor: pointer;
+
+  position: absolute;
+  top: 10px;
+  right: 10px;
+
+  outline: none;
+
+  &:focus-visible {
+    outline: 2px solid var(--color-info-500);
+  }
 }

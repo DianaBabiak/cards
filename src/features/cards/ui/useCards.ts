@@ -1,11 +1,9 @@
 import { useEffect } from 'react'
-import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
+import { useLocation, useSearchParams } from 'react-router-dom'
 
-export const useDeck = () => {
+export const useCards = () => {
   const [searchParams, setSearchParams] = useSearchParams()
   const { state } = useLocation()
-
-  const navigate = useNavigate()
 
   const orderBy = searchParams.get('sort') || undefined
 
@@ -34,16 +32,9 @@ export const useDeck = () => {
     setSearchParams(searchParams)
   }
 
-  const handleToPreviewPage = () => {
-    setSearchParams({})
-    const prevUrl = localStorage.getItem('prevUrl')
-
-    navigate(prevUrl ?? '/')
-  }
-
   const handleChangeSort = (sort: 'asc' | 'desc') => {
     if (sort) {
-      searchParams.set('sort', `created-${sort}`)
+      searchParams.set('sort', `updated-${sort}`)
     } else {
       searchParams.delete('sort')
     }
@@ -69,7 +60,6 @@ export const useDeck = () => {
     handleChangePage,
     handleChangeQuestion,
     handleChangeSort,
-    handleToPreviewPage,
     itemsPerPage,
     orderBy,
     page,
