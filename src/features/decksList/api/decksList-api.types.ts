@@ -1,12 +1,12 @@
 export type ResponseGetDecks = {
-  items: DecksItems[]
+  items: DecksItem[]
   pagination: DecksPagination
 }
 export type DecksItemsAuthor = {
   id: string
   name: string
 }
-export type DecksItems = {
+export type DecksItem = {
   author: DecksItemsAuthor
   cardsCount: number
   cover: string
@@ -40,13 +40,13 @@ export type CreateDeckArgs = {
   name: string
 }
 
-export type DeleteDeckArgs = {
+export type DeckArgs = {
   id: string
 }
 
-export type DeleteDeckResponse = Omit<DecksItems, 'author'>
+export type DeleteDeckResponse = Omit<DecksItem, 'author'>
 
-export type UpdateDeckArgs = Partial<CreateDeckArgs> & DeleteDeckArgs
+export type UpdateDeckArgs = Partial<CreateDeckArgs> & DeckArgs
 
 export type OrderBy =
   | 'author.name-asc'
@@ -64,31 +64,4 @@ export type OrderBy =
 export type ResponseGetMinMaxCards = {
   max: number
   min: number
-}
-
-export type ResponseGetCard = {
-  answer: string
-  answerImg: string
-  answerVideo: string
-  created: string
-  deckId: string
-  grade: number
-  id: string
-  question: string
-  questionImg: string
-  questionVideo: string
-  shots: number
-  updated: string
-  userId: string
-}
-
-export type GetRandomCard = {
-  idDeck: string
-  previousCardId?: string
-}
-
-export type SaveGradeCard = {
-  cardId: string
-  grade: 0 | 1 | 2 | 3 | 4 | 5
-  idDeck: string
 }
