@@ -1,6 +1,6 @@
+import { Icon } from '@/components/ui/Icon'
 import { Button } from '@/components/ui/button'
 import { DropDownMenu, DropdownItem, DropdownItemWithImg } from '@/components/ui/dropDownMenu'
-import { Icon } from '@/components/ui/icon'
 import { Typography } from '@/components/ui/typography'
 
 import s from './header.module.scss'

@@ -2,10 +2,10 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link, useLocation } from 'react-router-dom'
 
+import { Icon } from '@/components/ui/Icon'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { ControlledRadioGroup } from '@/components/ui/controlled/controledRadioGroup/ControledRadioGroup'
-import { Icon } from '@/components/ui/icon'
 import { Typography } from '@/components/ui/typography'
 import {
   SaveGradeCard,

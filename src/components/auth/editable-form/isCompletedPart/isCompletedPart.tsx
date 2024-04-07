@@ -1,8 +1,8 @@
 import { ChangeEvent, useState } from 'react'
 
 import avatar from '@/assets/Ellipse 45.png'
+import { Icon } from '@/components/ui/Icon'
 import { Button } from '@/components/ui/button'
-import { Icon } from '@/components/ui/icon'
 import { Typography } from '@/components/ui/typography'
 
 import h from '../editable-form.module.scss'

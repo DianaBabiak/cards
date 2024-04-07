@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 
-import { Icon } from '@/components/ui/icon'
+import { Icon } from '@/components/ui/Icon'
 import { Typography } from '@/components/ui/typography'
 
 import s from '../cards.module.scss'

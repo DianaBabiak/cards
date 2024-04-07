@@ -1,6 +1,6 @@
 import { ComponentPropsWithoutRef } from 'react'
 
-import { Icon } from '@/components/ui/icon'
+import { Icon } from '@/components/ui/Icon'
 
 import s from './rating.module.scss'
 
