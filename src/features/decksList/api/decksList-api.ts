@@ -2,19 +2,22 @@ import { baseApi } from '@/services/base-api'
 
 import {
   CreateDeckArgs,
-  DeckArgs,
-  DecksItem,
+  DecksItems,
+  DeleteDeckArgs,
   DeleteDeckResponse,
   GetDecksArgs,
+  GetRandomCard,
+  ResponseGetCard,
   ResponseGetDecks,
   ResponseGetMinMaxCards,
+  SaveGradeCard,
   UpdateDeckArgs,
 } from './decksList-api.types'
 
 export const decksApi = baseApi.injectEndpoints({
   endpoints: builder => {
     return {
-      createDeck: builder.mutation<DecksItem, CreateDeckArgs>({
+      createDeck: builder.mutation<DecksItems, CreateDeckArgs>({
         invalidatesTags: ['Decks'],
         query: args => ({
           body: args,
@@ -22,17 +25,11 @@ export const decksApi = baseApi.injectEndpoints({
           url: '/v1/decks',
         }),
       }),
-      deleteDeck: builder.mutation<DeleteDeckResponse, DeckArgs>({
+      deleteDeck: builder.mutation<DeleteDeckResponse, DeleteDeckArgs>({
         invalidatesTags: ['Decks'],
         query: args => ({
           method: 'DELETE',
-          url: `/v1/cards/${args.id}`,
-        }),
-      }),
-      getDeck: builder.query<DecksItem, DeckArgs>({
-        providesTags: ['Decks'],
-        query: ({ id }) => ({
-          url: `/v1/decks/${id}`,
+          url: `/v1/decks/${args.id}`,
         }),
       }),
       getDecks: builder.query<ResponseGetDecks, GetDecksArgs | void>({
@@ -46,7 +43,19 @@ export const decksApi = baseApi.injectEndpoints({
         providesTags: ['Decks'],
         query: () => '/v2/decks/min-max-cards',
       }),
-      updateDeck: builder.mutation<DecksItem, UpdateDeckArgs>({
+      getRandomCard: builder.query<ResponseGetCard, GetRandomCard>({
+        providesTags: ['Decks'],
+        query: ({ idDeck }) => `/v1/decks/${idDeck}/learn`,
+      }),
+      saveGradeCard: builder.mutation<ResponseGetCard, SaveGradeCard>({
+        invalidatesTags: ['Decks'],
+        query: ({ idDeck, ...args }) => ({
+          body: args,
+          method: 'POST',
+          url: `/v1/decks/${idDeck}/learn`,
+        }),
+      }),
+      updateDeck: builder.mutation<DecksItems, UpdateDeckArgs>({
         invalidatesTags: ['Decks'],
         query: ({ id, ...args }) => ({
           body: args,
@@ -61,8 +70,9 @@ export const decksApi = baseApi.injectEndpoints({
 export const {
   useCreateDeckMutation,
   useDeleteDeckMutation,
-  useGetDeckQuery,
   useGetDecksQuery,
   useGetMinMaxCardsQuery,
+  useGetRandomCardQuery,
+  useSaveGradeCardMutation,
   useUpdateDeckMutation,
 } = decksApi

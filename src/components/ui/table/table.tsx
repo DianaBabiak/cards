@@ -1,6 +1,8 @@
-import { ComponentPropsWithoutRef, forwardRef, useState } from 'react'
+import { ComponentPropsWithoutRef, forwardRef, useEffect, useState } from 'react'
 
-import { Icon } from '@/components/ui/icon'
+import { useAppSelector } from '@/common/hooks/hooks'
+import { Icon } from '@/components/ui/Icon'
+import { isClearSelector } from '@/features/decksList/model/decksList/decksSelectors'
 import clsx from 'clsx'
 
 import s from './table.module.scss'
@@ -65,14 +67,29 @@ export const TableHeadCell = forwardRef<HTMLTableCellElement, TableHeadCellProps
     } = props
     const classNames = clsx(s.tableHeadCell, className ?? '')
 
-    const [sort, setSort] = useState<'asc' | 'desc'>(sortName)
+    const isClear = useAppSelector(isClearSelector)
+
+    const [sort, setSort] = useState<'asc' | 'desc'>(() => {
+      const savedValues = localStorage.getItem('tableSort')
+
+      return savedValues ? JSON.parse(savedValues) : sortName
+    })
 
     const changeSortHandler = () => {
-      const newSortDirection = sort === 'desc' ? 'asc' : 'desc'
-
-      onChangeSort?.(newSortDirection)
-      setSort(newSortDirection)
+      setSort(sort === 'desc' ? 'asc' : 'desc')
+      localStorage.setItem('tableSort', JSON.stringify(sort === 'desc' ? 'asc' : 'desc'))
     }
+
+    useEffect(() => {
+      if (isClear) {
+        setSort('desc')
+        localStorage.setItem('sliderValues', JSON.stringify('desc'))
+      }
+    }, [isClear])
+
+    useEffect(() => {
+      onChangeSort?.(sort)
+    }, [sort])
 
     return (
       <th className={classNames} {...restProps} ref={ref}>

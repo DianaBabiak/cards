@@ -1,6 +1,8 @@
-import { ComponentPropsWithoutRef, ElementRef, forwardRef, useState } from 'react'
+import { ComponentPropsWithoutRef, ElementRef, forwardRef, useEffect, useState } from 'react'
 
+import { useAppSelector } from '@/common/hooks/hooks'
 import { Typography } from '@/components/ui/typography'
+import { isClearSelector } from '@/features/decksList/model/decksList/decksSelectors'
 import * as Slider from '@radix-ui/react-slider'
 
 import s from './slider.module.scss'
@@ -29,14 +31,28 @@ export const CustomSlider = forwardRef<ElementRef<typeof Slider.Root>, SliderDem
       ...restProps
     } = props
 
-    const [currentValue, setCurrentValue] = useState([min, max])
+    const isClearSlider = useAppSelector(isClearSelector)
+
+    const [currentValue, setCurrentValue] = useState(() => {
+      const savedValues = localStorage.getItem('sliderValues')
+
+      return savedValues ? JSON.parse(savedValues) : [min, max]
+    })
 
     const handleValueChange = (values: number[]) => {
       setCurrentValue(values)
+      localStorage.setItem('sliderValues', JSON.stringify(values))
       if (onValueChange) {
         onValueChange(values)
       }
     }
+
+    useEffect(() => {
+      if (isClearSlider) {
+        setCurrentValue([min, max])
+        localStorage.setItem('sliderValues', JSON.stringify([min, max]))
+      }
+    }, [isClearSlider])
 
     return (
       <div className={className ?? ''}>
