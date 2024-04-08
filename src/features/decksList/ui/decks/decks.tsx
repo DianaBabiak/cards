@@ -16,17 +16,9 @@ export const DecksList = () => {
 
   const [decksParams, setDecksParams] = useSearchParams()
 
-  const {
-    data: minMaxCards,
-    isLoading: isMinMaxLoading,
-    isSuccess: isMinMaxSuccess,
-  } = useGetMinMaxCardsQuery()
+  const { data: minMaxCards, isLoading: isMinMaxLoading } = useGetMinMaxCardsQuery()
 
-  const {
-    data,
-    isLoading: isDataLoading,
-    isSuccess: isDataSuccess,
-  } = useGetDecksQuery({
+  const { data, isLoading: isDataLoading } = useGetDecksQuery({
     currentPage: Number(decksParams.get('page')) || 1,
     itemsPerPage: decksParams.get('items') || '10',
     maxCardsCount: Number(decksParams.get('maxCards')) || minMaxCards?.max,
