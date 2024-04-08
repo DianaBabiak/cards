@@ -1,9 +1,9 @@
-import { Icon } from '@/components/ui/icon'
 import { Select } from '@/components/ui/select'
 import { clsx } from 'clsx'
 
 import s from './pagination.module.scss'
 
+import { Icon } from '../Icon'
 import { usePagination } from './usePagination'
 
 type PaginationConditionals =

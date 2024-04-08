@@ -1,9 +1,9 @@
 import { ChangeEvent, useEffect, useRef, useState } from 'react'
 import { Control, FieldValues, Path, UseFormRegister, UseFormSetValue } from 'react-hook-form'
 
+import { Icon } from '@/components/ui/Icon'
 import { Button } from '@/components/ui/button'
 import { ControlledTextField } from '@/components/ui/controlled/controlled-textField/controlled-textField'
-import { Icon } from '@/components/ui/icon'
 import { Typography } from '@/components/ui/typography'
 
 import s from '@/components/ui/modal/modal.module.scss'

@@ -1,15 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 
-import { Modal } from '@/components/ui/modal'
-import { VariantModalContent } from '@/components/ui/modal/contentContainerModal/ContentContainerModal'
+import { useAppDispatch } from '@/common/hooks/hooks'
 import { Pagination } from '@/components/ui/pagination'
-import { CreationDeck } from '@/features/creationEditionEntity/create/creationDeck'
-import {
-  OrderBy,
-  useDeleteDeckMutation,
-  useGetDecksQuery,
-  useGetMinMaxCardsQuery,
-} from '@/features/decksList/api'
+import { OrderBy, useGetDecksQuery, useGetMinMaxCardsQuery } from '@/features/decksList/api'
+import { decksListActions } from '@/features/decksList/model/decksList/decksSlice'
 import { DecksFilters } from '@/features/decksList/ui/decks/decksFiltres/decksFiltres'
 import { DecksTable } from '@/features/decksList/ui/decks/decksTable/decksTable'
 
@@ -18,101 +12,93 @@ import s from './decks.module.scss'
 import { DecksTitleAddDeck } from './decksTitle-addDeck/decksTitle-addDeck'
 
 export const DecksList = () => {
-  const [currentPage, setCurrentPage] = useState(1)
-  const [itemsPerPage, setItemsPerPage] = useState('10')
-  const [orderBy, setOrderBy] = useState<OrderBy>(null)
-  const [name, setName] = useState('')
-  const [isOpenCreateDeck, setIsOpenCreateDeck] = useState(false)
-  const [isOpenDeleteDeck, setIsOpenDeleteDeck] = useState(false)
-  const [currentIdDeck, setCurrentIdDeck] = useState('')
+  const dispatch = useAppDispatch()
 
-  const { data: minMaxCards } = useGetMinMaxCardsQuery()
+  const [decksParams, setDecksParams] = useSearchParams()
 
-  const [maxCardsCount, setMaxCardsCount] = useState(minMaxCards?.max)
-  const [minCardsCount, setMinCardsCount] = useState(minMaxCards?.min)
+  const { data: minMaxCards, isLoading: isMinMaxLoading } = useGetMinMaxCardsQuery()
 
-  const { data } = useGetDecksQuery({
-    currentPage,
-    itemsPerPage,
-    maxCardsCount,
-    minCardsCount,
-    name,
-    orderBy,
+  const { data, isLoading: isDataLoading } = useGetDecksQuery({
+    currentPage: Number(decksParams.get('page')) || 1,
+    itemsPerPage: decksParams.get('items') || '10',
+    maxCardsCount: Number(decksParams.get('maxCards')) || minMaxCards?.max,
+    minCardsCount: Number(decksParams.get('minCards')) || minMaxCards?.min,
+    name: decksParams.get('name') || '',
+    orderBy: (decksParams.get('orderBy') as OrderBy) || null,
   })
-  const [deleteDeck, {}] = useDeleteDeckMutation()
+
+  const updateSearchParams = (params: { [key: string]: string }) => {
+    const newSearchParams = new URLSearchParams(decksParams)
+
+    Object.entries(params).forEach(([key, value]) => {
+      if (value) {
+        newSearchParams.set(key, value)
+      } else {
+        newSearchParams.delete(key)
+      }
+    })
+
+    if (!params.page) {
+      newSearchParams.set('page', '1')
+    }
+
+    setDecksParams(newSearchParams)
+  }
+
   const onChangePageHandler = (page: number) => {
-    setCurrentPage(page)
+    updateSearchParams({ page: page.toString() })
   }
 
   const onChangePerPageHandler = (pageItems: string) => {
-    setItemsPerPage(pageItems)
+    updateSearchParams({ items: pageItems })
   }
 
-  const onChangeSortPerData = (sortData: 'asc' | 'desc') => {
-    setOrderBy(`created-${sortData}`)
+  const onChangeSortPerDate = (sortData: 'asc' | 'desc') => {
+    debugger
+    console.log(sortData)
+    updateSearchParams({ orderBy: `updated-${sortData}` })
   }
 
-  const onSliderValueChange = (minMaxCards: [min: number, max: number]) => {
-    setMaxCardsCount(minMaxCards[1])
-    setMinCardsCount(minMaxCards[0])
+  const onSliderValueChange = ([min, max]: [number, number]) => {
+    updateSearchParams({ maxCards: max.toString(), minCards: min.toString() })
   }
 
   const onSearchNameHandler = (searchName: string) => {
-    setName(searchName)
+    updateSearchParams({ name: searchName })
   }
 
-  const onOpenCreateCardHandler = () => {
-    setIsOpenCreateDeck(true)
+  const onClearFiltersHandler = () => {
+    updateSearchParams({
+      items: '10',
+      maxCards: minMaxCards?.max.toString() || '',
+      minCards: minMaxCards?.min.toString() || '',
+      name: '',
+      orderBy: '',
+      page: '1',
+    })
+    dispatch(decksListActions.setClearFilters({ isClear: true }))
   }
 
-  const onOpenDeleteDeckModalHandler = (idDeck: string) => {
-    setIsOpenDeleteDeck(true)
-    setCurrentIdDeck(idDeck)
-  }
-  const onDeleteDeckHandler = async () => {
-    try {
-      await deleteDeck({
-        id: currentIdDeck,
-      })
-    } catch (err) {
-      console.error('Ошибка при удалении дека:', err)
-    }
-  }
+  const isSuccess =
+    !!data && minMaxCards && minMaxCards.min !== undefined && minMaxCards.max !== undefined
 
-  useEffect(() => {
-    setMaxCardsCount(minMaxCards?.max)
-    setMinCardsCount(minMaxCards?.min)
-  }, [minMaxCards?.min, minMaxCards?.max])
+  const isLoading = isDataLoading && isMinMaxLoading
 
-  const isInitialized =
-    !!data && minCardsCount !== undefined && maxCardsCount !== undefined && !!minMaxCards
-
-  return (
-    isInitialized && (
+  return isLoading ? (
+    <div>Loading</div>
+  ) : (
+    isSuccess && (
       <div className={s.container}>
-        <DecksTitleAddDeck onOpenCreateCardHandler={onOpenCreateCardHandler} />
-        <CreationDeck isOpen={isOpenCreateDeck} setIsOpen={setIsOpenCreateDeck} />
-        <Modal
-          contentText={'Do you really want to remove Deck? All cards will be deleted.'}
-          headerTitle={'Delete Deck'}
-          isOpen={isOpenDeleteDeck}
-          labelFooterPrimaryButton={'Delete Card'}
-          labelFooterSecondaryButton={'Cansel'}
-          onClickPrimaryButton={onDeleteDeckHandler}
-          setIsOpen={setIsOpenDeleteDeck}
-          variant={VariantModalContent.text}
-        />
+        <DecksTitleAddDeck />
         <DecksFilters
-          maxCardsCount={maxCardsCount}
-          minCardsCount={minCardsCount}
+          maxCardsCount={minMaxCards?.max}
+          minCardsCount={minMaxCards?.min}
+          onClearFilter={onClearFiltersHandler}
           onSetSearchNameHandler={onSearchNameHandler}
           onSliderValueChange={onSliderValueChange}
+          valueName={decksParams.get('name') || ''}
         />
-        <DecksTable
-          data={data}
-          onChangeSortPerData={onChangeSortPerData}
-          onOpenDeleteDeckModalHandler={onOpenDeleteDeckModalHandler}
-        />
+        <DecksTable data={data} onChangeSortPerData={onChangeSortPerDate} />
 
         <Pagination
           count={data.pagination.totalPages}

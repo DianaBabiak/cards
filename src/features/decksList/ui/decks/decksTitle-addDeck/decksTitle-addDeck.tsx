@@ -3,16 +3,13 @@ import { Typography } from '@/components/ui/typography'
 
 import s from '../decks.module.scss'
 
-type DecksTitleAddDeckProps = {
-  onOpenCreateCardHandler: () => void
-}
-export const DecksTitleAddDeck = ({ onOpenCreateCardHandler }: DecksTitleAddDeckProps) => {
+export const DecksTitleAddDeck = () => {
   return (
     <div className={s.addDeckWrapper}>
       <Typography as={'h1'} variant={'h1'}>
         Decks list
       </Typography>
-      <Button onClick={onOpenCreateCardHandler}>Add New Deck</Button>
+      <Button>Add New Deck</Button>
     </div>
   )
 }

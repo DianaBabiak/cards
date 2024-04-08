@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
+import { Icon } from '@/components/ui/Icon'
 import { Button } from '@/components/ui/button'
 import { DropDownMenu, DropdownItem } from '@/components/ui/dropDownMenu'
-import { Icon } from '@/components/ui/icon'
 import { Modal } from '@/components/ui/modal'
 import { VariantModalContent } from '@/components/ui/modal/contentContainerModal/ContentContainerModal'
 import { Typography } from '@/components/ui/typography'
