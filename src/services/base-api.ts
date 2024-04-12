@@ -10,5 +10,5 @@ export const baseApi = createApi({
   }),
   endpoints: () => ({}),
   reducerPath: 'baseApi', //как name в slice(префикс перед основным action)
-  tagTypes: ['Decks', 'Cards'],
+  tagTypes: ['Decks', 'Cards', 'Me'],
 })
