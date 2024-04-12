@@ -8,6 +8,7 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { Typography } from '@/components/ui/typography'
+import { useMeQuery } from '@/features/auth/api/auth-api'
 import { ResponseGetDecks } from '@/features/decksList/api'
 
 import s from '@/features/decksList/ui/decks/decks.module.scss'
@@ -19,6 +20,8 @@ type DecksTableProps = {
 
 export const DecksTable = (props: DecksTableProps) => {
   const { data, onChangeSortPerData } = props
+
+  const { data: meData } = useMeQuery()
 
   const formatter1 = new Intl.DateTimeFormat('ru')
 
@@ -68,11 +71,15 @@ export const DecksTable = (props: DecksTableProps) => {
               <Typography variant={'body2'}>{deck.author.name}</Typography>
             </TableBodyCell>
             <TableBodyCell className={s.deckButtonsCell}>
-              <div className={s.deckButtonsWrapper}>
-                <Button as={'a'} buttonImg={'playCircle'} className={s.deckButton} isImg></Button>
-                <Button as={'a'} buttonImg={'edit2'} className={s.deckButton} isImg></Button>
-                <Button as={'a'} buttonImg={'trash'} className={s.deckButton} isImg></Button>
-              </div>
+              {meData?.id === data.items[0].author.id ? (
+                <div className={s.deckButtonsWrapper}>
+                  <Button as={'a'} buttonImg={'playCircle'} className={s.deckButton} isImg></Button>
+                  <Button as={'a'} buttonImg={'edit2'} className={s.deckButton} isImg></Button>
+                  <Button as={'a'} buttonImg={'trash'} className={s.deckButton} isImg></Button>
+                </div>
+              ) : (
+                <div className={s.deckButtonsWrapper}>---</div>
+              )}
             </TableBodyCell>
           </TableRow>
         ))}

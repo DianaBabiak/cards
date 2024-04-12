@@ -83,7 +83,7 @@ export const TableHeadCell = forwardRef<HTMLTableCellElement, TableHeadCellProps
     useEffect(() => {
       if (isClear) {
         setSort('desc')
-        localStorage.setItem('sliderValues', JSON.stringify('desc'))
+        localStorage.setItem('tableSort', JSON.stringify('desc'))
       }
     }, [isClear])
 

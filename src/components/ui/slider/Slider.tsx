@@ -33,10 +33,27 @@ export const CustomSlider = forwardRef<ElementRef<typeof Slider.Root>, SliderDem
 
     const isClearSlider = useAppSelector(isClearSelector)
 
+    const ensureArray = (value: null | string, fallback: [number, number]): [number, number] => {
+      if (!value) {
+        return fallback
+      }
+      try {
+        const parsed = JSON.parse(value)
+
+        if (Array.isArray(parsed) && parsed.length === 2 && parsed.every(Number.isFinite)) {
+          return parsed as [number, number]
+        }
+
+        return fallback
+      } catch (e) {
+        return fallback
+      }
+    }
+
     const [currentValue, setCurrentValue] = useState(() => {
       const savedValues = localStorage.getItem('sliderValues')
 
-      return savedValues ? JSON.parse(savedValues) : [min, max]
+      return ensureArray(savedValues, [min, max])
     })
 
     const handleValueChange = (values: number[]) => {
