@@ -18,6 +18,7 @@ export const DecksList = () => {
 
   const { data: minMaxCards, isLoading: isMinMaxLoading } = useGetMinMaxCardsQuery()
 
+  console.log(minMaxCards)
   const { data, isLoading: isDataLoading } = useGetDecksQuery({
     currentPage: Number(decksParams.get('page')) || 1,
     itemsPerPage: decksParams.get('items') || '10',
