@@ -1,11 +1,9 @@
 import { useForm } from 'react-hook-form'
-import { Link, useNavigate } from 'react-router-dom'
 
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { ControlledTextField } from '@/components/ui/controlled/controlled-textField/controlled-textField'
 import { Typography } from '@/components/ui/typography'
-import { useSignUpMutation } from '@/features/auth/api/auth-api'
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -34,19 +32,8 @@ export const CreateLoginForm = () => {
     resolver: zodResolver(createLoginSchema),
   })
 
-  const navigate = useNavigate()
-  const [signUp, {}] = useSignUpMutation()
-
-  const onSubmit = async (data: FormValues) => {
-    try {
-      await signUp({
-        email: data.email,
-        password: data.password,
-      })
-      navigate('/login')
-    } catch (e) {
-      console.log(e)
-    }
+  const onSubmit = (data: FormValues) => {
+    console.log(data)
   }
 
   return (
@@ -85,9 +72,7 @@ export const CreateLoginForm = () => {
         </Button>
       </form>
       <Typography variant={'body2'}>Already have an account?</Typography>
-      <Typography as={Link} className={s.link} to={'/login'} variant={'link1'}>
-        Sign In
-      </Typography>
+      <a className={s.link}>Sign In</a>
     </Card>
   )
 }
