@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { CreationDeck } from '@/features/decksList/creationEntity/creationDeck/CreationDeck'
+import { CreationDeck } from '@/features/creationEntity/creationDeck/CreationDeck'
 
 const meta = {
   argTypes: {},

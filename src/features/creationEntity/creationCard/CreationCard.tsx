@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form'
 
 import { Modal } from '@/components/ui/modal'
 import { VariantModalContent } from '@/components/ui/modal/contentContainerModal/ContentContainerModal'
-import { CreationItem } from '@/features/decksList/creationEntity/creationItem'
+import { CreationItem } from '@/features/creationEntity/creationItem'
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
