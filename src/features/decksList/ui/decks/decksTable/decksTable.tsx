@@ -1,3 +1,6 @@
+import { Link } from 'react-router-dom'
+
+import { Icon } from '@/components/ui/Icon'
 import { Button } from '@/components/ui/button'
 import {
   Table,
@@ -16,10 +19,11 @@ import s from '@/features/decksList/ui/decks/decks.module.scss'
 type DecksTableProps = {
   data: ResponseGetDecks
   onChangeSortPerData: (sortData: 'asc' | 'desc') => void
+  onOpenDeleteDeckModalHandler: (idDeck: string) => void
 }
 
 export const DecksTable = (props: DecksTableProps) => {
-  const { data, onChangeSortPerData } = props
+  const { data, onChangeSortPerData, onOpenDeleteDeckModalHandler } = props
 
   const { data: meData } = useMeQuery()
 
@@ -51,14 +55,16 @@ export const DecksTable = (props: DecksTableProps) => {
           <TableRow key={deck.id}>
             <TableBodyCell>
               <div className={s.deckTableNameCellWrapper}>
-                {deck.name && (
-                  <Typography className={s.deckTableNameSpan} variant={'body2'}>
-                    {deck.name}
-                  </Typography>
-                )}
-                {deck.cover && (
-                  <img alt={'deck image'} className={s.deckTableNameImg} src={deck.cover} />
-                )}
+                <Link to={`deck/${deck.id}`}>
+                  {deck.name && (
+                    <Typography className={s.deckTableNameSpan} variant={'body2'}>
+                      {deck.name}
+                    </Typography>
+                  )}
+                  {deck.cover && (
+                    <img alt={'deck image'} className={s.deckTableNameImg} src={deck.cover} />
+                  )}
+                </Link>
               </div>
             </TableBodyCell>
             <TableBodyCell>
@@ -71,11 +77,19 @@ export const DecksTable = (props: DecksTableProps) => {
               <Typography variant={'body2'}>{deck.author.name}</Typography>
             </TableBodyCell>
             <TableBodyCell className={s.deckButtonsCell}>
-              {meData?.id === data.items[0].author.id ? (
+              {meData?.id === deck.author.id ? (
                 <div className={s.deckButtonsWrapper}>
-                  <Button as={'a'} buttonImg={'playCircle'} className={s.deckButton} isImg></Button>
+                  <Link className={s.deckButton} to={`/learn/${deck.id}`}>
+                    <Icon iconId={'playCircle'} />
+                  </Link>
                   <Button as={'a'} buttonImg={'edit2'} className={s.deckButton} isImg></Button>
-                  <Button as={'a'} buttonImg={'trash'} className={s.deckButton} isImg></Button>
+                  <Button
+                    as={'a'}
+                    buttonImg={'trash'}
+                    className={s.deckButton}
+                    isImg
+                    onClick={() => onOpenDeleteDeckModalHandler(deck.id)}
+                  ></Button>
                 </div>
               ) : (
                 <div className={s.deckButtonsWrapper}>---</div>

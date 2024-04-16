@@ -1,54 +1,11 @@
 export type ResponseGetDecks = {
-  items: DecksItems[]
+  items: DecksItem[]
   pagination: DecksPagination
 }
 export type DecksItemsAuthor = {
   id: string
   name: string
 }
-export type DecksItems = {
-  author: DecksItemsAuthor
-  cardsCount: number
-  cover: string
-  created: string
-  id: string
-  isPrivate: boolean
-  name: string
-  updated: string
-  userId: string
-}
-
-export type DeleteDeckArgs = {
-  id: string
-}
-
-export type ResponseGetCard = {
-  answer: string
-  answerImg: string
-  answerVideo: string
-  created: string
-  deckId: string
-  grade: number
-  id: string
-  question: string
-  questionImg: string
-  questionVideo: string
-  shots: number
-  updated: string
-  userId: string
-}
-
-export type GetRandomCard = {
-  idDeck: string
-  previousCardId?: string
-}
-
-export type SaveGradeCard = {
-  cardId: string
-  grade: 0 | 1 | 2 | 3 | 4 | 5
-  idDeck: string
-}
-
 export type DecksItem = {
   author: DecksItemsAuthor
   cardsCount: number

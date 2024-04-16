@@ -23,6 +23,7 @@ const publicRoutes: RouteObject[] = [
     path: '/login/registration',
   },
 ]
+
 const privateRoutes: RouteObject[] = [
   {
     element: <DecksList />,
@@ -55,7 +56,7 @@ function PublicRoutes() {
   return isSuccess ? <Navigate to={'/'} /> : <Outlet />
 }
 
-export const router = createBrowserRouter([
+const router = createBrowserRouter([
   {
     children: privateRoutes,
     element: <PrivateRoutes />,
