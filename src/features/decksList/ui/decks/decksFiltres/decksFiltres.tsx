@@ -5,7 +5,6 @@ import { Button } from '@/components/ui/button'
 import { CustomSlider } from '@/components/ui/slider'
 import { CustomTabs } from '@/components/ui/tabs'
 import { TextField } from '@/components/ui/textField'
-import { useMeQuery } from '@/features/auth/api/auth-api'
 import { isClearSelector } from '@/features/decksList/model/decksList/decksSelectors'
 import { decksListActions } from '@/features/decksList/model/decksList/decksSlice'
 
@@ -17,7 +16,6 @@ type DecksFiltresProps = {
   onClearFilter: () => void
   onSetSearchNameHandler: (searchName: string) => void
   onSliderValueChange: (minMaxCards: [min: number, max: number]) => void
-  onTabsValueChange: (authorId: string) => void
   valueName: string
 }
 
@@ -28,22 +26,14 @@ export const DecksFilters = (props: DecksFiltresProps) => {
     onClearFilter,
     onSetSearchNameHandler,
     onSliderValueChange,
-    onTabsValueChange,
     valueName,
   } = props
 
   const isClear = useAppSelector(isClearSelector)
   const dispatch = useAppDispatch()
 
-  const { data: meData } = useMeQuery()
-
   const [currentSliderValue, setCurrentSliderValue] = useState([minCardsCount, maxCardsCount])
   const [searchName, setSearchName] = useState(valueName)
-  const [tabsValue, setTabsValue] = useState(() => {
-    const savedValues = localStorage.getItem('tabsValue')
-
-    return savedValues ? JSON.parse(savedValues) : 'all-cards'
-  })
 
   const timerId = useRef<null | number>(null)
 
@@ -51,11 +41,6 @@ export const DecksFilters = (props: DecksFiltresProps) => {
     setCurrentSliderValue([minCardsCount, maxCardsCount])
     setSearchName('')
     onClearFilter()
-  }
-
-  const onChangeTabsValueHandler = (tabsValue: string) => {
-    localStorage.setItem('tabsValue', JSON.stringify(tabsValue))
-    setTabsValue(tabsValue)
   }
 
   const onSearchNameHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -87,14 +72,6 @@ export const DecksFilters = (props: DecksFiltresProps) => {
     }
   }, [isClear, dispatch])
 
-  useEffect(() => {
-    if (tabsValue === 'my-card' && meData) {
-      onTabsValueChange(meData.id)
-    } else if (tabsValue === 'all-cards') {
-      onTabsValueChange('')
-    }
-  }, [meData, onTabsValueChange, tabsValue])
-
   return (
     <div className={s.filterDecksWrapper}>
       <TextField
@@ -106,7 +83,6 @@ export const DecksFilters = (props: DecksFiltresProps) => {
       />
       <CustomTabs
         defaultValue={'all-cards'}
-        onValueChange={onChangeTabsValueHandler}
         tabs={[
           {
             disabled: false,
@@ -116,7 +92,6 @@ export const DecksFilters = (props: DecksFiltresProps) => {
           { disabled: false, title: 'All Cards', value: 'all-cards' },
         ]}
         tabsName={'Show decks cards'}
-        value={tabsValue}
       />
       <CustomSlider
         defaultValue={[minCardsCount, maxCardsCount]}
