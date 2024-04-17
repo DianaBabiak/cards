@@ -55,7 +55,7 @@ export const DecksTable = (props: DecksTableProps) => {
           <TableRow key={deck.id}>
             <TableBodyCell>
               <div className={s.deckTableNameCellWrapper}>
-                <Link to={`deck/${deck.id}`}>
+                <Link className={s.link} to={`deck/${deck.id}`}>
                   {deck.name && (
                     <Typography className={s.deckTableNameSpan} variant={'body2'}>
                       {deck.name}

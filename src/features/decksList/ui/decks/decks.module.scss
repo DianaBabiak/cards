@@ -9,52 +9,53 @@
   justify-content: space-between;
 }
 
-.filterDecksWrapper{
+.filterDecksWrapper {
   display: flex;
-  justify-content: space-between;
   align-items: end;
+  justify-content: space-between;
   margin-bottom: 36px;
 }
 
 .searchDecks {
   width: 300px;
   height: 36px;
- }
+}
 
 .tableDecks {
   width: 100%;
   margin-bottom: 24px;
 }
 
-.deckTableNameCellWrapper{
+.deckTableNameCellWrapper {
   display: flex;
-  align-items: center;
   gap: 10px;
+  align-items: center;
 }
 
-.deckTableNameImg{
+.deckTableNameImg {
   max-width: 118px;
   max-height: 48px;
 }
 
-.deckButtonsWrapper{
+.deckButtonsWrapper {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+
   width: auto;
   height: fit-content;
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
 }
 
-.deckButtonsCell{
+.deckButtonsCell {
   width: 117px;
   padding: 6px 10px;
 }
 
 .deckButton {
-  background: none;
   width: 16px;
   height: 16px;
   padding: 0;
+  background: none;
 
   &:hover {
     background: none;
@@ -63,4 +64,11 @@
 
 .pagination {
   margin-top: 24px;
+}
+
+.link {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  justify-content: center;
 }

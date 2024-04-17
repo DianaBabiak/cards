@@ -11,13 +11,30 @@ import {
   UpdateDeckArgs,
 } from './decksList-api.types'
 
+function buildDeckFormData(body: CreateDeckArgs) {
+  const formData = new FormData()
+
+  if (body.cover) {
+    formData.append('cover', body.cover)
+  }
+  if (body.isPrivate) {
+    formData.append('isPrivate', `${body.isPrivate}`)
+  }
+  if (body.name) {
+    formData.append('name', body.name)
+  }
+
+  return formData
+}
+
 export const decksApi = baseApi.injectEndpoints({
   endpoints: builder => {
     return {
       createDeck: builder.mutation<DecksItem, CreateDeckArgs>({
         invalidatesTags: ['Decks'],
         query: args => ({
-          body: args,
+          body: buildDeckFormData(args),
+          formData: buildDeckFormData(args),
           method: 'POST',
           url: '/v1/decks',
         }),
@@ -26,7 +43,7 @@ export const decksApi = baseApi.injectEndpoints({
         invalidatesTags: ['Decks'],
         query: args => ({
           method: 'DELETE',
-          url: `/v1/cards/${args.id}`,
+          url: `/v1/decks/${args.id}`,
         }),
       }),
       getDeck: builder.query<DecksItem, DeckArgs>({
