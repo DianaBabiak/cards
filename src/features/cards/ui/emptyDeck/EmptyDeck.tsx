@@ -7,8 +7,9 @@ import { CreationCard } from '@/features/creationEditionEntity/create/creationCa
 import s from '../cards.module.scss'
 type EmptyDeckProps = {
   id?: string
+  isOwner: boolean
 }
-export const EmptyDeck = ({ id }: EmptyDeckProps) => {
+export const EmptyDeck = ({ id, isOwner }: EmptyDeckProps) => {
   const [isOpenCreateCard, setIsOpenCreateCard] = useState(false)
   const onOpenCreateCardHandler = () => {
     setIsOpenCreateCard(true)
@@ -17,9 +18,9 @@ export const EmptyDeck = ({ id }: EmptyDeckProps) => {
   return (
     <div className={s.wrapperEmptyContent}>
       <Typography colorTheme={'dark'}>
-        This pack is empty. Click add new card to fill this pack
+        This pack is empty. {isOwner && 'Click add new card to fill this pack'}
       </Typography>
-      <Button onClick={onOpenCreateCardHandler}>Add New Card</Button>
+      {isOwner && <Button onClick={onOpenCreateCardHandler}>Add New Card</Button>}
       <CreationCard id={id} isOpen={isOpenCreateCard} setIsOpen={setIsOpenCreateCard} />
     </div>
   )
