@@ -31,7 +31,6 @@ export const DecksList = () => {
   const { data: minMaxCards, isLoading: isMinMaxLoading } = useGetMinMaxCardsQuery()
 
   const { data, isLoading: isDataLoading } = useGetDecksQuery({
-    authorId: decksParams.get('authorId') || undefined,
     currentPage: Number(decksParams.get('page')) || 1,
     itemsPerPage: decksParams.get('items') || '10',
     maxCardsCount: Number(decksParams.get('maxCards')) || minMaxCards?.max,
@@ -78,10 +77,6 @@ export const DecksList = () => {
 
   const onSearchNameHandler = (searchName: string) => {
     updateSearchParams({ name: searchName })
-  }
-
-  const onChangeTabs = (authorId: string) => {
-    updateSearchParams({ authorId: authorId })
   }
 
   const onClearFiltersHandler = () => {
@@ -142,7 +137,6 @@ export const DecksList = () => {
           onClearFilter={onClearFiltersHandler}
           onSetSearchNameHandler={onSearchNameHandler}
           onSliderValueChange={onSliderValueChange}
-          onTabsValueChange={onChangeTabs}
           valueName={decksParams.get('name') || ''}
         />
         <DecksTable
