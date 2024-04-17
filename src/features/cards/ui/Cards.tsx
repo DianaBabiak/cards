@@ -5,6 +5,7 @@ import { Modal } from '@/components/ui/modal'
 import { VariantModalContent } from '@/components/ui/modal/contentContainerModal/ContentContainerModal'
 import { Pagination } from '@/components/ui/pagination'
 import { TextField } from '@/components/ui/textField'
+import { useMeQuery } from '@/features/auth/api/auth-api'
 import { useDeleteCardMutation, useGetCardsQuery } from '@/features/cards/api'
 import { DeckTable } from '@/features/cards/ui/deckTable/DeckTable'
 import { EmptyDeck } from '@/features/cards/ui/emptyDeck/EmptyDeck'
@@ -26,6 +27,7 @@ export const Cards = () => {
   const { data: deckData, isLoading: isLoadingGetDeck } = useGetDeckQuery({
     id: idDeck as string,
   })
+  const { data: me } = useMeQuery()
 
   const {
     answer,
@@ -64,7 +66,7 @@ export const Cards = () => {
     }
   }
 
-  const isOwner = true
+  const isOwner = deckData?.userId === me?.id
 
   if (isLoadingGetDeck || isLoadingGetCards) {
     return <div>LOADING....</div>
@@ -74,7 +76,7 @@ export const Cards = () => {
     <div className={s.container}>
       <LinkBackHome />
       {data?.items.length === 0 ? (
-        <EmptyDeck id={idDeck} />
+        <EmptyDeck id={idDeck} isOwner={isOwner} />
       ) : (
         <>
           <CreationCard id={idDeck} isOpen={isOpenCreateCard} setIsOpen={setIsOpenCreateCard} />

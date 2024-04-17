@@ -1,23 +1,28 @@
 import { useForm } from 'react-hook-form'
 
 import { CreateEditDeck } from '@/features/creationEditionEntity/createEditDeck/CreateEditDeck'
-import { useCreateDeckMutation } from '@/features/decksList/api'
+import { useGetDeckByIdQuery, useUpdateDeckMutation } from '@/features/decksList/api'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
-export type CreationDeckProps = {
+export type UpdateDeckProps = {
+  idDeck: string
   isOpen: boolean
   setIsOpen: (isOpen: boolean) => void
 }
 
-const CreationDeckFormSchema = z.object({
+const UpdateDeckFormSchema = z.object({
   image: z.any().optional(),
   name: z.string().min(3),
   private: z.boolean().default(false),
 })
 
-export type CreationDeckFormValues = z.infer<typeof CreationDeckFormSchema>
-export const CreationDeck = ({ isOpen, setIsOpen }: CreationDeckProps) => {
+export type UpdateDeckFormValues = z.infer<typeof UpdateDeckFormSchema>
+export const UpdateDeck = ({ idDeck, isOpen, setIsOpen }: UpdateDeckProps) => {
+  const { data } = useGetDeckByIdQuery({
+    id: idDeck,
+  })
+  const [updateDeckMutation, { isError }] = useUpdateDeckMutation()
   const {
     control,
     formState: { errors },
@@ -25,14 +30,18 @@ export const CreationDeck = ({ isOpen, setIsOpen }: CreationDeckProps) => {
     register,
     reset,
     setValue,
-  } = useForm<CreationDeckFormValues>({
-    resolver: zodResolver(CreationDeckFormSchema),
+  } = useForm<UpdateDeckFormValues>({
+    resolver: zodResolver(UpdateDeckFormSchema),
+    values: {
+      name: data?.name || '',
+      private: data?.isPrivate || false,
+    },
   })
-  const [createDeckMutation, { isError }] = useCreateDeckMutation()
-  const onSubmit = async (dataFormValues: CreationDeckFormValues) => {
+  const onSubmit = async (dataFormValues: UpdateDeckFormValues) => {
     try {
-      await createDeckMutation({
-        cover: dataFormValues.image,
+      await updateDeckMutation({
+        cover: dataFormValues.image ? dataFormValues.image : null,
+        id: idDeck,
         isPrivate: dataFormValues.private,
         name: dataFormValues.name,
       })
@@ -41,7 +50,7 @@ export const CreationDeck = ({ isOpen, setIsOpen }: CreationDeckProps) => {
         setIsOpen(false)
       }
     } catch (err) {
-      console.error('Ошибка при создании дека:', err)
+      console.error('Ошибка при редактировании deck:', err)
     }
   }
 
@@ -55,7 +64,8 @@ export const CreationDeck = ({ isOpen, setIsOpen }: CreationDeckProps) => {
         register={register}
         setIsOpen={setIsOpen}
         setValue={setValue}
-        variant={'add'}
+        urlImage={data?.cover}
+        variant={'update'}
       />
     </form>
   )
