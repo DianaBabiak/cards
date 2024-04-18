@@ -6,6 +6,7 @@ import {
   createBrowserRouter,
 } from 'react-router-dom'
 
+import { ForgotPasswordForm } from '@/components/auth/forgorPassword/forgotPassword-form'
 import { CreateLoginForm } from '@/components/auth/login/createLoginForm'
 import { LoginForm } from '@/components/auth/login/loginForm'
 import { useMeQuery } from '@/features/auth/api/auth-api'
@@ -21,6 +22,10 @@ const publicRoutes: RouteObject[] = [
   {
     element: <CreateLoginForm />,
     path: '/login/registration',
+  },
+  {
+    element: <ForgotPasswordForm />,
+    path: '/login/forgot-password',
   },
 ]
 
