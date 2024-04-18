@@ -1,23 +1,42 @@
 import { ChangeEvent, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
-import avatar from '@/assets/Ellipse 45.png'
 import { Icon } from '@/components/ui/Icon'
 import { Button } from '@/components/ui/button'
 import { Typography } from '@/components/ui/typography'
+import { useLogoutMutation } from '@/features/auth/api/auth-api'
 
 import h from '../editable-form.module.scss'
 import s from './isCompletedPart.module.scss'
 
 type IsCompletedPartProps = {
+  avatar?: null | string
   currentName: string
   email?: string
   setIsEditable: (isEditable: boolean) => void
 }
 
-export const IsCompletedPart = (props: IsCompletedPartProps) => {
-  const { currentName, email, setIsEditable } = props
+const defaultPhoto =
+  'https://www.shutterstock.com/image-vector/default-avatar-profile-icon-social-600nw-1677509740.jpg'
 
-  const [currentAvatar, setCurrentAvatar] = useState(avatar)
+export const IsCompletedPart = (props: IsCompletedPartProps) => {
+  const { avatar, currentName, email, setIsEditable } = props
+
+  const [currentAvatar, setCurrentAvatar] = useState(avatar || defaultPhoto)
+
+  const [logout, {}] = useLogoutMutation()
+
+  const navigate = useNavigate()
+
+  const logoutHandler = async () => {
+    try {
+      await logout()
+
+      navigate('/login')
+    } catch (err) {
+      console.error('Ошибка при logout:', err)
+    }
+  }
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files ? e.target.files[0] : null
@@ -60,7 +79,12 @@ export const IsCompletedPart = (props: IsCompletedPartProps) => {
 
       {email && <Typography colorTheme={'dark'}>{email}</Typography>}
 
-      <Button className={s.isEditableFormButton} isImg variant={'secondary'}>
+      <Button
+        className={s.isEditableFormButton}
+        isImg
+        onClick={logoutHandler}
+        variant={'secondary'}
+      >
         <Typography variant={'subtitle2'}>Logout</Typography>
       </Button>
     </div>

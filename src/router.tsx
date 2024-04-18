@@ -6,6 +6,7 @@ import {
   createBrowserRouter,
 } from 'react-router-dom'
 
+import { EditableForm } from '@/components/auth/editable-form'
 import { ForgotPasswordForm } from '@/components/auth/forgorPassword/forgotPassword-form'
 import { CreateLoginForm } from '@/components/auth/login/createLoginForm'
 import { LoginForm } from '@/components/auth/login/loginForm'
@@ -13,6 +14,7 @@ import { useMeQuery } from '@/features/auth/api/auth-api'
 import { Cards } from '@/features/cards/ui/Cards'
 import { DecksList } from '@/features/decksList/ui/decks'
 import { LearnDeck } from '@/features/learnDeck'
+import { Layout } from '@/layout/Layout'
 
 const publicRoutes: RouteObject[] = [
   {
@@ -42,10 +44,16 @@ const privateRoutes: RouteObject[] = [
     element: <Cards />,
     path: '/deck/:deckId',
   },
+  {
+    element: <EditableForm />,
+    path: '/profile',
+  },
 ]
 
 function PrivateRoutes() {
-  const { isError, isLoading } = useMeQuery()
+  const { isError, isLoading } = useMeQuery(undefined, {
+    refetchOnMountOrArgChange: 1, // in seconds
+  })
   const isAuthenticated = !isError && !isLoading
 
   if (isLoading) {
@@ -61,14 +69,20 @@ function PublicRoutes() {
   return isSuccess ? <Navigate to={'/'} /> : <Outlet />
 }
 
-const router = createBrowserRouter([
+export const router = createBrowserRouter([
   {
-    children: privateRoutes,
-    element: <PrivateRoutes />,
-  },
-  {
-    children: publicRoutes,
-    element: <PublicRoutes />,
+    children: [
+      {
+        children: privateRoutes,
+        element: <PrivateRoutes />,
+      },
+      {
+        children: publicRoutes,
+        element: <PublicRoutes />,
+      },
+    ],
+    element: <Layout />,
+    path: '/',
   },
 ])
 
