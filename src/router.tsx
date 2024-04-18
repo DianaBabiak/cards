@@ -56,14 +56,20 @@ function PublicRoutes() {
   return isSuccess ? <Navigate to={'/'} /> : <Outlet />
 }
 
-const router = createBrowserRouter([
+export const router = createBrowserRouter([
   {
-    children: privateRoutes,
-    element: <PrivateRoutes />,
-  },
-  {
-    children: publicRoutes,
-    element: <PublicRoutes />,
+    children: [
+      {
+        children: privateRoutes,
+        element: <PrivateRoutes />,
+      },
+      {
+        children: publicRoutes,
+        element: <PublicRoutes />,
+      },
+    ],
+    element: <Layout />,
+    path: '/',
   },
 ])
 
