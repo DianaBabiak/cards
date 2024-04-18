@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import { Icon } from '@/components/ui/Icon'
 import { Button } from '@/components/ui/button'
@@ -18,10 +18,13 @@ export const Header = ({}: HeaderProps) => {
   const { data: meData, isLoading } = useMeQuery()
   const [logout, {}] = useLogoutMutation()
   const avatar = meData?.avatar ? meData?.avatar : defaultPhoto
+  const navigate = useNavigate()
 
   const logoutHandler = async () => {
     try {
       await logout()
+
+      navigate('/login')
     } catch (err) {
       console.error('Ошибка при logout:', err)
     }
@@ -60,10 +63,12 @@ export const Header = ({}: HeaderProps) => {
                 }
                 name={meData.name}
               />
-              <DropdownItem>
-                <Icon height={'16px'} iconId={'person'} viewBox={'0 0 16 16 '} width={'16px'} />
-                My Profile
-              </DropdownItem>
+              <Link className={s.link} to={'/profile'}>
+                <DropdownItem>
+                  <Icon height={'16px'} iconId={'person'} viewBox={'0 0 16 16 '} width={'16px'} />
+                  My Profile
+                </DropdownItem>
+              </Link>
               <DropdownItem onClick={logoutHandler}>
                 <Icon height={'16px'} iconId={'logOut'} viewBox={'0 0 16 16 '} width={'16px'} />
                 Sing out

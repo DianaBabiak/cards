@@ -91,29 +91,27 @@ export const DecksTable = (props: DecksTableProps) => {
                 <Typography variant={'body2'}>{deck.author.name}</Typography>
               </TableBodyCell>
               <TableBodyCell className={s.deckButtonsCell}>
-                {meData?.id === deck.author.id ? (
-                  <div className={s.deckButtonsWrapper}>
-                    <Link className={s.deckButton} to={`/learn/${deck.id}`}>
-                      <Icon iconId={'playCircle'} />
-                    </Link>
-                    <Button
-                      as={'a'}
-                      buttonImg={'edit2'}
-                      className={s.deckButton}
-                      isImg
-                      onClick={() => onOpenEditModalHandler(deck.id)}
-                    ></Button>
-                    <Button
-                      as={'a'}
-                      buttonImg={'trash'}
-                      className={s.deckButton}
-                      isImg
-                      onClick={() => onOpenDeleteDeckModalHandler(deck.id)}
-                    ></Button>
-                  </div>
-                ) : (
-                  <div className={s.deckButtonsWrapper}>---</div>
-                )}
+                <div className={s.deckButtonsWrapper}>
+                  <Link className={s.deckButton} to={`/learn/${deck.id}`}>
+                    <Icon iconId={'playCircle'} />
+                  </Link>
+                  <Button
+                    as={'a'}
+                    buttonImg={meData?.id === deck.author.id ? 'edit2' : 'edit3'}
+                    className={s.deckButton}
+                    isImg
+                    onClick={() => onOpenEditModalHandler(deck.id)}
+                    style={{ pointerEvents: meData?.id !== deck.author.id ? 'none' : 'auto' }}
+                  ></Button>
+                  <Button
+                    as={'a'}
+                    buttonImg={meData?.id === deck.author.id ? 'trash' : 'trash2'}
+                    className={s.deckButton}
+                    isImg
+                    onClick={() => onOpenDeleteDeckModalHandler(deck.id)}
+                    style={{ pointerEvents: meData?.id !== deck.author.id ? 'none' : 'auto' }}
+                  ></Button>
+                </div>
               </TableBodyCell>
             </TableRow>
           ))}
