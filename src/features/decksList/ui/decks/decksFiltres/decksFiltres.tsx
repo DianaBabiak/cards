@@ -50,6 +50,8 @@ export const DecksFilters = (props: DecksFiltresProps) => {
   const onClearFilterHandler = () => {
     setCurrentSliderValue([minCardsCount, maxCardsCount])
     setSearchName('')
+    setTabsValue('all-cards')
+    localStorage.setItem('tabsValue', JSON.stringify('all-cards'))
     onClearFilter()
   }
 
@@ -93,7 +95,7 @@ export const DecksFilters = (props: DecksFiltresProps) => {
     } else if (tabsValue === 'all-cards') {
       onTabsValueChange('')
     }
-  }, [meData, onTabsValueChange, tabsValue])
+  }, [tabsValue])
 
   return (
     <div className={s.filterDecksWrapper}>
