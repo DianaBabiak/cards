@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 import { useAppDispatch } from '@/common/hooks/hooks'
@@ -60,29 +60,47 @@ export const DecksList = () => {
     setDecksParams(newSearchParams)
   }
 
-  const onChangePageHandler = (page: number) => {
-    updateSearchParams({ page: page.toString() })
-  }
+  const onChangePageHandler = useCallback(
+    (page: number) => {
+      updateSearchParams({ page: page.toString() })
+    },
+    [updateSearchParams]
+  )
 
-  const onChangePerPageHandler = (pageItems: string) => {
-    updateSearchParams({ items: pageItems })
-  }
+  const onChangePerPageHandler = useCallback(
+    (pageItems: string) => {
+      updateSearchParams({ items: pageItems })
+    },
+    [updateSearchParams]
+  )
 
-  const onChangeSortPerDate = (sortData: 'asc' | 'desc') => {
-    updateSearchParams({ orderBy: `updated-${sortData}` })
-  }
+  const onChangeSortPerDate = useCallback(
+    (sortData: 'asc' | 'desc') => {
+      updateSearchParams({ orderBy: `updated-${sortData}` })
+    },
+    [updateSearchParams]
+  )
 
-  const onSliderValueChange = ([min, max]: [number, number]) => {
-    updateSearchParams({ maxCards: max.toString(), minCards: min.toString() })
-  }
+  const onSliderValueChange = useCallback(
+    ([min, max]: [number, number]) => {
+      updateSearchParams({ maxCards: max.toString(), minCards: min.toString() })
+    },
+    [updateSearchParams]
+  )
 
-  const onSearchNameHandler = (searchName: string) => {
-    updateSearchParams({ name: searchName })
-  }
+  const onSearchNameHandler = useCallback(
+    (searchName: string) => {
+      updateSearchParams({ name: searchName })
+    },
+    [updateSearchParams]
+  )
 
-  const onChangeTabs = (authorId: string) => {
-    updateSearchParams({ authorId: authorId })
-  }
+  const onChangeTabs = useCallback(
+    (authorId: string) => {
+      updateSearchParams({ authorId: authorId })
+    },
+    [updateSearchParams]
+  )
 
   const onClearFiltersHandler = () => {
     updateSearchParams({
