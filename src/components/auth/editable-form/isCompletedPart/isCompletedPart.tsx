@@ -84,6 +84,7 @@ export const IsCompletedPart = (props: IsCompletedPartProps) => {
         isImg
         onClick={logoutHandler}
         variant={'secondary'}
+        viewBox={'0 0 24 24'}
       >
         <Typography variant={'subtitle2'}>Logout</Typography>
       </Button>
