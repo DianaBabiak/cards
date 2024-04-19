@@ -1,4 +1,5 @@
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, useRef, useState } from 'react'
+import { UseFormRegister, UseFormSetValue } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 
 import { Icon } from '@/components/ui/Icon'
@@ -13,21 +14,25 @@ type IsCompletedPartProps = {
   avatar?: null | string
   currentName: string
   email?: string
+  nameImg: string
+  onChange: () => void
+  register?: UseFormRegister<any>
   setIsEditable: (isEditable: boolean) => void
+  setValue: UseFormSetValue<any>
 }
 
 const defaultPhoto =
   'https://www.shutterstock.com/image-vector/default-avatar-profile-icon-social-600nw-1677509740.jpg'
 
 export const IsCompletedPart = (props: IsCompletedPartProps) => {
-  const { avatar, currentName, email, setIsEditable } = props
+  const { avatar, currentName, email, nameImg, onChange, register, setIsEditable, setValue } = props
 
   const [currentAvatar, setCurrentAvatar] = useState(avatar || defaultPhoto)
 
   const [logout, {}] = useLogoutMutation()
 
   const navigate = useNavigate()
-
+  const inputRef = useRef<HTMLInputElement>(null)
   const logoutHandler = async () => {
     try {
       await logout()
@@ -39,15 +44,12 @@ export const IsCompletedPart = (props: IsCompletedPartProps) => {
   }
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files ? e.target.files[0] : null
+    if (e.target.files && e.target.files.length) {
+      const file = e.target.files[0]
 
-    if (file) {
-      const reader = new FileReader()
-
-      reader.onloadend = () => {
-        setCurrentAvatar(reader.result as string)
-      }
-      reader.readAsDataURL(file)
+      setCurrentAvatar(URL.createObjectURL(file))
+      setValue(nameImg, file)
+      onChange()
     }
   }
 
@@ -56,7 +58,13 @@ export const IsCompletedPart = (props: IsCompletedPartProps) => {
       <div className={s.avatarWrapper}>
         <img alt={'avatar'} className={h.avatar} src={currentAvatar} />
         <label>
-          <input className={s.editAvatarInput} onChange={handleImageChange} type={'file'} />
+          <input
+            className={s.editAvatarInput}
+            {...register?.(nameImg)}
+            onChange={handleImageChange}
+            ref={inputRef}
+            type={'file'}
+          />
           <div className={s.editAvatarBtn}>
             <Icon height={'16'} iconId={'edit2'} viewBox={'0 0 16 16'} width={'16'} />
           </div>

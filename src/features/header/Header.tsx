@@ -53,6 +53,7 @@ export const Header = ({}: HeaderProps) => {
               }
             >
               <DropdownItemWithImg
+                className={s.dropdown}
                 email={meData.email}
                 icon={
                   <img

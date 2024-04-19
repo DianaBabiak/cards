@@ -27,14 +27,14 @@
 }
 
 .deckTableNameCellWrapper {
-  display: flex;
-  gap: 10px;
-  align-items: center;
+  overflow: hidden;
+  padding: 2px 0 5px;
 }
 
 .deckTableNameImg {
-  max-width: 118px;
-  max-height: 48px;
+  width: 118px;
+  height: 48px;
+  object-fit: cover;
 }
 
 .deckButtonsWrapper {
@@ -68,7 +68,8 @@
 
 .link {
   display: flex;
-  gap: 15px;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
+  gap: 5px;
+  align-items: start;
+  justify-content: flex-start;
 }

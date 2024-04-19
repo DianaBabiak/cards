@@ -105,8 +105,8 @@
 }
 
 .imageCard {
-  max-width: 118px;
-  min-height: 48px;
+  width: 118px;
+  height: 48px;
   object-fit: cover;
 }
 
@@ -115,6 +115,7 @@ a {
 }
 
 .wrapperTableImg {
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: start;

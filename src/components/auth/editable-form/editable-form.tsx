@@ -5,7 +5,7 @@ import { IsCompletedPart } from '@/components/auth/editable-form/isCompletedPart
 import { IsEditablePart } from '@/components/auth/editable-form/isEditabledPart'
 import { Card } from '@/components/ui/card'
 import { Typography } from '@/components/ui/typography'
-import { useMeQuery } from '@/features/auth/api/auth-api'
+import { useMeQuery, useUpdateUserDataMutation } from '@/features/auth/api/auth-api'
 import { LinkBackHome } from '@/features/cards/ui/linkBackHome/LinkBackHome'
 import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
@@ -14,26 +14,37 @@ import { z } from 'zod'
 import s from './editable-form.module.scss'
 
 const loginSchema = z.object({
-  nickname: z.string().min(1).max(50),
+  avatar: z.any().optional(),
+  nickname: z.string().min(1).max(50).optional(),
 })
 
 export type FormValues = z.infer<typeof loginSchema>
 
 export const EditableForm = () => {
   const [isEditable, setIsEditable] = useState(false)
-  const { data: meData } = useMeQuery()
-  const [currentName, setCurrentName] = useState(meData?.name || '')
-
+  const { data: meData, refetch } = useMeQuery()
+  const [updateUserData, { isError }] = useUpdateUserDataMutation()
   const {
     control,
     formState: { errors },
     handleSubmit,
+    register,
+    setValue,
   } = useForm<FormValues>({ resolver: zodResolver(loginSchema) })
 
-  const onSubmit = (data: FormValues) => {
-    console.log(data)
-    setCurrentName(data.nickname)
-    setIsEditable(false)
+  const onSubmit = async (data: FormValues) => {
+    try {
+      await updateUserData({
+        avatar: data.avatar,
+        name: data.nickname,
+      })
+      await refetch()
+      if (!isError) {
+        setIsEditable(false)
+      }
+    } catch (err) {
+      console.error('Ошибка при изменении данных:', err)
+    }
   }
 
   const email = meData?.email || ''
@@ -51,16 +62,22 @@ export const EditableForm = () => {
 
           {isEditable ? (
             <IsEditablePart
+              avatar={meData?.avatar}
               control={control}
-              currentName={currentName}
+              currentName={meData?.name || ''}
               errorMessage={errors.nickname?.message}
+              updatedUserDataHandler={handleSubmit(onSubmit)}
             />
           ) : (
             <IsCompletedPart
               avatar={meData?.avatar}
-              currentName={currentName}
+              currentName={meData?.name || ''}
               email={email}
+              nameImg={'avatar'}
+              onChange={handleSubmit(onSubmit)}
+              register={register}
               setIsEditable={setIsEditable}
+              setValue={setValue}
             />
           )}
         </form>
