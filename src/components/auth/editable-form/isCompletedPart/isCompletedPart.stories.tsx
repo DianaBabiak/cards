@@ -15,7 +15,10 @@ type Story = StoryObj<typeof meta>
 export const IsEditableWithoutEmail: Story = {
   args: {
     currentName: 'Alex',
+    nameImg: '',
+    onChange: () => {},
     setIsEditable: () => {},
+    setValue: () => {},
   },
 }
 
@@ -23,6 +26,9 @@ export const IsEditableWithEmail: Story = {
   args: {
     currentName: 'Alex',
     email: 'predator12007@mail.ru',
+    nameImg: '',
+    onChange: () => {},
     setIsEditable: () => {},
+    setValue: () => {},
   },
 }

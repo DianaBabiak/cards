@@ -16,7 +16,7 @@ type IsCompletedPartProps = {
   email?: string
   nameImg: string
   onChange: () => void
-  register: UseFormRegister<any>
+  register?: UseFormRegister<any>
   setIsEditable: (isEditable: boolean) => void
   setValue: UseFormSetValue<any>
 }
@@ -60,7 +60,7 @@ export const IsCompletedPart = (props: IsCompletedPartProps) => {
         <label>
           <input
             className={s.editAvatarInput}
-            {...register(nameImg)}
+            {...register?.(nameImg)}
             onChange={handleImageChange}
             ref={inputRef}
             type={'file'}
