@@ -26,3 +26,8 @@ export type SignUpArgs = {
   sendConfirmationEmail?: boolean
   subject?: string
 }
+
+export type UpdateUserDataArg = {
+  avatar?: string
+  name?: string
+}
