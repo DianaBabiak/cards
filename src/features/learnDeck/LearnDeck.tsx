@@ -6,6 +6,7 @@ import { Icon } from '@/components/ui/Icon'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { ControlledRadioGroup } from '@/components/ui/controlled/controledRadioGroup/ControledRadioGroup'
+import { PreLoader } from '@/components/ui/preLoader'
 import { Typography } from '@/components/ui/typography'
 import {
   SaveGradeCard,
@@ -87,7 +88,7 @@ export const LearnDeck = ({}: LearnDeckProps) => {
   return (
     <div className={s.container}>
       {isLoading ? (
-        <div>Loading</div>
+        <PreLoader />
       ) : (
         <>
           <Link className={s.link} to={'/'}>
