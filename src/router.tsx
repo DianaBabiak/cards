@@ -15,6 +15,7 @@ import { Cards } from '@/features/cards/ui/Cards'
 import { DecksList } from '@/features/decksList/ui/decks'
 import { LearnDeck } from '@/features/learnDeck'
 import { Layout } from '@/layout/Layout'
+import { Error404 } from '@/pages/error404'
 
 const publicRoutes: RouteObject[] = [
   {
@@ -83,6 +84,10 @@ export const router = createBrowserRouter([
     ],
     element: <Layout />,
     path: '/',
+  },
+  {
+    element: <Error404 />,
+    path: '*',
   },
 ])
 
