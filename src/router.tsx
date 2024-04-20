@@ -10,11 +10,13 @@ import { EditableForm } from '@/components/auth/editable-form'
 import { ForgotPasswordForm } from '@/components/auth/forgorPassword/forgotPassword-form'
 import { CreateLoginForm } from '@/components/auth/login/createLoginForm'
 import { LoginForm } from '@/components/auth/login/loginForm'
+import { PreLoader } from '@/components/ui/preLoader'
 import { useMeQuery } from '@/features/auth/api/auth-api'
 import { Cards } from '@/features/cards/ui/Cards'
 import { DecksList } from '@/features/decksList/ui/decks'
 import { LearnDeck } from '@/features/learnDeck'
 import { Layout } from '@/layout/Layout'
+import { Error404 } from '@/pages/error404'
 
 const publicRoutes: RouteObject[] = [
   {
@@ -57,7 +59,7 @@ function PrivateRoutes() {
   const isAuthenticated = !isError && !isLoading
 
   if (isLoading) {
-    return <div>Loading</div>
+    return <PreLoader />
   }
 
   return isAuthenticated ? <Outlet /> : <Navigate to={'/login'} />
@@ -83,6 +85,10 @@ export const router = createBrowserRouter([
     ],
     element: <Layout />,
     path: '/',
+  },
+  {
+    element: <Error404 />,
+    path: '*',
   },
 ])
 

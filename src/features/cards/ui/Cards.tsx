@@ -4,6 +4,7 @@ import { useLocation } from 'react-router-dom'
 import { Modal } from '@/components/ui/modal'
 import { VariantModalContent } from '@/components/ui/modal/contentContainerModal/ContentContainerModal'
 import { Pagination } from '@/components/ui/pagination'
+import { PreLoader } from '@/components/ui/preLoader'
 import { TextField } from '@/components/ui/textField'
 import { useMeQuery } from '@/features/auth/api/auth-api'
 import { useDeleteCardMutation, useGetCardsQuery } from '@/features/cards/api'
@@ -69,7 +70,7 @@ export const Cards = () => {
   const isOwner = deckData?.userId === me?.id
 
   if (isLoadingGetDeck || isLoadingGetCards) {
-    return <div>LOADING....</div>
+    return <PreLoader />
   }
 
   return (

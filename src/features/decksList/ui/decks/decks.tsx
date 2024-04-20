@@ -5,6 +5,7 @@ import { useAppDispatch } from '@/common/hooks/hooks'
 import { Modal } from '@/components/ui/modal'
 import { VariantModalContent } from '@/components/ui/modal/contentContainerModal/ContentContainerModal'
 import { Pagination } from '@/components/ui/pagination'
+import { PreLoader } from '@/components/ui/preLoader'
 import { CreationDeck } from '@/features/creationEditionEntity/create/creationDeck'
 import {
   OrderBy,
@@ -138,7 +139,7 @@ export const DecksList = () => {
   const isLoading = isDataLoading && isMinMaxLoading
 
   return isLoading ? (
-    <div>Loading</div>
+    <PreLoader />
   ) : (
     isSuccess && (
       <div className={s.container}>
