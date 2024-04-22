@@ -22,12 +22,13 @@ type DecksTableProps = {
   data: ResponseGetDecks
   onChangeSortPerData: (sortData: 'asc' | 'desc') => void
   onOpenDeleteDeckModalHandler: (idDeck: string) => void
+  sortName: 'asc' | 'desc'
 }
 
 export const DecksTable = (props: DecksTableProps) => {
   const [isOpenEditDeck, setIsOpenEditDeck] = useState(false)
   const [currentIdDeck, setCurrentIdDeck] = useState('')
-  const { data, onChangeSortPerData, onOpenDeleteDeckModalHandler } = props
+  const { data, onChangeSortPerData, onOpenDeleteDeckModalHandler, sortName } = props
 
   const { data: meData } = useMeQuery()
 
@@ -53,7 +54,11 @@ export const DecksTable = (props: DecksTableProps) => {
             <TableHeadCell>
               <Typography variant={'subtitle2'}>Cards</Typography>
             </TableHeadCell>
-            <TableHeadCell isSortedColumn onChangeSort={onChangeSortPerDataHandler}>
+            <TableHeadCell
+              isSortedColumn
+              onChangeSort={onChangeSortPerDataHandler}
+              sortName={sortName}
+            >
               <Typography variant={'subtitle2'}>Last Updated</Typography>
             </TableHeadCell>
             <TableHeadCell>

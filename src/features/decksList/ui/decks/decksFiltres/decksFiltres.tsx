@@ -1,23 +1,23 @@
 import { ChangeEvent, useEffect, useRef, useState } from 'react'
 
-import { useAppDispatch, useAppSelector } from '@/common/hooks/hooks'
 import { Button } from '@/components/ui/button'
 import { CustomSlider } from '@/components/ui/slider'
 import { CustomTabs } from '@/components/ui/tabs'
 import { TextField } from '@/components/ui/textField'
 import { useMeQuery } from '@/features/auth/api/auth-api'
-import { isClearSelector } from '@/features/decksList/model/decksList/decksSelectors'
-import { decksListActions } from '@/features/decksList/model/decksList/decksSlice'
+import { ResponseGetMinMaxCards } from '@/features/decksList/api'
 
 import s from '@/features/decksList/ui/decks/decks.module.scss'
 
 type DecksFiltresProps = {
   maxCardsCount: number
   minCardsCount: number
+  minMaxCards?: ResponseGetMinMaxCards
   onClearFilter: () => void
   onSetSearchNameHandler: (searchName: string) => void
   onSliderValueChange: (minMaxCards: [min: number, max: number]) => void
   onTabsValueChange: (authorId: string) => void
+  tabsValue?: string
   valueName: string
 }
 
@@ -25,39 +25,27 @@ export const DecksFilters = (props: DecksFiltresProps) => {
   const {
     maxCardsCount,
     minCardsCount,
+    minMaxCards,
     onClearFilter,
     onSetSearchNameHandler,
     onSliderValueChange,
     onTabsValueChange,
+    tabsValue,
     valueName,
   } = props
 
-  const isClear = useAppSelector(isClearSelector)
-  const dispatch = useAppDispatch()
-
   const { data: meData } = useMeQuery()
 
-  const [currentSliderValue, setCurrentSliderValue] = useState([minCardsCount, maxCardsCount])
   const [searchName, setSearchName] = useState(valueName)
-  const [tabsValue, setTabsValue] = useState(() => {
-    const savedValues = localStorage.getItem('tabsValue')
-
-    return savedValues ? JSON.parse(savedValues) : 'all-cards'
-  })
 
   const timerId = useRef<null | number>(null)
 
   const onClearFilterHandler = () => {
-    setCurrentSliderValue([minCardsCount, maxCardsCount])
-    setSearchName('')
-    setTabsValue('all-cards')
-    localStorage.setItem('tabsValue', JSON.stringify('all-cards'))
     onClearFilter()
   }
 
   const onChangeTabsValueHandler = (tabsValue: string) => {
-    localStorage.setItem('tabsValue', JSON.stringify(tabsValue))
-    setTabsValue(tabsValue)
+    onTabsValueChange(tabsValue)
   }
 
   const onSearchNameHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -80,22 +68,10 @@ export const DecksFilters = (props: DecksFiltresProps) => {
   }, [])
 
   useEffect(() => {
-    if (isClear) {
-      const timer = setTimeout(() => {
-        dispatch(decksListActions.setClearFilters({ isClear: false }))
-      }, 0)
-
-      return () => clearTimeout(timer)
+    if (valueName !== searchName) {
+      setSearchName(valueName)
     }
-  }, [isClear, dispatch])
-
-  useEffect(() => {
-    if (tabsValue === 'my-card' && meData) {
-      onTabsValueChange(meData.id)
-    } else if (tabsValue === 'all-cards') {
-      onTabsValueChange('')
-    }
-  }, [tabsValue])
+  }, [valueName])
 
   return (
     <div className={s.filterDecksWrapper}>
@@ -113,20 +89,20 @@ export const DecksFilters = (props: DecksFiltresProps) => {
           {
             disabled: false,
             title: 'My Cards',
-            value: 'my-card',
+            value: meData?.id ?? 'myId',
           },
-          { disabled: false, title: 'All Cards', value: 'all-cards' },
+          { disabled: false, title: 'All Cards', value: '' },
         ]}
         tabsName={'Show decks cards'}
-        value={tabsValue}
+        value={tabsValue ?? ''}
       />
       <CustomSlider
         defaultValue={[minCardsCount, maxCardsCount]}
-        max={currentSliderValue[1]}
-        min={currentSliderValue[0]}
+        max={minMaxCards?.max ?? 0}
+        min={minMaxCards?.min ?? 0}
         onValueChange={onSliderValueChange}
         sliderName={'Number of cards'}
-        value={currentSliderValue}
+        value={[minCardsCount, maxCardsCount]}
       />
       <Button buttonImg={'trash'} isImg onClick={onClearFilterHandler} variant={'secondary'}>
         Clear Filter
