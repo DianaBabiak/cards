@@ -1,4 +1,4 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 
 export type DecksListState = ReturnType<typeof slice.getInitialState>
 
@@ -8,11 +8,7 @@ const slice = createSlice({
     isClearFilters: false,
   },
   name: 'decksList',
-  reducers: {
-    setClearFilters: (state, action: PayloadAction<{ isClear: boolean }>) => {
-      state.isClearFilters = action.payload.isClear
-    },
-  },
+  reducers: {},
 })
 
 export const decksListReducer = slice.reducer

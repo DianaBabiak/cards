@@ -1,8 +1,6 @@
-import { ComponentPropsWithoutRef, forwardRef, useEffect, useState } from 'react'
+import { ComponentPropsWithoutRef, forwardRef } from 'react'
 
-import { useAppSelector } from '@/common/hooks/hooks'
 import { Icon } from '@/components/ui/Icon'
-import { isClearSelector } from '@/features/decksList/model/decksList/decksSelectors'
 import clsx from 'clsx'
 
 import s from './table.module.scss'
@@ -67,29 +65,9 @@ export const TableHeadCell = forwardRef<HTMLTableCellElement, TableHeadCellProps
     } = props
     const classNames = clsx(s.tableHeadCell, className ?? '')
 
-    const isClear = useAppSelector(isClearSelector)
-
-    const [sort, setSort] = useState<'asc' | 'desc'>(() => {
-      const savedValues = localStorage.getItem('tableSort')
-
-      return savedValues ? JSON.parse(savedValues) : sortName
-    })
-
     const changeSortHandler = () => {
-      setSort(sort === 'desc' ? 'asc' : 'desc')
-      localStorage.setItem('tableSort', JSON.stringify(sort === 'desc' ? 'asc' : 'desc'))
+      onChangeSort?.(sortName === 'desc' ? 'asc' : 'desc')
     }
-
-    useEffect(() => {
-      if (isClear) {
-        setSort('desc')
-        localStorage.setItem('tableSort', JSON.stringify('desc'))
-      }
-    }, [isClear])
-
-    useEffect(() => {
-      onChangeSort?.(sort)
-    }, [sort])
 
     return (
       <th className={classNames} {...restProps} ref={ref}>
@@ -98,7 +76,7 @@ export const TableHeadCell = forwardRef<HTMLTableCellElement, TableHeadCellProps
             {children}
             <Icon
               height={'8'}
-              iconId={sort === 'desc' ? 'arrowDown' : 'arrowUp'}
+              iconId={sortName === 'desc' ? 'arrowDown' : 'arrowUp'}
               viewBox={'0 0 15 8'}
               width={'15'}
             />

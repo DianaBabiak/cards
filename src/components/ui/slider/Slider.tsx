@@ -1,8 +1,6 @@
-import { ComponentPropsWithoutRef, ElementRef, forwardRef, useEffect, useState } from 'react'
+import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
 
-import { useAppSelector } from '@/common/hooks/hooks'
 import { Typography } from '@/components/ui/typography'
-import { isClearSelector } from '@/features/decksList/model/decksList/decksSelectors'
 import * as Slider from '@radix-ui/react-slider'
 
 import s from './slider.module.scss'
@@ -31,45 +29,9 @@ export const CustomSlider = forwardRef<ElementRef<typeof Slider.Root>, SliderDem
       ...restProps
     } = props
 
-    const isClearSlider = useAppSelector(isClearSelector)
-
-    const ensureArray = (value: null | string, fallback: [number, number]): [number, number] => {
-      if (!value) {
-        return fallback
-      }
-      try {
-        const parsed = JSON.parse(value)
-
-        if (Array.isArray(parsed) && parsed.length === 2 && parsed.every(Number.isFinite)) {
-          return parsed as [number, number]
-        }
-
-        return fallback
-      } catch (e) {
-        return fallback
-      }
-    }
-
-    const [currentValue, setCurrentValue] = useState(() => {
-      const savedValues = localStorage.getItem('sliderValues')
-
-      return ensureArray(savedValues, [min, max])
-    })
-
     const handleValueChange = (values: [number, number]) => {
-      setCurrentValue(values)
-      localStorage.setItem('sliderValues', JSON.stringify(values))
-      if (onValueChange) {
-        onValueChange(values)
-      }
+      onValueChange?.(values)
     }
-
-    useEffect(() => {
-      if (isClearSlider) {
-        setCurrentValue([min, max])
-        localStorage.setItem('sliderValues', JSON.stringify([min, max]))
-      }
-    }, [isClearSlider])
 
     return (
       <div className={className ?? ''}>
@@ -79,7 +41,7 @@ export const CustomSlider = forwardRef<ElementRef<typeof Slider.Root>, SliderDem
           </Typography>
         )}
         <div className={s.customSliderWrapper}>
-          <MinMax minMax={currentValue[0]} />
+          <MinMax minMax={min} />
           <div className={s.sliderWrapper}>
             <Slider.Root
               className={s.sliderRoot}
@@ -88,7 +50,7 @@ export const CustomSlider = forwardRef<ElementRef<typeof Slider.Root>, SliderDem
               min={min}
               onValueChange={handleValueChange}
               step={step || 1}
-              value={currentValue}
+              value={value}
               {...restProps}
               ref={ref}
             >
@@ -99,7 +61,7 @@ export const CustomSlider = forwardRef<ElementRef<typeof Slider.Root>, SliderDem
               <Slider.Thumb className={s.sliderThumb} />
             </Slider.Root>
           </div>
-          <MinMax minMax={currentValue[1]} />
+          <MinMax minMax={max} />
         </div>
       </div>
     )
