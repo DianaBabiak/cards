@@ -15,8 +15,14 @@ const defaultPhoto =
   'https://www.shutterstock.com/image-vector/default-avatar-profile-icon-social-600nw-1677509740.jpg'
 
 export const Header = ({}: HeaderProps) => {
-  const { data: meData, isLoading } = useMeQuery()
   const [logout, {}] = useLogoutMutation()
+  const {
+    data: meData,
+    isError,
+    isLoading,
+  } = useMeQuery(undefined, {
+    refetchOnMountOrArgChange: 1, // in seconds
+  })
   const avatar = meData?.avatar ? meData?.avatar : defaultPhoto
   const navigate = useNavigate()
 
@@ -38,12 +44,12 @@ export const Header = ({}: HeaderProps) => {
     <header className={s.header}>
       <div className={s.container}>
         <img alt={'logo'} src={logo} />
-        {!meData ? (
+        {isError ? (
           <Button variant={'secondary'}>Sign In</Button>
         ) : (
           <div className={s.containerUserInformation}>
             <Typography className={s.name} variant={'subtitle1'}>
-              {meData.name}
+              {meData?.name}
             </Typography>
             <DropDownMenu
               trigger={
@@ -54,7 +60,7 @@ export const Header = ({}: HeaderProps) => {
             >
               <DropdownItemWithImg
                 className={s.dropdown}
-                email={meData.email}
+                email={meData?.email}
                 icon={
                   <img
                     alt={'photo user'}
@@ -62,7 +68,7 @@ export const Header = ({}: HeaderProps) => {
                     style={{ borderRadius: '50%', height: '36px', width: '36px' }}
                   />
                 }
-                name={meData.name}
+                name={meData?.name}
               />
               <Link className={s.link} to={'/profile'}>
                 <DropdownItem>
