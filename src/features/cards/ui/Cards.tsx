@@ -76,7 +76,7 @@ export const Cards = () => {
   return (
     <div className={s.container}>
       <LinkBackHome />
-      {data?.items.length === 0 ? (
+      {!deckData?.cardsCount ? (
         <EmptyDeck id={idDeck} isOwner={isOwner} />
       ) : (
         <>
