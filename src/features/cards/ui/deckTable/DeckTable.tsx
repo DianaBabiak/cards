@@ -21,12 +21,14 @@ type DeckTableProps = {
   handleChangeSort: (sortData: 'asc' | 'desc') => void
   isOwner: boolean
   onOpenDeleteCardModalHandler: (idCard: string) => void
+  sortName: 'asc' | 'desc'
 }
 export const DeckTable = ({
   data,
   handleChangeSort,
   isOwner,
   onOpenDeleteCardModalHandler,
+  sortName,
 }: DeckTableProps) => {
   const [isOpenUpdateCard, setIsOpenUpdateCard] = useState(false)
   const [currentIdCard, setCurrentIdCard] = useState('')
@@ -39,11 +41,13 @@ export const DeckTable = ({
 
   return (
     <>
-      <UpdateCard
-        idCard={currentIdCard}
-        isOpen={isOpenUpdateCard}
-        setIsOpen={setIsOpenUpdateCard}
-      />
+      {currentIdCard && (
+        <UpdateCard
+          idCard={currentIdCard}
+          isOpen={isOpenUpdateCard}
+          setIsOpen={setIsOpenUpdateCard}
+        />
+      )}
       <Table className={s.tableDecks}>
         <TableHead>
           <TableRow className={s.deckTableRow}>
@@ -53,7 +57,12 @@ export const DeckTable = ({
             <TableHeadCell className={s.cell}>
               <Typography variant={'subtitle2'}>Answer</Typography>
             </TableHeadCell>
-            <TableHeadCell className={s.cell} isSortedColumn onChangeSort={handleChangeSort}>
+            <TableHeadCell
+              className={s.cell}
+              isSortedColumn
+              onChangeSort={handleChangeSort}
+              sortName={sortName}
+            >
               <Typography variant={'subtitle2'}>Last Updated</Typography>
             </TableHeadCell>
             <TableHeadCell className={s.cell}>
