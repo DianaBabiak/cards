@@ -73,7 +73,12 @@ export const LoginForm = () => {
         />
         <ControlledCheckbox control={control} label={'Remember me'} name={'rememberMe'} />
         <div className={s.containerTypography}>
-          <Typography as={Link} to={'/login/forgot-password'} variant={'body2'}>
+          <Typography
+            as={Link}
+            style={{ cursor: 'pointer' }}
+            to={'/login/forgot-password'}
+            variant={'body2'}
+          >
             Forgot Password?
           </Typography>
         </div>
