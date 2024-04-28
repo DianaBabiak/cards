@@ -7,6 +7,8 @@ import {
 } from 'react-router-dom'
 
 import { EditableForm } from '@/components/auth/editable-form'
+import { BackToEmail } from '@/components/auth/forgorPassword/backToEmail'
+import { CreateNewPasswordForm } from '@/components/auth/forgorPassword/createNewPassword-form'
 import { ForgotPasswordForm } from '@/components/auth/forgorPassword/forgotPassword-form'
 import { CreateLoginForm } from '@/components/auth/login/createLoginForm'
 import { LoginForm } from '@/components/auth/login/loginForm'
@@ -30,6 +32,14 @@ const publicRoutes: RouteObject[] = [
   {
     element: <ForgotPasswordForm />,
     path: '/login/forgot-password',
+  },
+  {
+    element: <BackToEmail />,
+    path: '/login/back-to-email',
+  },
+  {
+    element: <CreateNewPasswordForm />,
+    path: '/login/recover-password/:token',
   },
 ]
 
