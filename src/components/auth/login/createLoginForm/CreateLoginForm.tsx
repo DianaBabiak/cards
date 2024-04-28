@@ -1,11 +1,13 @@
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
 
+import { useAppDispatch } from '@/common/hooks/hooks'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { ControlledTextField } from '@/components/ui/controlled/controlled-textField/controlled-textField'
 import { Typography } from '@/components/ui/typography'
 import { useSignUpMutation } from '@/features/auth/api/auth-api'
+import { handleServerNetworkError } from '@/utils/handleServerNetworkError'
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -33,6 +35,7 @@ export const CreateLoginForm = () => {
   } = useForm<FormValues>({
     resolver: zodResolver(createLoginSchema),
   })
+  const dispatch = useAppDispatch()
 
   const navigate = useNavigate()
   const [signUp, {}] = useSignUpMutation()
@@ -42,10 +45,10 @@ export const CreateLoginForm = () => {
       await signUp({
         email: data.email,
         password: data.password,
-      })
+      }).unwrap()
       navigate('/login')
     } catch (e) {
-      console.log(e)
+      handleServerNetworkError(dispatch, e)
     }
   }
 

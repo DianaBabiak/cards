@@ -1,7 +1,9 @@
 import { useForm } from 'react-hook-form'
 
+import { useAppDispatch } from '@/common/hooks/hooks'
 import { useCreateCardMutation } from '@/features/cards/api'
 import { CreateEditCard } from '@/features/creationEditionEntity/createEditCard/CreateEditCard'
+import { handleServerNetworkError } from '@/utils/handleServerNetworkError'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -20,6 +22,8 @@ const CreationCardFormSchema = z.object({
 
 export type CreationCardFormValues = z.infer<typeof CreationCardFormSchema>
 export const CreationCard = ({ id, isOpen, setIsOpen }: CreationCardProps) => {
+  const dispatch = useAppDispatch()
+
   const [createCardMutation, { isError }] = useCreateCardMutation()
   const {
     control,
@@ -45,7 +49,7 @@ export const CreationCard = ({ id, isOpen, setIsOpen }: CreationCardProps) => {
         setIsOpen(false)
       }
     } catch (err) {
-      console.error('Ошибка при создании карточки:', err)
+      handleServerNetworkError(dispatch, err)
     }
   }
 

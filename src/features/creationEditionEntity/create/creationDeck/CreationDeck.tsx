@@ -1,7 +1,9 @@
 import { useForm } from 'react-hook-form'
 
+import { useAppDispatch } from '@/common/hooks/hooks'
 import { CreateEditDeck } from '@/features/creationEditionEntity/createEditDeck/CreateEditDeck'
 import { useCreateDeckMutation } from '@/features/decksList/api'
+import { handleServerNetworkError } from '@/utils/handleServerNetworkError'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -18,6 +20,8 @@ const CreationDeckFormSchema = z.object({
 
 export type CreationDeckFormValues = z.infer<typeof CreationDeckFormSchema>
 export const CreationDeck = ({ isOpen, setIsOpen }: CreationDeckProps) => {
+  const dispatch = useAppDispatch()
+
   const {
     control,
     formState: { errors },
@@ -41,7 +45,7 @@ export const CreationDeck = ({ isOpen, setIsOpen }: CreationDeckProps) => {
         setIsOpen(false)
       }
     } catch (err) {
-      console.error('Ошибка при создании дека:', err)
+      handleServerNetworkError(dispatch, err)
     }
   }
 

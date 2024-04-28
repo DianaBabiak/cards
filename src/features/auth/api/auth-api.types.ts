@@ -31,3 +31,14 @@ export type UpdateUserDataArg = {
   avatar?: string
   name?: string
 }
+
+export type RecoveryEmailArgs = {
+  email: string
+  html?: string
+  subject?: string
+}
+
+export type ResetPasswordArgs = {
+  password: string
+  token: string | undefined
+}

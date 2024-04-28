@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
+import { useAppDispatch } from '@/common/hooks/hooks'
 import { Icon } from '@/components/ui/Icon'
 import { Button } from '@/components/ui/button'
 import { DropDownMenu, DropdownItem } from '@/components/ui/dropDownMenu'
@@ -9,6 +10,7 @@ import { VariantModalContent } from '@/components/ui/modal/contentContainerModal
 import { Typography } from '@/components/ui/typography'
 import { UpdateDeck } from '@/features/creationEditionEntity/update/updateDeck/UpdateDeck'
 import { useDeleteDeckMutation } from '@/features/decksList/api'
+import { handleServerNetworkError } from '@/utils/handleServerNetworkError'
 
 import s from '../cards.module.scss'
 
@@ -19,6 +21,8 @@ type NameDeckProps = {
   onOpenCreateCardHandler: () => void
 }
 export const NameDeck = ({ deckId, deckName, isOwner, onOpenCreateCardHandler }: NameDeckProps) => {
+  const dispatch = useAppDispatch()
+
   const [isOpenDeleteDeck, setIsOpenDeleteDeck] = useState(false)
   const [isOpenEditDeck, setIsOpenEditDeck] = useState(false)
   const [currentIdDeck, setCurrentIdDeck] = useState('')
@@ -38,7 +42,7 @@ export const NameDeck = ({ deckId, deckName, isOwner, onOpenCreateCardHandler }:
         id: currentIdDeck,
       })
     } catch (err) {
-      console.error('Ошибка при удалении дека:', err)
+      handleServerNetworkError(dispatch, err)
     }
   }
 

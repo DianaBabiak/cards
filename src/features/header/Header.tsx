@@ -1,10 +1,12 @@
 import { Link, useNavigate } from 'react-router-dom'
 
+import { useAppDispatch } from '@/common/hooks/hooks'
 import { Icon } from '@/components/ui/Icon'
 import { Button } from '@/components/ui/button'
 import { DropDownMenu, DropdownItem, DropdownItemWithImg } from '@/components/ui/dropDownMenu'
 import { Typography } from '@/components/ui/typography'
 import { useLogoutMutation, useMeQuery } from '@/features/auth/api/auth-api'
+import { handleServerNetworkError } from '@/utils/handleServerNetworkError'
 
 import s from './header.module.scss'
 
@@ -23,16 +25,19 @@ export const Header = ({}: HeaderProps) => {
   } = useMeQuery(undefined, {
     refetchOnMountOrArgChange: 1, // in seconds
   })
+
+  const dispatch = useAppDispatch()
+
   const avatar = meData?.avatar ? meData?.avatar : defaultPhoto
   const navigate = useNavigate()
 
   const logoutHandler = async () => {
     try {
-      await logout()
+      await logout().unwrap()
 
       navigate('/login')
     } catch (err) {
-      console.error('Ошибка при logout:', err)
+      handleServerNetworkError(dispatch, err)
     }
   }
 
