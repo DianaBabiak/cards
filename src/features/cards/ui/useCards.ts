@@ -3,12 +3,13 @@ import { useSearchParams } from 'react-router-dom'
 export const useCards = () => {
   const [searchParams, setSearchParams] = useSearchParams()
 
-  const orderBy = searchParams.get('sort') || undefined
+  const orderBy = searchParams.get('sort') || 'updated-desc'
+  const sortDirection = orderBy ? orderBy.split('-')[1] : 'desc'
 
   const itemsPerPage = Number(searchParams.get('items')) || 10
   const page = Number(searchParams.get('page')) || 1
-  const question = searchParams.get('question') || undefined
-  const answer = searchParams.get('answer') || undefined
+  const question = searchParams.get('question') || ''
+  const answer = searchParams.get('answer') || ''
 
   const handleChangePage = (page: number) => {
     searchParams.set('page', page.toString())
@@ -50,5 +51,6 @@ export const useCards = () => {
     orderBy,
     page,
     question,
+    sortDirection,
   }
 }

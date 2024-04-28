@@ -55,10 +55,12 @@ export const cardsApi = baseApi.injectEndpoints({
       }),
       getCards: builder.query<ResponseGetCards, GetCardsArgs>({
         providesTags: ['Cards'],
-        query: ({ id, ...params }) => ({
-          params: params ?? undefined,
-          url: `/v1/decks/${id}/cards`,
-        }),
+        query: ({ id, ...params }) => {
+          return {
+            params: params ?? undefined,
+            url: `/v1/decks/${id}/cards`,
+          }
+        },
       }),
       getRandomCard: builder.query<ResponseGetCard, GetRandomCard>({
         providesTags: ['Cards', 'Decks'],

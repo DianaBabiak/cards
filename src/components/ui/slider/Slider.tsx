@@ -41,7 +41,7 @@ export const CustomSlider = forwardRef<ElementRef<typeof Slider.Root>, SliderDem
           </Typography>
         )}
         <div className={s.customSliderWrapper}>
-          <MinMax minMax={min} />
+          <MinMax minMax={value?.[0] ?? 0} />
           <div className={s.sliderWrapper}>
             <Slider.Root
               className={s.sliderRoot}
@@ -61,7 +61,7 @@ export const CustomSlider = forwardRef<ElementRef<typeof Slider.Root>, SliderDem
               <Slider.Thumb className={s.sliderThumb} />
             </Slider.Root>
           </div>
-          <MinMax minMax={max} />
+          <MinMax minMax={value?.[1] ?? 0} />
         </div>
       </div>
     )

@@ -44,10 +44,12 @@ export const Cards = () => {
     orderBy,
     page,
     question,
+    sortDirection,
   } = useCards()
   const onOpenCreateCardHandler = () => {
     setIsOpenCreateCard(true)
   }
+
   const { data, isLoading: isLoadingGetCards } = useGetCardsQuery({
     answer,
     currentPage: page,
@@ -115,6 +117,7 @@ export const Cards = () => {
               handleChangeSort={handleChangeSort}
               isOwner={isOwner}
               onOpenDeleteCardModalHandler={onOpenDeleteCardModalHandler}
+              sortName={sortDirection as 'asc' | 'desc'}
             />
             <Pagination
               count={data?.pagination.totalPages || 1}
