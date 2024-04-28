@@ -1,9 +1,13 @@
 import { useForm } from 'react-hook-form'
+import { Link, useNavigate } from 'react-router-dom'
 
+import { useAppDispatch } from '@/common/hooks/hooks'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { ControlledTextField } from '@/components/ui/controlled/controlled-textField/controlled-textField'
 import { Typography } from '@/components/ui/typography'
+import { useSignUpMutation } from '@/features/auth/api/auth-api'
+import { handleServerNetworkError } from '@/utils/handleServerNetworkError'
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -31,9 +35,21 @@ export const CreateLoginForm = () => {
   } = useForm<FormValues>({
     resolver: zodResolver(createLoginSchema),
   })
+  const dispatch = useAppDispatch()
 
-  const onSubmit = (data: FormValues) => {
-    console.log(data)
+  const navigate = useNavigate()
+  const [signUp, {}] = useSignUpMutation()
+
+  const onSubmit = async (data: FormValues) => {
+    try {
+      await signUp({
+        email: data.email,
+        password: data.password,
+      }).unwrap()
+      navigate('/login')
+    } catch (e) {
+      handleServerNetworkError(dispatch, e)
+    }
   }
 
   return (
@@ -72,7 +88,9 @@ export const CreateLoginForm = () => {
         </Button>
       </form>
       <Typography variant={'body2'}>Already have an account?</Typography>
-      <a className={s.link}>Sign In</a>
+      <Typography as={Link} className={s.link} to={'/login'} variant={'link1'}>
+        Sign In
+      </Typography>
     </Card>
   )
 }

@@ -1,9 +1,14 @@
 import { useForm } from 'react-hook-form'
+import { Link, useNavigate } from 'react-router-dom'
 
+import { useAppDispatch } from '@/common/hooks/hooks'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { ControlledTextField } from '@/components/ui/controlled/controlled-textField/controlled-textField'
+import { PreLoader } from '@/components/ui/preLoader'
 import { Typography } from '@/components/ui/typography'
+import { useSendRecoveryEmailMutation } from '@/features/auth/api/auth-api'
+import { handleServerNetworkError } from '@/utils/handleServerNetworkError'
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -11,7 +16,7 @@ import { z } from 'zod'
 import s from './forgotPassword-form.module.scss'
 
 const loginSchema = z.object({
-  email: z.string().email(),
+  email: z.string().email('Invalid email address'),
 })
 
 type FormValues = z.infer<typeof loginSchema>
@@ -25,8 +30,22 @@ export const ForgotPasswordForm = () => {
     resolver: zodResolver(loginSchema),
   })
 
-  const onSubmit = (data: FormValues) => {
-    console.log(data)
+  const dispatch = useAppDispatch()
+
+  const navigate = useNavigate()
+  const [sendRecoveryEmail, { isLoading }] = useSendRecoveryEmailMutation()
+
+  const onSubmit = async (data: FormValues) => {
+    try {
+      await sendRecoveryEmail(data).unwrap()
+      navigate('/login/back-to-email')
+    } catch (error: unknown) {
+      handleServerNetworkError(dispatch, error)
+    }
+  }
+
+  if (isLoading) {
+    return <PreLoader />
   }
 
   return (
@@ -54,7 +73,9 @@ export const ForgotPasswordForm = () => {
       <Typography colorBalance={900} variant={'body2'}>
         Did you remember your password?
       </Typography>
-      <a className={s.link}>Try logging in</a>
+      <Typography as={Link} className={s.link} to={'/login'} variant={'link1'}>
+        Try logging in
+      </Typography>
     </Card>
   )
 }

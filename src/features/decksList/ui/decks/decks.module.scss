@@ -1,0 +1,75 @@
+.container {
+  max-width: 1008px;
+  margin: 0 auto;
+  padding: 93px 0 168px;
+}
+
+.addDeckWrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.filterDecksWrapper {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  margin-bottom: 36px;
+}
+
+.searchDecks {
+  width: 300px;
+  height: 36px;
+}
+
+.tableDecks {
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+.deckTableNameCellWrapper {
+  overflow: hidden;
+  padding: 2px 0 5px;
+}
+
+.deckTableNameImg {
+  width: 118px;
+  height: 48px;
+  object-fit: cover;
+}
+
+.deckButtonsWrapper {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+
+  width: auto;
+  height: fit-content;
+}
+
+.deckButtonsCell {
+  width: 117px;
+  padding: 6px 10px;
+}
+
+.deckButton {
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  background: none;
+
+  &:hover {
+    background: none;
+  }
+}
+
+.pagination {
+  margin-top: 24px;
+}
+
+.link {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: start;
+  justify-content: flex-start;
+}

@@ -1,6 +1,6 @@
 import { ChangeEvent, ComponentPropsWithoutRef, forwardRef, useState } from 'react'
 
-import { Icon } from '@/components/ui/icon'
+import { Icon } from '@/components/ui/Icon'
 import { Typography } from '@/components/ui/typography'
 
 import s from './TextField.module.scss'
@@ -31,7 +31,6 @@ export const TextField = forwardRef<HTMLInputElement, Props>(
     const inputPassword = inputType === 'password'
     const inputSearch = inputType === 'search'
     const classNames = {
-      container: `${s.container} ${className}`,
       input: `${s.input} ${errorMessage ? s.error : ''} ${
         inputSearch ? s.hasSearch : ''
       } ${className}`,
@@ -53,7 +52,7 @@ export const TextField = forwardRef<HTMLInputElement, Props>(
     const currentInputType = getInputType(inputType, showPasword)
 
     return (
-      <div className={classNames.container}>
+      <div className={`${s.container} ${className}`}>
         {label && !inputSearch && <span className={s.label}>{label}</span>}
         {/*<div className={s.InputContainer}>*/}
         <div className={classNames.inputContainer}>
@@ -73,17 +72,17 @@ export const TextField = forwardRef<HTMLInputElement, Props>(
             value={value}
           />
           {inputPassword && (
-            <button className={s.buttonEye} onClick={showPasswordHandler}>
+            <div className={s.buttonEye} onClick={showPasswordHandler}>
               {showPasword ? (
                 <Icon height={'20px'} iconId={'eyeOutlineOff'} width={'20px'} />
               ) : (
                 <Icon iconId={'eyeOutline'} />
               )}
-            </button>
+            </div>
           )}
         </div>
         {errorMessage && (
-          <Typography className={classNames.span} colorTheme={'danger'}>
+          <Typography as={'div'} className={classNames.span} colorTheme={'danger'}>
             {errorMessage}
           </Typography>
         )}

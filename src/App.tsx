@@ -1,9 +1,11 @@
-import { LoginForm } from '@/components/auth/login/loginForm/LoginForm'
+import CustomizedSnackbars from '@/components/ui/errorSnackbar/errorSnackbar'
+import { Router } from '@/router'
 
 export function App() {
   return (
-    <div>
-      <LoginForm />
-    </div>
+    <>
+      <CustomizedSnackbars />
+      <Router />
+    </>
   )
 }

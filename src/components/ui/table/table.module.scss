@@ -1,7 +1,8 @@
 .table {
   border-collapse: collapse;
   border: 1px solid var(--color-dark-500);
-  max-width: fit-content;
+  max-width: 100%;
+  table-layout: fixed;
 }
 
 .tableHead {
@@ -9,11 +10,35 @@
   background-color: var(--color-dark-500);
 }
 
+.tableRow {
+  height: 36px;
+}
+
 .tableHeadCell {
   padding: 6px 24px;
   text-align: left;
 }
 
+.headCellWrapper {
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  cursor: pointer;
+}
+
 .tableBodyCell {
   padding: 6px 24px;
+  height: fit-content;
+  border-bottom: 1px solid var(--color-dark-500);
+}
+
+.tableHeadCell:first-child,
+.tableBodyCell:first-child {
+  width: 30%;
+}
+
+.tableHeadCell:last-child,
+.tableBodyCell:last-child {
+  min-width: 10%;
 }

@@ -4,5 +4,6 @@
   "devCommand": "pnpm run storybook",
   "framework": null,
   "installCommand": "pnpm i",
-  "outputDirectory": "./storybook-static"
+  "outputDirectory": "./storybook-static",
+  "routes": [{ "src": "/[^.]+", "dest": "/", "status": 200 }]
 }

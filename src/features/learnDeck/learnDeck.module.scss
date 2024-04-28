@@ -1,0 +1,73 @@
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.containerCard {
+  position: relative;
+
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 35px;
+}
+
+.img {
+  width: 100%;
+}
+
+.containerText {
+  margin: 10px 0;
+  text-align: justify;
+}
+
+.link {
+  cursor: pointer;
+
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  justify-content: flex-start;
+
+  margin: 20px 0;
+
+  text-decoration: none;
+}
+
+.containerRadio {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+  justify-content: center;
+
+  width: 100%;
+  margin: 30px 0;
+}
+
+.emptyDeck {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.close {
+  cursor: pointer;
+
+  position: absolute;
+  top: 10px;
+  right: 10px;
+
+  outline: none;
+
+  &:focus-visible {
+    outline: 2px solid var(--color-info-500);
+  }
+}

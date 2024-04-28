@@ -5,45 +5,63 @@
 }
 
 .nameWrapper {
-  max-width: 246px;
   display: flex;
   gap: 9px;
+
+  max-width: 246px;
   margin-top: 6px;
   padding-left: 8px;
 }
 
 .avatarWrapper {
-  display: flex;
   position: relative;
+  display: flex;
 }
 
 .editNameIcon {
+  cursor: pointer;
+
   width: 16px;
   height: 16px;
-  background-color: transparent;
   padding-top: 10px;
-  cursor: pointer;
+
+  background-color: transparent;
 }
 
 .editAvatarBtn {
-  width: 24px;
-  height: 24px;
-  padding: 4px;
+  cursor: pointer;
+  content: '';
 
   position: absolute;
-  content: '';
   right: 0;
   bottom: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 24px;
+  height: 24px;
+  margin: 0 auto;
+  padding: 4px;
+
+  background-color: var(--color-dark-300);
+  border-radius: 4px;
 }
 
 .name {
-  margin: 0;
   max-width: 100%;
+  margin: 0;
+
+  hyphens: auto;
   word-wrap: break-word; /* Позволяет словам переноситься */
   overflow-wrap: break-word; /* Современный аналог word-wrap для переноса слов */
-  hyphens: auto;
 }
 
 .isEditableFormButton {
   margin-top: 13px;
+}
+
+.editAvatarInput {
+  display: none;
 }
