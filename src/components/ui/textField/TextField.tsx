@@ -52,7 +52,7 @@ export const TextField = forwardRef<HTMLInputElement, Props>(
     const currentInputType = getInputType(inputType, showPasword)
 
     return (
-      <div className={s.container}>
+      <div className={`${s.container} ${className}`}>
         {label && !inputSearch && <span className={s.label}>{label}</span>}
         {/*<div className={s.InputContainer}>*/}
         <div className={classNames.inputContainer}>
