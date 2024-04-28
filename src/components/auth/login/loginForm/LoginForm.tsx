@@ -1,12 +1,14 @@
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 
+import { useAppDispatch } from '@/common/hooks/hooks'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { ControlledCheckbox } from '@/components/ui/controlled/controlled-checkbox/controlled-checkbox'
 import { ControlledTextField } from '@/components/ui/controlled/controlled-textField/controlled-textField'
 import { Typography } from '@/components/ui/typography'
 import { useLoginMutation } from '@/features/auth/api/auth-api'
+import { handleServerNetworkError } from '@/utils/handleServerNetworkError'
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -37,13 +39,15 @@ export const LoginForm = () => {
     resolver: zodResolver(loginSchema),
   })
 
+  const dispatch = useAppDispatch()
+
   const [signIn, {}] = useLoginMutation()
 
   const onSubmit = async (data: FormValues) => {
     try {
       await signIn(data).unwrap()
-    } catch (error: any) {
-      console.log(error)
+    } catch (error) {
+      handleServerNetworkError(dispatch, error)
     }
   }
 

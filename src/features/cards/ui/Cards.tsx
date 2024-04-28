@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useLocation } from 'react-router-dom'
 
+import { useAppDispatch } from '@/common/hooks/hooks'
 import { Modal } from '@/components/ui/modal'
 import { VariantModalContent } from '@/components/ui/modal/contentContainerModal/ContentContainerModal'
 import { Pagination } from '@/components/ui/pagination'
@@ -15,10 +16,13 @@ import { NameDeck } from '@/features/cards/ui/nameDeck/NameDeck'
 import { useCards } from '@/features/cards/ui/useCards'
 import { CreationCard } from '@/features/creationEditionEntity/create/creationCard'
 import { useGetDeckQuery } from '@/features/decksList/api'
+import { handleServerNetworkError } from '@/utils/handleServerNetworkError'
 
 import s from './cards.module.scss'
 
 export const Cards = () => {
+  const dispatch = useAppDispatch()
+
   const [isOpenCreateCard, setIsOpenCreateCard] = useState(false)
   const [isOpenDeleteCard, setIsOpenDeleteCard] = useState(false)
   const [currentIdCard, setCurrentIdCard] = useState('')
@@ -63,7 +67,7 @@ export const Cards = () => {
         id: currentIdCard,
       })
     } catch (err) {
-      console.error('Ошибка при удалении карточки:', err)
+      handleServerNetworkError(dispatch, err)
     }
   }
 

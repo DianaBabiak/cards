@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+import { useAppDispatch } from '@/common/hooks/hooks'
 import { Modal } from '@/components/ui/modal'
 import { VariantModalContent } from '@/components/ui/modal/contentContainerModal/ContentContainerModal'
 import { Pagination } from '@/components/ui/pagination'
@@ -14,6 +15,7 @@ import {
 import { DecksFilters } from '@/features/decksList/ui/decks/decksFiltres/decksFiltres'
 import { DecksTable } from '@/features/decksList/ui/decks/decksTable/decksTable'
 import { useDescQueryParams } from '@/features/decksList/ui/decks/useDescQueryParams'
+import { handleServerNetworkError } from '@/utils/handleServerNetworkError'
 
 import s from './decks.module.scss'
 
@@ -53,6 +55,7 @@ export const DecksList = () => {
     name,
     orderBy: orderBy as OrderBy,
   })
+  const dispatch = useAppDispatch()
 
   const [deleteDeck, {}] = useDeleteDeckMutation()
 
@@ -74,7 +77,7 @@ export const DecksList = () => {
         id: currentIdDeck,
       })
     } catch (err) {
-      console.error('Ошибка при удалении дека:', err)
+      handleServerNetworkError(dispatch, err)
     }
   }
 

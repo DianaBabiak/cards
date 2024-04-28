@@ -1,7 +1,9 @@
 import { useForm } from 'react-hook-form'
 
+import { useAppDispatch } from '@/common/hooks/hooks'
 import { CreateEditDeck } from '@/features/creationEditionEntity/createEditDeck/CreateEditDeck'
 import { useGetDeckByIdQuery, useUpdateDeckMutation } from '@/features/decksList/api'
+import { handleServerNetworkError } from '@/utils/handleServerNetworkError'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -19,6 +21,8 @@ const UpdateDeckFormSchema = z.object({
 
 export type UpdateDeckFormValues = z.infer<typeof UpdateDeckFormSchema>
 export const UpdateDeck = ({ idDeck, isOpen, setIsOpen }: UpdateDeckProps) => {
+  const dispatch = useAppDispatch()
+
   const { data } = useGetDeckByIdQuery({
     id: idDeck,
   })
@@ -50,7 +54,7 @@ export const UpdateDeck = ({ idDeck, isOpen, setIsOpen }: UpdateDeckProps) => {
         setIsOpen(false)
       }
     } catch (err) {
-      console.error('Ошибка при редактировании deck:', err)
+      handleServerNetworkError(dispatch, err)
     }
   }
 

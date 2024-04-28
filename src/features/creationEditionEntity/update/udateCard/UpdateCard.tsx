@@ -1,7 +1,9 @@
 import { useForm } from 'react-hook-form'
 
+import { useAppDispatch } from '@/common/hooks/hooks'
 import { useGetCardByIdQuery, useUpdateCardMutation } from '@/features/cards/api'
 import { CreateEditCard } from '@/features/creationEditionEntity/createEditCard/CreateEditCard'
+import { handleServerNetworkError } from '@/utils/handleServerNetworkError'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -20,6 +22,8 @@ const UpdateCardFormSchema = z.object({
 
 export type UpdateCardFormValues = z.infer<typeof UpdateCardFormSchema>
 export const UpdateCard = ({ idCard, isOpen, setIsOpen }: UpdateCardProps) => {
+  const dispatch = useAppDispatch()
+
   const { data } = useGetCardByIdQuery({
     id: idCard,
   })
@@ -52,7 +56,7 @@ export const UpdateCard = ({ idCard, isOpen, setIsOpen }: UpdateCardProps) => {
         setIsOpen(false)
       }
     } catch (err) {
-      console.error('Ошибка при редактировании карточки:', err)
+      handleServerNetworkError(dispatch, err)
     }
   }
 
