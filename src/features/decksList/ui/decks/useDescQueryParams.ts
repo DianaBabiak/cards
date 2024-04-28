@@ -114,8 +114,6 @@ export const useDescQueryParams = ({ minMaxCards }: UseDescQueryParamsProps) => 
     localStorage.setItem(LSKey, '{}')
   }
 
-  console.log('name', name)
-
   return {
     authorId,
     handleChangeAuthorId,
