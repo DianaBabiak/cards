@@ -18,7 +18,7 @@ export const BackToEmail = () => {
         We’ve sent an Email with instructions to example@mail.com
       </Typography>
 
-      <Button as={'a'} href={'/sign-in'} isFullWidth>
+      <Button as={'a'} href={'/login'} isFullWidth>
         <Typography variant={'subtitle2'}>Back to Sign In</Typography>
       </Button>
     </Card>
