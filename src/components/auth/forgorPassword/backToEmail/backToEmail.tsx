@@ -6,6 +6,8 @@ import { Typography } from '@/components/ui/typography'
 import s from './backToEmail.module.scss'
 
 export const BackToEmail = () => {
+  const usersEmail = localStorage.getItem('currentEmail')
+
   return (
     <Card className={s.container}>
       <Typography as={'h1'} className={s.formTitle} variant={'h1'}>
@@ -15,7 +17,7 @@ export const BackToEmail = () => {
       <img alt={'icon'} src={icon} />
 
       <Typography as={'p'} className={s.formDescription} colorBalance={900} variant={'body2'}>
-        We’ve sent an Email with instructions to example@mail.com
+        We’ve sent an Email with instructions to {usersEmail}
       </Typography>
 
       <Button as={'a'} href={'/login'} isFullWidth>
