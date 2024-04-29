@@ -44,6 +44,9 @@ export const ForgotPasswordForm = () => {
         html: `<h2>Hello, ##name##!</h2><br/>To recover your password, follow the link below:<br/>
       <a href="${link}">Recover password</a>. If it doesn't work, copy and paste the following link in your browser:<br/>"${link}"`,
       }).unwrap()
+
+      localStorage.setItem('currentEmail', data.email)
+
       navigate('/login/back-to-email')
     } catch (error: unknown) {
       handleServerNetworkError(dispatch, error)
