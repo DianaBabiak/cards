@@ -1,30 +1,28 @@
-# React + TypeScript + Vite
+# Learn Using Cards
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Learn Using Cards is a simple application designed for effective memorization using flashcards methodology.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Flashcard Creation:** Create and manage flashcards with questions and answers.
+- **Quiz Mode:** Test yourself using the flashcards in quiz mode.
+- **State Management:** Utilizes RTK Query for data fetching and caching.
+- **Form Handling:** Uses React Hook Form for easy and flexible form validation.
+- **Routing:** Uses React Router Dom for seamless navigation between different views.
+- **Component Library:** Utilizes Radix UI for building accessible and responsive components.
+- **CSS Utilities:** Styled with clsx for dynamic class names.
+- **Schema Validation:** Uses zod for schema validation.
+- **Storybook:** Includes Storybook for UI component development and testing.
 
-## Expanding the ESLint configuration
+## Technology Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+- **Vite:** Frontend build tool that provides fast refresh and great development experience.
+- **React:** Frontend framework for building the user interface.
+- **TypeScript:** Programming language for type-checking and improved developer experience.
+- **React Hook Form:** Library for efficient form handling and validation.
+- **RTK Query:** State management and data fetching library.
+- **React Router Dom:** Library for declarative routing in React applications.
+- **Radix UI:** Component library for building accessible and responsive UI components.
+- **clsx:** Utility for constructing className strings conditionally.
+- **zod:** TypeScript-first schema validation for structured data.
+- **Storybook:** Development environment for UI components.
