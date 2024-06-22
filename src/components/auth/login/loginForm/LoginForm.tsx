@@ -53,6 +53,10 @@ export const LoginForm = () => {
 
   return (
     <Card className={s.container}>
+      <div className={s.containerData}>
+        <span>Login: demo@gmail.com</span>
+        <span>Password: 1234</span>
+      </div>
       <Typography variant={'h1'}>Sign In</Typography>
       <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
         <DevTool control={control} />
